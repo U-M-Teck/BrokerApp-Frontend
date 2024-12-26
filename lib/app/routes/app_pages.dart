@@ -51,7 +51,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SIGN_IN,
-      page: () => const SignInView(),
+      page: () =>  SignInView(),
       binding: SignInBinding(),
     ),
     GetPage(
@@ -61,7 +61,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CHANGE_PASSWORD,
-      page: () => const ChangePasswordView(),
+      page: () =>  ChangePasswordView(),
       binding: ChangePasswordBinding(),
     ),
     GetPage(
