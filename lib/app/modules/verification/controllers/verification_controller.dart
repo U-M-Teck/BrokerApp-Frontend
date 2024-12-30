@@ -10,7 +10,7 @@ class VerificationController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     void submitForm() {
-       Get.offAllNamed(Routes.SIGN_IN);
+       Get.offAllNamed(Routes.HOME);
 
   }
 

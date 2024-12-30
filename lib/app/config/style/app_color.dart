@@ -7,9 +7,12 @@ class AppColors {
   static const Color desSelected= Color(0xffA8A8A8);
   static const Color white = Color(0xffffffff);
   static const Color white2 = Color(0xffF1F5F9);
+  static const Color white3 = Color(0xffEBEBEB);
+  static const Color white4 = Color(0xffF5F5F5);
+  static const Color grey = Color(0xff999CA0);
   static const Color black = Color(0xff000000);
   static const Color red = Color(0xffff0000);
-  static const Color success = Colors.green;
+  static const Color success = Color(0xff4CDA64);
   
   // Order Status Colors
   static const Color pending = Color(0xffFF6347);    // Orange

@@ -36,9 +36,13 @@ class CreateAccountView extends GetView<CreateAccountController> {
             Get.toNamed(Routes.SIGN_UP);
           },),
           24.hs,
-          SignUpButton(icon: Assets.assetsSvgUser,title: "Property Owner",),
+          SignUpButton(icon: Assets.assetsSvgUser,title: "Property Owner",onPressed: (){
+            Get.toNamed(Routes.SIGN_UP);
+          }),
           24.hs,
-          SignUpButton(icon: Assets.assetsSvgBroker,title: "Broker",),
+          SignUpButton(icon: Assets.assetsSvgBroker,title: "Broker",onPressed: (){
+            Get.toNamed(Routes.SIGN_UP);
+          }),
           ],
         ),
       ),

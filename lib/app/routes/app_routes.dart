@@ -4,6 +4,10 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
+  static const notification = _Paths.notification;
+  static const searchByFilter = _Paths.searchByFilter;
+  static const brokerPoints = _Paths.brokerPoints;
+  static const contactUs = _Paths.contactUs;
   static const SPLASH = _Paths.SPLASH;
   static const ON_BORDING = _Paths.ON_BORDING;
   static const SIGN_IN = _Paths.SIGN_IN;
@@ -17,6 +21,10 @@ abstract class Routes {
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
+  static const notification = '/notification';
+  static const searchByFilter = '/searchByFilter';
+  static const brokerPoints = '/brokerPoints';
+  static const contactUs = '/rateUs';
   static const SPLASH = '/splash';
   static const ON_BORDING = '/on-bording';
   static const SIGN_IN = '/sign-in';

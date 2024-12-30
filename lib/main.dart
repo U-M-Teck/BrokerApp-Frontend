@@ -1,4 +1,4 @@
-import 'package:broker/app/config/style/app_color.dart';
+import 'package:broker/app/config/style/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,8 +13,11 @@ void main() {
     splitScreenMode: true,
     builder: (_, child) => OKToast(
       child: GetMaterialApp(
+        
+        theme: appTheme,
+              debugShowCheckedModeBanner: false,
         title: "Application",
-        initialRoute: Routes.SIGN_IN,
+        initialRoute: Routes.SPLASH,
         getPages: AppPages.routes,
       ),
     ),

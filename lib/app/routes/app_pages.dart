@@ -1,3 +1,8 @@
+import 'package:broker/app/modules/home/views/drawer_screens/broker_points_screen.dart';
+import 'package:broker/app/modules/home/views/drawer_screens/contact_us_screen.dart';
+import 'package:broker/app/modules/home/views/drawer_screens/notification_screen.dart';
+import 'package:broker/app/modules/home/views/drawer_screens/search_by_filter_screen.dart';
+import 'package:broker/app/modules/layout/views/layout_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/change_password/bindings/change_password_binding.dart';
@@ -5,7 +10,6 @@ import '../modules/change_password/views/change_password_view.dart';
 import '../modules/create_account/bindings/create_account_binding.dart';
 import '../modules/create_account/views/create_account_view.dart';
 import '../modules/home/bindings/home_binding.dart';
-import '../modules/home/views/home_view.dart';
 import '../modules/on_bording/bindings/on_bording_binding.dart';
 import '../modules/on_bording/views/on_bording_view.dart';
 import '../modules/personal_data/bindings/personal_data_binding.dart';
@@ -24,13 +28,29 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const initial = Routes.HOME;
 
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => const HomeView(),
+      page: () =>  LayoutView(),
       binding: HomeBinding(),
+    ),
+        GetPage(
+      name: _Paths.notification,
+      page: () =>  NotificationScreen(),
+    ),
+    GetPage(
+      name: _Paths.brokerPoints,
+      page: () =>  BrokerPointsScreen(),
+    ),
+     GetPage(
+      name: _Paths.contactUs,
+      page: () =>  ContactUsScreen(),
+    ),
+       GetPage(
+      name: _Paths.searchByFilter,
+      page: () =>  SearchByFilterScreen(),
     ),
     GetPage(
       name: _Paths.SPLASH,

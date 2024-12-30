@@ -10,13 +10,17 @@ class AppScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:appBar ,
+      appBar: appBar,
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-        AppImageView(svgPath: Assets.assetsSvgGroup,),
-        body
-      ],),
+          AppImageView(svgPath: Assets.assetsSvgGroup),
+          Padding(
+            padding: EdgeInsets.zero,
+            child: body,
+          ),
+        ],
+      ),
     );
   }
 }

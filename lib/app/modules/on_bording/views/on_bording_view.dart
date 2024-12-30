@@ -4,6 +4,7 @@ import 'package:broker/app/config/utils/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
 import 'package:broker/app/config/widgets/buttons/button_1.dart';
 import 'package:broker/app/config/widgets/buttons/button_2.dart';
+import 'package:broker/app/routes/app_pages.dart';
 import 'package:broker/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,11 +27,17 @@ class OnBordingView extends GetView<OnBordingController> {
             24.hs,
             Text("Welcome to Broker!",style: AppTextStyle.font18black600,),
             24.hs,
-            AppButton1(title: AppStrings.signIn,),
+            AppButton1(title: AppStrings.signIn,onPressed: (){
+              Get.toNamed(Routes.SIGN_IN);
+            },),
             24.hs,
-            AppButton2(title: AppStrings.createAccount,),
+            AppButton2(title: AppStrings.createAccount,onPressed: (){
+              Get.toNamed(Routes.CREATE_ACCOUNT);
+            },),
             24.hs,
-            AppButton1(title: AppStrings.goToMap,),
+            AppButton1(title: AppStrings.goToMap,onPressed: (){
+              Get.offAllNamed(Routes.HOME);
+            },),
 
           ],
         ),
