@@ -24,7 +24,7 @@ class BrokerPointsScreen extends StatelessWidget {
               children: [
                 Text("You have 300 Broker Points!", style: AppTextStyle.font18black600),
                 16.hs,
-                TextButton(onPressed: () {}, child: Text("Learn More", style: AppTextStyle.font16primary600)),
+                TextButton(onPressed: () {}, child: Text(AppStrings.learnMore, style: AppTextStyle.font16primary600)),
               ],
             ),
           ),

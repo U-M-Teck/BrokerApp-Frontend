@@ -38,6 +38,10 @@ class AppTextStyle {
       .merge(_fontWeight600)
       .merge(_fontSize18)
       .copyWith(color: AppColors.secondary);
+        static TextStyle font18primary600 = _fontPoppins
+      .merge(_fontWeight600)
+      .merge(_fontSize18)
+      .copyWith(color: AppColors.primary);
         static TextStyle font18black600 = _fontPoppins
       .merge(_fontWeight600)
       .merge(_fontSize18)
@@ -50,6 +54,10 @@ class AppTextStyle {
       .merge(_fontWeight400)
       .merge(_fontSize16)
       .copyWith(color: AppColors.black);
+              static TextStyle font16grey400 = _fontPoppins
+      .merge(_fontWeight400)
+      .merge(_fontSize16)
+      .copyWith(color: AppColors.grey);
               static TextStyle font16white400 = _fontPoppins
       .merge(_fontWeight400)
       .merge(_fontSize16)
@@ -91,6 +99,10 @@ class AppTextStyle {
       .merge(_fontWeight600)
       .merge(_fontSize16)
       .copyWith(color: AppColors.black);
+        static TextStyle font16grey600 = _fontPoppins
+      .merge(_fontWeight600)
+      .merge(_fontSize16)
+      .copyWith(color: AppColors.grey);
 
   static TextStyle font16white500 = _fontPoppins
       .merge(_fontWeight500)
@@ -141,6 +153,10 @@ class AppTextStyle {
       .merge(_fontWeight400)
       .merge(_fontSize12)
       .copyWith(color: AppColors.black);
+              static TextStyle font12grey400 = _fontPoppins
+      .merge(_fontWeight400)
+      .merge(_fontSize12)
+      .copyWith(color: AppColors.grey);
         static TextStyle font10grey600 = _fontPoppins
       .merge(_fontWeight600)
       .merge(_fontSize10)

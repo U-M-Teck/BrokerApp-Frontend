@@ -44,7 +44,11 @@ dependencies:
   oktoast: ^3.4.0
   jiffy: ^6.2.1
   google_maps_flutter: ^2.2.0
-
+  image_picker: ^1.1.2
+  carousel_slider: ^5.0.0
+  fl_chart: ^0.70.0
+  dio: ^5.7.0
+  get_storage: ^2.1.1
 
 flutter_assets:
   assets_path: assets/

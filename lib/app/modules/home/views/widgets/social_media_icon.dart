@@ -10,9 +10,15 @@ class SocialMediaIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w,vertical: 12.h),
-      decoration: BoxDecoration(color: AppColors.primary,borderRadius: BorderRadius.circular(8)),
-      child: AppImageView(svgPath: icon,height: 24.h,width: 24.w,color: AppColors.white,),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+      decoration: BoxDecoration(
+          color: AppColors.primary, borderRadius: BorderRadius.circular(8)),
+      child: AppImageView(
+        svgPath: icon,
+        height: 24.h,
+        width: 24.w,
+        color: AppColors.white,
+      ),
     );
   }
 }

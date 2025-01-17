@@ -32,15 +32,15 @@ class CreateAccountView extends GetView<CreateAccountController> {
             24.hs,
             AppImageView(imagePath: Assets.assetsImagesSignUp,width: 250.w,height: 240.h,),
             24.hs,
-          SignUpButton(icon: Assets.assetsSvgSearch,title: "Property Seeker",onPressed: (){
+          SignUpButton(icon: Assets.assetsSvgSearch,title: AppStrings.propertySeeker,onPressed: (){
             Get.toNamed(Routes.SIGN_UP);
           },),
           24.hs,
-          SignUpButton(icon: Assets.assetsSvgUser,title: "Property Owner",onPressed: (){
+          SignUpButton(icon: Assets.assetsSvgUser,title: AppStrings.propertyOwner,onPressed: (){
             Get.toNamed(Routes.SIGN_UP);
           }),
           24.hs,
-          SignUpButton(icon: Assets.assetsSvgBroker,title: "Broker",onPressed: (){
+          SignUpButton(icon: Assets.assetsSvgBroker,title: AppStrings.broker,onPressed: (){
             Get.toNamed(Routes.SIGN_UP);
           }),
           ],

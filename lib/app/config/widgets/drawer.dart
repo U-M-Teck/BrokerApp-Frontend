@@ -56,7 +56,7 @@ class DrawerWidget extends StatelessWidget {
               Get.toNamed(Routes.contactUs);
 
             },
-            leading: AppImageView(svgPath: Assets.assetsSvgMobile,color: AppColors.grey,height: 24.h,width: 24.w,),
+            leading: AppImageView(svgPath: Assets.assetsSvgCalling,color: AppColors.grey,height: 24.h,width: 24.w,),
             title: Text(AppStrings.contactUs),
           ),
           ListTile(

@@ -13,32 +13,40 @@ import 'package:get/get.dart';
 import '../controllers/change_password_controller.dart';
 
 class ChangePasswordView extends GetView<ChangePasswordController> {
-   ChangePasswordView({super.key});
-     @override
-  final ChangePasswordController controller =
-      Get.put<ChangePasswordController>(ChangePasswordController());
+  const ChangePasswordView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      appBar: AppBar(
-        title: const Text("Change Password"),
-        centerTitle: true,
-      ),
-      body: Form(
-        key: controller.formKey,
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20.0.w,vertical:24.h,),
-          children: [
-            Text("Enter Password",style: AppTextStyle.font16black600,),
-            24.hs,
-            PasswordField(controller: controller.passwordController),
-            24.hs,
-            ConfirmPasswordField(controller: controller.confirmPasswordController, password: controller.passwordController),
-            24.hs,
-            AppButton1(title: AppStrings.save,onPressed: controller.submitForm,)
-          ],
+        appBar: AppBar(
+          title: const Text(AppStrings.changePassword),
+          centerTitle: true,
         ),
-      )
-    );
+        body: Form(
+          key: controller.formKey,
+          child: ListView(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.0.w,
+              vertical: 24.h,
+            ),
+            children: [
+              Text(
+                AppStrings.enterPassword,
+                style: AppTextStyle.font16black600,
+              ),
+              24.hs,
+              PasswordField(controller: controller.passwordController),
+              24.hs,
+              ConfirmPasswordField(
+                  controller: controller.confirmPasswordController,
+                  password: controller.passwordController),
+              24.hs,
+              AppButton1(
+                title: AppStrings.save,
+                onPressed: controller.submitForm,
+              )
+            ],
+          ),
+        ));
   }
 }

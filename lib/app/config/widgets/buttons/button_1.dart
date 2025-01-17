@@ -1,4 +1,5 @@
 
+import 'package:broker/app/config/utils/extentions/extention.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -38,12 +39,23 @@ class AppButton1 extends StatelessWidget {
             backgroundColor: const WidgetStatePropertyAll(AppColors.primary),
             shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8)))),
-        child: Center(
+        child: leading == null
+            ? Center(
                 child: Text(
                   title ?? "",
                   style: AppTextStyle.font16white600,
                 ),
               )
-            );
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  leading!,
+                  horizontalTitleGap?.ws ?? 8.ws,
+                  Text(
+                    title ?? "",
+                    style: AppTextStyle.font16white600,
+                  ),
+                ],
+              ));
   }
 }

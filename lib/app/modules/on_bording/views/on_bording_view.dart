@@ -25,7 +25,7 @@ class OnBordingView extends GetView<OnBordingController> {
           children: [
             AppImageView(imagePath: Assets.assetsImagesOnBoarding,width:350.w,height: 280.h,),
             24.hs,
-            Text("Welcome to Broker!",style: AppTextStyle.font18black600,),
+            Text(AppStrings.welcomeToBroker,style: AppTextStyle.font18black600,),
             24.hs,
             AppButton1(title: AppStrings.signIn,onPressed: (){
               Get.toNamed(Routes.SIGN_IN);

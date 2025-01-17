@@ -21,7 +21,7 @@ class HomeView extends GetView<HomeController> {
         preferredSize: Size.fromHeight(60.0.h),
         child: HomeAppBar(onPressed: () {
           controller.scaffoldKey.currentState!.openDrawer();
-        }, controller: controller.searchController,),
+        }, ),
       ),
       body: 
       // GoogleMap(

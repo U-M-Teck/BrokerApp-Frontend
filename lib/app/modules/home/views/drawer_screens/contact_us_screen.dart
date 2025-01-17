@@ -35,7 +35,7 @@ class ContactUsScreen extends StatelessWidget {
                 spacing: 12.h,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AppButton1(title: "Send",),
+                  AppButton1(title: AppStrings.send,),
                   WhatsAppButton(onPressed: (){},hight: 50.h,)
                 ],
               ),
@@ -50,7 +50,7 @@ class ContactUsScreen extends StatelessWidget {
           spacing: 8.w,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Follow Us On",style: AppTextStyle.font16black400,),
+            Text(AppStrings.followUsOn,style: AppTextStyle.font16black400,),
             SocialMediaIcon(icon: Assets.assetsSvgFacebook),
             SocialMediaIcon(icon: Assets.assetsSvgSnapchat),
             SocialMediaIcon(icon: Assets.assetsSvgInstagram),

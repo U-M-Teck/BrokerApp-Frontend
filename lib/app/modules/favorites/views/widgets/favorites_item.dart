@@ -1,5 +1,6 @@
 import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/style/app_text_styles.dart';
+import 'package:broker/app/config/utils/app_utils/app_strings.dart';
 import 'package:broker/app/config/utils/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
 import 'package:broker/app/config/widgets/buttons/whats_app_button.dart';
@@ -17,14 +18,7 @@ class FavoritesItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(25),
-            spreadRadius: 2,
-            blurRadius: 8,
-            offset: Offset(0, 4),
-          ),
-        ],
+        
       ),
       padding: EdgeInsets.symmetric(vertical: 20.0.h, horizontal: 20.w),
       child: Column(
@@ -38,7 +32,12 @@ class FavoritesItem extends StatelessWidget {
                 style: AppTextStyle.font16black600,
               ),
               Spacer(),
-              AppImageView(svgPath: Assets.assetsSvgFavorites,color: AppColors.primary,height: 24.h,width: 24.w,)
+              AppImageView(
+                svgPath: Assets.assetsSvgFavorites,
+                color: AppColors.primary,
+                height: 24.h,
+                width: 24.w,
+              )
             ],
           ),
           12.hs,
@@ -55,18 +54,29 @@ class FavoritesItem extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                  AppImageView(svgPath: Assets.assetsSvgLocation,height: 24.h,width: 24.w,color: AppColors.grey,),
+                    AppImageView(
+                      svgPath: Assets.assetsSvgLocation,
+                      height: 24.h,
+                      width: 24.w,
+                      color: AppColors.grey,
+                    ),
                     4.ws,
-                    Text('Location', style: AppTextStyle.font14grey400),
+                    Text(AppStrings.location,
+                        style: AppTextStyle.font14grey400),
                   ],
                 ),
               ),
               Expanded(
                 child: Row(
                   children: [
-                  AppImageView(svgPath: Assets.assetsSvgActive,height: 24.h,width: 24.w,color: AppColors.success,),
+                    AppImageView(
+                      svgPath: Assets.assetsSvgActive,
+                      height: 24.h,
+                      width: 24.w,
+                      color: AppColors.success,
+                    ),
                     4.ws,
-                    Text('Active', style: AppTextStyle.font14grey400),
+                    Text(AppStrings.active, style: AppTextStyle.font14grey400),
                   ],
                 ),
               ),
@@ -81,18 +91,20 @@ class FavoritesItem extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: WhatsAppButton(onPressed: () {  },),
+                child: WhatsAppButton(
+                  onPressed: () {},
+                ),
               ),
               16.ws,
               Expanded(
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    fixedSize: WidgetStatePropertyAll(Size(double.infinity,32.h)),
-
-                    backgroundColor: WidgetStatePropertyAll(AppColors.secondary)
-                  ),
+                      fixedSize:
+                          WidgetStatePropertyAll(Size(double.infinity, 32.h)),
+                      backgroundColor:
+                          WidgetStatePropertyAll(AppColors.secondary)),
                   onPressed: () {},
-                  child: Text('Details'),
+                  child: Text(AppStrings.details),
                 ),
               ),
             ],

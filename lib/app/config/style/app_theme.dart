@@ -6,6 +6,16 @@ import 'app_color.dart';
 import 'app_text_styles.dart';
 
 ThemeData get appTheme => ThemeData(
+  dialogTheme: DialogTheme(
+      insetPadding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 20.h), 
+  ),
+  checkboxTheme: CheckboxThemeData(
+      side: BorderSide(color: AppColors.grey,width: 2.w),
+    
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(4)
+    )
+  ),
     chipTheme: ChipThemeData(
         showCheckmark: false,
         selectedColor: AppColors.primary.withAlpha(75),
@@ -44,6 +54,7 @@ ThemeData get appTheme => ThemeData(
     focusColor: Colors.transparent,
     hoverColor: Colors.transparent,
     inputDecorationTheme: InputDecorationTheme(
+      labelStyle: AppTextStyle.font16grey400,
         prefixIconConstraints: BoxConstraints.loose(Size(24.w, 24.h)),
         prefixIconColor: AppColors.primary,
         suffixIconColor: AppColors.grey,

@@ -23,7 +23,7 @@ class ListViewView extends GetView<ListViewController> {
         preferredSize: Size.fromHeight(60.0.h),
         child: HomeAppBar(onPressed: () {
           controller.scaffoldKey.currentState!.openDrawer();
-        }, controller: controller.searchController,),
+        }, ),
       ),
       body: ListView.separated(itemBuilder: (context,index)=>ListItem(), separatorBuilder: (context,index)=>10.hs, itemCount: 20)
     );

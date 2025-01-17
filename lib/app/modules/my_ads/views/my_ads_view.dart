@@ -1,3 +1,4 @@
+import 'package:broker/app/config/utils/app_utils/app_strings.dart';
 import 'package:broker/app/config/utils/extentions/extention.dart';
 import 'package:broker/app/config/widgets/drawer.dart';
 import 'package:broker/app/modules/my_ads/controllers/my_ads_controller.dart';
@@ -5,6 +6,8 @@ import 'package:broker/app/modules/my_ads/views/widgets/adds_item.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+
+import '../../../config/widgets/pop_ups/clear_all_ads.dart';
 
 
 class MyAdsView extends GetView<MyAdsController> {
@@ -18,7 +21,10 @@ class MyAdsView extends GetView<MyAdsController> {
       key: controller.scaffoldKey,
       drawer: DrawerWidget(),
         appBar: AppBar(
-          actions: [TextButton(onPressed: (){}, child: Text("Clear All"))],
+          actions: [TextButton(onPressed: (){
+            showDialog(context: 
+            context, builder: (context)=> ClearAllAds());
+          }, child: Text(AppStrings.clearAll))],
       leading: IconButton(
         onPressed: () {
           controller.scaffoldKey.currentState!.openDrawer();
@@ -27,7 +33,7 @@ class MyAdsView extends GetView<MyAdsController> {
           Icons.menu,
         ),
       ),
-      title: Text("My Ads"),
+      title: Text(AppStrings.myAds),
         ),
         
         body: ListView.separated(

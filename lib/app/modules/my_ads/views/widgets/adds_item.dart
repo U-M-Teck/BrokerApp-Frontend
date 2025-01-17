@@ -1,7 +1,10 @@
 import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/style/app_text_styles.dart';
+import 'package:broker/app/config/utils/app_utils/app_strings.dart';
 import 'package:broker/app/config/utils/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
+import 'package:broker/app/config/widgets/pop_ups/delete_ad.dart';
+import 'package:broker/app/config/widgets/pop_ups/statistics_widget.dart';
 import 'package:broker/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,14 +19,7 @@ class AddsItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(25),
-            spreadRadius: 2,
-            blurRadius: 8,
-            offset: Offset(0, 4),
-          ),
-        ],
+        
       ),
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
       child: Column(
@@ -65,7 +61,7 @@ class AddsItem extends StatelessWidget {
                     color: AppColors.grey,
                   ),
                   4.ws,
-                  Text('Location', style: AppTextStyle.font14grey400),
+                  Text(AppStrings.location, style: AppTextStyle.font14grey400),
                 ],
               ),
               Row(
@@ -90,7 +86,7 @@ class AddsItem extends StatelessWidget {
                   ),
                   4.ws,
                   Text(
-                    'Inactive',
+                    AppStrings.inactive,
                     style: AppTextStyle.font14red400,
                   ),
                 ],
@@ -139,7 +135,10 @@ class AddsItem extends StatelessWidget {
                   style: ButtonStyle(
                       backgroundColor: WidgetStatePropertyAll(
                           AppColors.primary.withAlpha(75))),
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(context: context
+                    , builder: (context) => StatisticsWidget());
+                  },
                   child: AppImageView(
               svgPath: Assets.assetsSvgStatistics,
               height: 24.h,
@@ -153,7 +152,10 @@ class AddsItem extends StatelessWidget {
                   style: ButtonStyle(
                       backgroundColor: WidgetStatePropertyAll(
                           AppColors.primary.withAlpha(75))),
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(context: context
+                    , builder: (context) => DeleteAd());
+                  },
                   child: AppImageView(
               svgPath: Assets.assetsSvgDelete,
               height: 24.h,

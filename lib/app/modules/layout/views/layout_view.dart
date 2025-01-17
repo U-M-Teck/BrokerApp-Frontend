@@ -1,7 +1,9 @@
 import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/style/app_text_styles.dart';
+import 'package:broker/app/config/utils/app_utils/app_strings.dart';
 import 'package:broker/app/modules/home/views/home_view.dart';
 import 'package:broker/app/modules/layout/views/widgets/bottom_nav_bar_item.dart';
+import 'package:broker/app/routes/app_pages.dart';
 import 'package:broker/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,13 +15,13 @@ import '../../list_view/views/list_view_view.dart';
 import '../../my_ads/views/my_ads_view.dart';
 import '../controllers/layout_controller.dart';
 
-class LayoutView extends StatelessWidget {
-  final LayoutController controller = Get.put(LayoutController());
-
-  LayoutView({super.key});
-
+class LayoutView extends GetView<LayoutController> {
+   const LayoutView({super.key});
+   
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put<LayoutController>(LayoutController());
+
     return Scaffold(
       body: Obx(() {
         switch (controller.selectedIndex.value) {
@@ -42,14 +44,6 @@ class LayoutView extends StatelessWidget {
                 topLeft: Radius.circular(15.0),
                 topRight: Radius.circular(15.0),
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10.0,
-                  spreadRadius: 4.0,
-                  offset: Offset(0.0, 3.0),
-                ),
-              ],
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.only(
@@ -75,40 +69,49 @@ class LayoutView extends StatelessWidget {
                   BottomNavigationBarItem(
                     icon: BottomNavBarItem(
                       isSelected: controller.selectedIndex.value == 0,
-                      icon: Assets.assetsSvgHome, title: 'Home',
+                      icon: Assets.assetsSvgHome,
+                      title: AppStrings.home,
                     ),
                     label: '',
                   ),
                   BottomNavigationBarItem(
                     icon: BottomNavBarItem(
                       isSelected: controller.selectedIndex.value == 1,
-                      icon: Assets.assetsSvgList, title: 'ListView',
+                      icon: Assets.assetsSvgList,
+                      title: AppStrings.listView,
                     ),
                     label: '',
                   ),
                   BottomNavigationBarItem(
-                    icon: Container(
-                      height: 40.h,
-                      width: 40.w,
-                      decoration: BoxDecoration(
-                        color: AppColors.secondary,
-                        shape: BoxShape.circle,
+                    icon: InkWell(
+                      onTap: () {
+                        Get.toNamed(Routes.addProperty);
+                      },
+                      child: Container(
+                        height: 40.h,
+                        width: 40.w,
+                        decoration: BoxDecoration(
+                          color: AppColors.secondary,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.add, color: Colors.white, size: 35),
                       ),
-                      child: Icon(Icons.add, color: Colors.white, size: 35),
                     ),
                     label: '',
                   ),
                   BottomNavigationBarItem(
                     icon: BottomNavBarItem(
                       isSelected: controller.selectedIndex.value == 3,
-                      icon: Assets.assetsSvgFavorites, title: 'Favorites',
+                      icon: Assets.assetsSvgFavorites,
+                      title: AppStrings.favorites,
                     ),
                     label: '',
                   ),
                   BottomNavigationBarItem(
                     icon: BottomNavBarItem(
                       isSelected: controller.selectedIndex.value == 4,
-                      icon: Assets.assetsSvgAds, title: 'MyAds',
+                      icon: Assets.assetsSvgAds,
+                      title: AppStrings.myAds,
                     ),
                     label: '',
                   ),

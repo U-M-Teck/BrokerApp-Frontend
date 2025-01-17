@@ -8,7 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchField extends StatelessWidget {
   final TextEditingController controller;
-  const SearchField({super.key, required this.controller});
+  final ValueChanged<String>? onChanged;
+
+  const SearchField({super.key, required this.controller, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,7 @@ class SearchField extends StatelessWidget {
       
       controller: controller,
       keyboardType: TextInputType.name,
+      onChanged: onChanged,
       decoration: InputDecoration(
         isDense: true,
          prefixIconConstraints: BoxConstraints(

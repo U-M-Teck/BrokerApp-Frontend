@@ -14,11 +14,9 @@ import 'package:get/get.dart';
 import '../controllers/sign_in_controller.dart';
 
 class SignInView extends GetView<SignInController> {
-  SignInView({super.key});
+  const SignInView({super.key});
 
-  @override
-  final SignInController controller =
-      Get.put<SignInController>(SignInController());
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -59,14 +57,14 @@ class SignInView extends GetView<SignInController> {
             24.hs,
             AppButton1(
               title: AppStrings.signIn,
-              onPressed: controller.submitForm,
+              onPressed: controller.login,
             ),
             24.hs,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "New user?",
+                  AppStrings.newUser,
                   style: AppTextStyle.font16black400,
                 ),
                 TextButton(

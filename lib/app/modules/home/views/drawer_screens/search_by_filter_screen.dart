@@ -1,10 +1,16 @@
 import 'package:broker/app/config/style/app_text_styles.dart';
 import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/config/widgets/buttons/button_1.dart';
+import 'package:broker/app/config/widgets/buttons/button_2.dart';
+import 'package:broker/app/config/widgets/buttons/gps_button.dart';
+import 'package:broker/app/modules/add_property/views/widgets/check_widget.dart';
+import 'package:broker/app/modules/add_property/views/widgets/drop_down_widget.dart';
+import 'package:broker/app/modules/home/views/widgets/selection_row_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../../config/style/app_color.dart';
+import '../../../../config/utils/app_utils/app_strings.dart';
 import '../../controllers/search_by_filter_controller.dart';
 
 class SearchByFilterScreen extends StatelessWidget {
@@ -17,12 +23,12 @@ class SearchByFilterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Search Details"),
+        title: const Text(AppStrings.searchDetails),
         actions: [
           TextButton(
             onPressed: controller.resetFilters,
             child: Text(
-              "Reset",
+              AppStrings.reset,
               style: AppTextStyle.font16primary400,
             ),
           ),
@@ -32,74 +38,56 @@ class SearchByFilterScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
         children: [
           // Dropdown for Property Type
-          Obx(() {
-            return DropdownButtonFormField<String>(
-              decoration: const InputDecoration(labelText: "Type of Property"),
-              items: ["Apartment", "Villa", "Office"]
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                  .toList(),
-              value: controller.selectedPropertyType.value,
-              onChanged: (value) {
-                controller.selectedPropertyType.value = value;
-              },
-            );
-          }),
+          DropDownWidget(
+              items: [
+                AppStrings.apartment,
+                AppStrings.villa,
+                AppStrings.office
+              ],
+              controller: controller.selectedPropertyType,
+              label: AppStrings.typeOfProperty),
 
           16.hs,
           // Dropdown for City
-          Obx(() {
-            return DropdownButtonFormField<String>(
-              decoration: const InputDecoration(labelText: "City"),
-              items: ["City A", "City B", "City C"]
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                  .toList(),
-              value: controller.selectedCity.value,
-              onChanged: (value) {
-                controller.selectedCity.value = value;
-              },
-            );
-          }),
+          DropDownWidget(
+              items: ["City A", "City B", "City C"],
+              controller: controller.selectedCity,
+              label: AppStrings.city),
 
           16.hs,
           // TextFormField for District
-          TextFormField(
-            controller: controller.districtController,
-            decoration: const InputDecoration(labelText: "District"),
-            onChanged: (value) {
-              controller.selectedDistrict.value = value;
-            },
+          Row(
+            children: [
+              GpsButton(),
+              16.ws,
+              Expanded(
+                child: TextFormField(
+                  controller: controller.districtController,
+                  decoration:
+                      const InputDecoration(labelText: AppStrings.district),
+                  onChanged: (value) {
+                    controller.selectedDistrict.value = value;
+                  },
+                ),
+              ),
+            ],
           ),
 
           16.hs,
           // Rooms Selection
           Row(
             children: [
-              const Text("Rooms"),
+              Text(
+                AppStrings.rooms,
+                style: AppTextStyle.font14black400,
+              ),
               16.ws,
-              Obx(() {
-                return Wrap(
-                  spacing: 8,
-                  children: List.generate(5, (index) {
-                    return ChoiceChip(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: index == controller.selectedRooms.value
-                              ? AppColors.primary
-                              : AppColors
-                                  .white4, // Different border color for selected/unselected
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      label: Text(index < 4 ? "${index + 1}" : "5+"),
-                      selected: index == controller.selectedRooms.value,
-                      onSelected: (selected) {
-                        controller.selectedRooms.value = index;
-                      },
-                    );
-                  }),
-                );
-              }),
+              Expanded(
+                  child: SelectionRowWidget(
+                controller: controller.selectedRooms,
+                listLenght: 5,
+                labels: ["1", "2", "3", "4", "5+"],
+              )),
             ],
           ),
 
@@ -107,12 +95,15 @@ class SearchByFilterScreen extends StatelessWidget {
           // Area (m²) Range
           Row(
             children: [
-              const Text("Area (m²)"),
+              Text(
+                AppStrings.areaString,
+                style: AppTextStyle.font14black400,
+              ),
               16.ws,
               Expanded(
                 child: TextFormField(
                   controller: controller.fromAreaController,
-                  decoration: const InputDecoration(labelText: "From"),
+                  decoration: InputDecoration(labelText: AppStrings.from),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -120,7 +111,7 @@ class SearchByFilterScreen extends StatelessWidget {
               Expanded(
                 child: TextFormField(
                   controller: controller.toAreaController,
-                  decoration: const InputDecoration(labelText: "To"),
+                  decoration: InputDecoration(labelText: AppStrings.to),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -129,75 +120,45 @@ class SearchByFilterScreen extends StatelessWidget {
 
           16.hs,
           // Finishing Options
-          Obx(() {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text("Finishing"),
-                Wrap(
-                  spacing: 8,
-                  children: List.generate(3, (index) {
-                    return ChoiceChip(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: index == controller.selectedFinishing.value
-                              ? AppColors.primary
-                              : AppColors.white4,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      label: Text(index == 0
-                          ? "Without"
-                          : index == 1
-                              ? "Half"
-                              : "Full"),
-                      selected: controller.selectedFinishing.value == index,
-                      onSelected: (selected) {
-                        controller.selectedFinishing.value = index;
-                      },
-                    );
-                  }),
-                ),
-              ],
-            );
-          }),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                AppStrings.finishing,
+                style: AppTextStyle.font14black400,
+              ),
+              16.ws,
+              Expanded(
+                  child: SelectionRowWidget(
+                controller: controller.selectedFinishing,
+                listLenght: 3,
+                labels: [
+                  AppStrings.withoutString,
+                  AppStrings.half,
+                  AppStrings.fullString
+                ],
+              )),
+            ],
+          ),
 
           16.hs,
           // Furnished Checkbox
           Row(
             children: [
-              Obx(() {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text("Furnished"),
-                    50.ws,
-                    Checkbox(
-                      value: controller.isFurnished.value,
-                      onChanged: (value) {
-                        controller.isFurnished.value = value ?? false;
-                      },
-                    ),
-                  ],
-                );
-              }),
-              Spacer(),
+              Expanded(
+                child: CheckWidget(
+                  controller: controller.isFurnished,
+                  icon: "",
+                  title: AppStrings.finishing,
+                ),
+              ),
               // With Parking Checkbox
-              Obx(() {
-                return Row(
-                  children: [
-                    const Text("With Parking"),
-                    50.ws,
-                    Checkbox(
-                      value: controller.withParking.value,
-                      onChanged: (value) {
-                        controller.withParking.value = value ?? false;
-                      },
-                    ),
-                  ],
-                );
-              }),
+              Expanded(
+                  child: CheckWidget(
+                controller: controller.withParking,
+                icon: "",
+                title: AppStrings.withParking,
+              )),
             ],
           ),
 
@@ -205,12 +166,15 @@ class SearchByFilterScreen extends StatelessWidget {
           // Price Range
           Row(
             children: [
-              const Text("Price"),
+              Text(
+                AppStrings.price,
+                style: AppTextStyle.font14black400,
+              ),
               16.ws,
               Expanded(
                 child: TextFormField(
                   controller: controller.fromPriceController,
-                  decoration: const InputDecoration(labelText: "From"),
+                  decoration: const InputDecoration(labelText: AppStrings.from),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -218,7 +182,7 @@ class SearchByFilterScreen extends StatelessWidget {
               Expanded(
                 child: TextFormField(
                   controller: controller.toPriceController,
-                  decoration: const InputDecoration(labelText: "To"),
+                  decoration: const InputDecoration(labelText: AppStrings.to),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -227,53 +191,33 @@ class SearchByFilterScreen extends StatelessWidget {
 
           16.hs,
           // Type of Contract
-          Obx(() {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text("Type of Contract"),
-                Wrap(
-                  spacing: 8,
-                  children: List.generate(2, (index) {
-                    return ChoiceChip(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: index == controller.selectedContractType.value
-                              ? AppColors.primary
-                              : AppColors.white4,
-                          width: 2.w,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      label: Text(index == 0 ? "For Sell" : "For Rent"),
-                      selected: controller.selectedContractType.value == index,
-                      onSelected: (selected) {
-                        controller.selectedContractType.value = index;
-                      },
-                    );
-                  }),
-                ),
-              ],
-            );
-          }),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                AppStrings.typeOfContract,
+                style: AppTextStyle.font14black400,
+              ),
+              16.ws,
+              Expanded(
+                  child: SelectionRowWidget(
+                controller: controller.selectedContractType,
+                listLenght: 2,
+                labels: [AppStrings.forSell, AppStrings.forRent],
+              )),
+            ],
+          ),
 
           16.hs,
           // Buttons
-          ElevatedButton(
-            onPressed: () {
-              // Handle Search
-            },
-            child: const Text("Search"),
+          AppButton1(
+            title: AppStrings.search,
+            onPressed: () {},
           ),
           8.hs,
-          ElevatedButton(
-            onPressed: () {
-              // Handle Notify Me
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.secondary, // Customize button color
-            ),
-            child: const Text("Notify Me"),
+          AppButton2(
+            title: AppStrings.notifyMe,
+            onPressed: () {},
           ),
         ],
       ),

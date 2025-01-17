@@ -1,10 +1,20 @@
+import 'package:broker/app/modules/add_property/bindings/add_property_binding.dart';
+import 'package:broker/app/modules/add_property/views/add_property_view.dart';
+import 'package:broker/app/modules/add_property/views/screens/apartment/add_apartment.dart';
+import 'package:broker/app/modules/add_property/views/screens/apartment/add_apartment_stage_2.dart';
+import 'package:broker/app/modules/add_property/views/screens/apartment/add_apartment_stage_3.dart';
+import 'package:broker/app/modules/add_property/views/screens/apartment/add_apartment_stage_4.dart';
 import 'package:broker/app/modules/home/views/drawer_screens/broker_points_screen.dart';
 import 'package:broker/app/modules/home/views/drawer_screens/contact_us_screen.dart';
 import 'package:broker/app/modules/home/views/drawer_screens/notification_screen.dart';
 import 'package:broker/app/modules/home/views/drawer_screens/search_by_filter_screen.dart';
+import 'package:broker/app/modules/home/views/drawer_screens/search_screen.dart';
 import 'package:broker/app/modules/layout/views/layout_view.dart';
+import 'package:broker/app/modules/property_details/bindings/property_details_binding.dart';
+import 'package:broker/app/modules/property_details/views/property_details_view.dart';
 import 'package:get/get.dart';
 
+import '../modules/add_property/views/screens/apartment/add_apartment_stage_5.dart';
 import '../modules/change_password/bindings/change_password_binding.dart';
 import '../modules/change_password/views/change_password_view.dart';
 import '../modules/create_account/bindings/create_account_binding.dart';
@@ -52,6 +62,12 @@ class AppPages {
       name: _Paths.searchByFilter,
       page: () =>  SearchByFilterScreen(),
     ),
+     GetPage(
+            transition: Transition.noTransition,
+
+      name: _Paths.search,
+      page: () =>  SearchScreen(),
+    ),
     GetPage(
       name: _Paths.SPLASH,
       page: () => const SplashView(),
@@ -61,17 +77,10 @@ class AppPages {
       name: _Paths.ON_BORDING,
       page: () => const OnBordingView(),
       binding: OnBordingBinding(),
-      children: [
-        GetPage(
-          name: _Paths.ON_BORDING,
-          page: () => const OnBordingView(),
-          binding: OnBordingBinding(),
-        ),
-      ],
     ),
     GetPage(
       name: _Paths.SIGN_IN,
-      page: () =>  SignInView(),
+      page: () =>  const SignInView(),
       binding: SignInBinding(),
     ),
     GetPage(
@@ -81,7 +90,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CHANGE_PASSWORD,
-      page: () =>  ChangePasswordView(),
+      page: () =>  const ChangePasswordView(),
       binding: ChangePasswordBinding(),
     ),
     GetPage(
@@ -98,6 +107,35 @@ class AppPages {
       name: _Paths.PERSONAL_DATA,
       page: () => const PersonalDataView(),
       binding: PersonalDataBinding(),
+    ),
+     GetPage(
+      name: _Paths.propertyDetails,
+      page: () =>  const PropertyDetailsView(),
+      binding: PropertyDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.addProperty,
+      page: () => const AddPropertyView(),
+      binding: AddPropertyBinding(),
+    ),
+    GetPage(
+      name: _Paths.addApartment,
+      page: () =>  AddApartment(),
+    ),
+     GetPage(
+      name: _Paths.addApartmentStage2,
+      page: () =>  AddApartmentStage2(),
+    ),
+    GetPage(
+      name: _Paths.addApartmentStage3,
+      page: () =>  AddApartmentStage3(),
+    ),GetPage(
+      name: _Paths.addApartmentStage4,
+      page: () =>  AddApartmentStage4(),
+    ),
+    GetPage(
+      name: _Paths.addApartmentStage5,
+      page: () =>  AddApartmentStage5(),
     ),
   ];
 }

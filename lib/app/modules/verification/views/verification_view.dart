@@ -31,7 +31,7 @@ class VerificationView extends GetView<VerificationController> {
               Align(alignment:Alignment.topLeft,child: Text(AppStrings.verificationCode,style: AppTextStyle.font18black400,)),
               24.hs,
               CodeField(controller: controller.codeController,),
-              TextButton(onPressed: (){}, child: Text("Resend Code",style: AppTextStyle.font16primary400,)),
+              TextButton(onPressed: (){}, child: Text(AppStrings.resendCode,style: AppTextStyle.font16primary400,)),
               24.hs,
               StreamBuilder<int>(
                 stream: controller.stopWatchTimer.rawTime,

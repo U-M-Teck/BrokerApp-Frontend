@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
 
 class LayoutController extends GetxController {
-  //TODO: Implement BottomNavigationController
+  //TODO: Implement LayoutController
+
 
   final count = 0.obs;
-   var selectedIndex = 0.obs;
+   final selectedIndex = 0.obs;
 
      void changeIndex(int index) {
        selectedIndex.value = index;
@@ -26,3 +27,5 @@ class LayoutController extends GetxController {
 
   void increment() => count.value++;
 }
+
+
