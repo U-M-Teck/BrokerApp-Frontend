@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:oktoast/oktoast.dart';
 
 import 'app/core/heplers/localization_helper.dart';
+import 'app/core/services/storage_service.dart';
 import 'app/routes/app_pages.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'
     show
@@ -16,7 +17,15 @@ import 'package:flutter_localizations/flutter_localizations.dart'
         GlobalWidgetsLocalizations;
 
 void main() async {
-  await GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await GetStorage.init(); // Initialize GetStorage
+
+  final savedLanguage = StorageService.getData<String>('selected_language') ?? 'en';
+
+  LocalizationHelper().changeLocale(
+    savedLanguage == 'ar' ? Language.arabic : Language.english,
+  );
   runApp(ScreenUtilInit(
     designSize: const Size(375, 812),
     splitScreenMode: true,
@@ -28,7 +37,7 @@ void main() async {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        locale: LocalizationHelper.local,
+        locale: LocalizationHelper().initialLocale,
         translations: LocalizationHelper(),
         initialBinding: InitialBinding(),
         theme: appTheme,

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 import '../../../../../generated/assets.dart';
 import '../../../../core/heplers/localization_helper.dart';
+import '../../../../core/services/storage_service.dart';
 
 class ChangeLanguageScreen extends StatelessWidget {
   const ChangeLanguageScreen({super.key});
@@ -26,19 +27,24 @@ class ChangeLanguageScreen extends StatelessWidget {
             AppStrings.changeLanguage,
             style: AppTextStyle.font18black600,
           ),
-          AppImageView(imagePath: Assets.assetsImagesChangeLanguage,height: 150.h,width: 150.w,),
+          AppImageView(
+            imagePath: Assets.assetsImagesChangeLanguage,
+            height: 150.h,
+            width: 150.w,
+          ),
           AppButton1(
-            onPressed: () {
+            onPressed: () async {
+              await StorageService.setData('selected_language', 'en');
               LocalizationHelper().changeLocale(Language.english);
               Get.back();
             },
             title: AppStrings.english,
           ),
           AppButton2(
-            onPressed: () {
+            onPressed: () async {
+              await StorageService.setData('selected_language', 'ar');
               LocalizationHelper().changeLocale(Language.arabic);
               Get.back();
-
             },
             title: AppStrings.arabic,
           ),

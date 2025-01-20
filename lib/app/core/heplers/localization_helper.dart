@@ -1,13 +1,12 @@
 import 'dart:ui';
-
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../language/ar_eg.dart';
 import '../language/en_us.dart';
 
 class LocalizationHelper extends Translations {
   // Supported languages and locales
-  // Needs to be same order with locales
   static final languages = {
     Language.english: const Locale('en', 'US'),
     Language.arabic: const Locale('ar', 'EG')
@@ -18,25 +17,41 @@ class LocalizationHelper extends Translations {
     languages[Language.arabic]!
   ];
 
-  // here we need to add our default language
-  static Locale local = languages[Language.english]!;
+  // Default language key for storage
+  static const String _languageKey = 'selected_language';
 
-  // Keys and their translations
-  // Translations are separated maps in `lang` file
+  // Storage instance
+  final GetStorage _storage = GetStorage();
+
+  // Get the stored locale or fallback to default
+  Locale get initialLocale {
+    final savedLanguageCode = _storage.read<String>(_languageKey);
+    if (savedLanguageCode != null) {
+      return languages.values.firstWhere(
+        (locale) => locale.languageCode == savedLanguageCode,
+        orElse: () => languages[Language.english]!,
+      );
+    }
+    return languages[Language.english]!;
+  }
+
+  // Check if the current language is Arabic
+  bool isArabic() {
+    return Get.locale?.languageCode == languages[Language.arabic]!.languageCode;
+  }
+
+  // Change the locale and save the selected language
+  void changeLocale(Language language) {
+    final newLocale = languages[language]!;
+    Get.updateLocale(newLocale);
+    _storage.write(_languageKey, newLocale.languageCode);
+  }
+
   @override
   Map<String, Map<String, String>> get keys => {
         languages[Language.arabic]!.languageCode: ar,
-        languages[Language.english]!.languageCode: en
+        languages[Language.english]!.languageCode: en,
       };
-
-  bool isArabic() {
-    return Get.locale!.languageCode == languages[Language.arabic]!.languageCode;
-  }
-
-  // Gets locale from language, and updates the locale
-  void changeLocale(Language language) {
-    Get.updateLocale(languages[language]!);
-  }
 }
 
 enum Language { arabic, english }
