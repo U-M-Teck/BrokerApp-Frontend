@@ -1,5 +1,5 @@
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/form_fields/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,7 +24,7 @@ class SearchScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Text(AppStrings.done)),
+                  child:  Text(AppStrings.done)),
             ],
           ),
           30.hs,

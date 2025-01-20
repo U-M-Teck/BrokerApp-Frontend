@@ -2,9 +2,29 @@
 class Assets {
   Assets._();
   
-  static const String assetsFontPoppinsRegular = "assets/font/Poppins-Regular.ttf";
+  static const String assetsFontAlexandriaBlack = "assets/font/Alexandria-Black.ttf";
+
+  static const String assetsFontAlexandriaBold = "assets/font/Alexandria-Bold.ttf";
+
+  static const String assetsFontAlexandriaExtraBold = "assets/font/Alexandria-ExtraBold.ttf";
+
+  static const String assetsFontAlexandriaExtraLight = "assets/font/Alexandria-ExtraLight.ttf";
+
+  static const String assetsFontAlexandriaLight = "assets/font/Alexandria-Light.ttf";
+
+  static const String assetsFontAlexandriaMedium = "assets/font/Alexandria-Medium.ttf";
+
+  static const String assetsFontAlexandriaRegular = "assets/font/Alexandria-Regular.ttf";
+
+  static const String assetsFontAlexandriaSemiBold = "assets/font/Alexandria-SemiBold.ttf";
+
+  static const String assetsFontAlexandriaThin = "assets/font/Alexandria-Thin.ttf";
+
+  static const String assetsImagesChangeLanguage = "assets/images/change_language.jpg";
 
   static const String assetsImagesOnBoarding = "assets/images/on_boarding.jpg";
+
+  static const String assetsImagesRateUs = "assets/images/rate_us.jpg";
 
   static const String assetsImagesSignUp = "assets/images/sign_up.jpg";
 

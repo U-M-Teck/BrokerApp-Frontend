@@ -4,6 +4,8 @@ import 'package:broker/app/modules/add_property/views/screens/apartment/add_apar
 import 'package:broker/app/modules/add_property/views/screens/apartment/add_apartment_stage_2.dart';
 import 'package:broker/app/modules/add_property/views/screens/apartment/add_apartment_stage_3.dart';
 import 'package:broker/app/modules/add_property/views/screens/apartment/add_apartment_stage_4.dart';
+import 'package:broker/app/modules/change_password/views/forget_password_view.dart';
+import 'package:broker/app/modules/change_password/views/verify_forget_password_code_screen.dart';
 import 'package:broker/app/modules/home/views/drawer_screens/broker_points_screen.dart';
 import 'package:broker/app/modules/home/views/drawer_screens/contact_us_screen.dart';
 import 'package:broker/app/modules/home/views/drawer_screens/notification_screen.dart';
@@ -17,17 +19,16 @@ import 'package:get/get.dart';
 import '../modules/add_property/views/screens/apartment/add_apartment_stage_5.dart';
 import '../modules/change_password/bindings/change_password_binding.dart';
 import '../modules/change_password/views/change_password_view.dart';
-import '../modules/create_account/bindings/create_account_binding.dart';
-import '../modules/create_account/views/create_account_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/on_bording/bindings/on_bording_binding.dart';
 import '../modules/on_bording/views/on_bording_view.dart';
-import '../modules/personal_data/bindings/personal_data_binding.dart';
-import '../modules/personal_data/views/personal_data_view.dart';
 import '../modules/sign_in/bindings/sign_in_binding.dart';
 import '../modules/sign_in/views/sign_in_view.dart';
 import '../modules/sign_up/bindings/sign_up_binding.dart';
+import '../modules/sign_up/views/create_account_view.dart';
+import '../modules/sign_up/views/pesonal_data_screen.dart';
 import '../modules/sign_up/views/sign_up_view.dart';
+import '../modules/sign_up/views/verification_sign_up_screen.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/verification/bindings/verification_binding.dart';
@@ -94,9 +95,19 @@ class AppPages {
       binding: ChangePasswordBinding(),
     ),
     GetPage(
+      name: _Paths.Forget_PASSWORD,
+      page: () =>  const ForgetPasswordView(),
+      binding: ChangePasswordBinding(),
+    ), GetPage(
+      name: _Paths.Verify_Forget_PASSWORD,
+      page: () =>  const VerifyForgetPasswordCodeScreen(),
+      binding: ChangePasswordBinding(),
+    ),
+    GetPage(
       name: _Paths.CREATE_ACCOUNT,
       page: () => const CreateAccountView(),
-      binding: CreateAccountBinding(),
+      binding: SignUpBinding(),
+
     ),
     GetPage(
       name: _Paths.SIGN_UP,
@@ -105,13 +116,19 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PERSONAL_DATA,
-      page: () => const PersonalDataView(),
-      binding: PersonalDataBinding(),
+      page: () => const PersonalDataScreen(),
+      binding: SignUpBinding(),
+
     ),
      GetPage(
       name: _Paths.propertyDetails,
       page: () =>  const PropertyDetailsView(),
       binding: PropertyDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.signUpVerification,
+      page: () =>  const VerificationSignUpScreen(),
+      binding: SignUpBinding(),
     ),
     GetPage(
       name: _Paths.addProperty,

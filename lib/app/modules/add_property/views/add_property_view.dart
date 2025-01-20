@@ -17,7 +17,7 @@ class AddPropertyView extends GetView<AddPropertyController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.addProperty),
+        title:  Text(AppStrings.addProperty),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),

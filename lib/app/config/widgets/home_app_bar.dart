@@ -1,4 +1,4 @@
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
 import 'package:broker/app/routes/app_pages.dart';
 import 'package:broker/generated/assets.dart';
@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../style/app_color.dart';
 import '../style/app_text_styles.dart';
+import '../utils/app_utils/app_strings.dart';
 
 class HomeAppBar extends StatelessWidget {
   final VoidCallback onPressed;
@@ -48,7 +49,7 @@ class HomeAppBar extends StatelessWidget {
                       ),
                       8.ws,
                       Text(
-                        'Search',
+                        AppStrings.search,
                         style: AppTextStyle.font16grey400,
                       ),
                     ],

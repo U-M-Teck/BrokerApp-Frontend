@@ -1,5 +1,5 @@
 import 'package:broker/app/config/style/app_text_styles.dart';
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/buttons/button_1.dart';
 import 'package:broker/app/config/widgets/buttons/button_2.dart';
 import 'package:broker/app/config/widgets/buttons/gps_button.dart';
@@ -23,7 +23,7 @@ class SearchByFilterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.searchDetails),
+        title:  Text(AppStrings.searchDetails),
         actions: [
           TextButton(
             onPressed: controller.resetFilters,
@@ -64,7 +64,7 @@ class SearchByFilterScreen extends StatelessWidget {
                 child: TextFormField(
                   controller: controller.districtController,
                   decoration:
-                      const InputDecoration(labelText: AppStrings.district),
+                       InputDecoration(labelText: AppStrings.district),
                   onChanged: (value) {
                     controller.selectedDistrict.value = value;
                   },
@@ -174,7 +174,7 @@ class SearchByFilterScreen extends StatelessWidget {
               Expanded(
                 child: TextFormField(
                   controller: controller.fromPriceController,
-                  decoration: const InputDecoration(labelText: AppStrings.from),
+                  decoration:  InputDecoration(labelText: AppStrings.from),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -182,7 +182,7 @@ class SearchByFilterScreen extends StatelessWidget {
               Expanded(
                 child: TextFormField(
                   controller: controller.toPriceController,
-                  decoration: const InputDecoration(labelText: AppStrings.to),
+                  decoration:  InputDecoration(labelText: AppStrings.to),
                   keyboardType: TextInputType.number,
                 ),
               ),

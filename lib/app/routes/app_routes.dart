@@ -20,7 +20,10 @@ abstract class Routes {
   static const ON_BORDING = _Paths.ON_BORDING;
   static const SIGN_IN = _Paths.SIGN_IN;
   static const VERIFICATION = _Paths.VERIFICATION;
+  static const signUpVerification = _Paths.signUpVerification;
   static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
+  static const Forget_PASSWORD = _Paths.Forget_PASSWORD;
+  static const Verify_Forget_PASSWORD = _Paths.Verify_Forget_PASSWORD;
   static const CREATE_ACCOUNT = _Paths.CREATE_ACCOUNT;
   static const SIGN_UP = _Paths.SIGN_UP;
   static const PERSONAL_DATA = _Paths.PERSONAL_DATA;
@@ -45,7 +48,10 @@ abstract class _Paths {
   static const ON_BORDING = '/on-bording';
   static const SIGN_IN = '/sign-in';
   static const VERIFICATION = '/verification';
+  static const signUpVerification = '/signUpVerification';
   static const CHANGE_PASSWORD = '/change-password';
+  static const Forget_PASSWORD = '/forget-password';
+  static const Verify_Forget_PASSWORD = '/verify-forget-password';
   static const CREATE_ACCOUNT = '/create-account';
   static const SIGN_UP = '/sign-up';
   static const PERSONAL_DATA = '/personal-data';

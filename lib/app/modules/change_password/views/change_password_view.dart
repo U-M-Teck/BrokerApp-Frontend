@@ -1,6 +1,6 @@
 import 'package:broker/app/config/style/app_text_styles.dart';
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_scaffold.dart';
 import 'package:broker/app/config/widgets/buttons/button_1.dart';
 import 'package:broker/app/config/widgets/form_fields/confirm_password_field.dart';
@@ -19,11 +19,11 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
   Widget build(BuildContext context) {
     return AppScaffold(
         appBar: AppBar(
-          title: const Text(AppStrings.changePassword),
+          title:  Text(AppStrings.changePassword),
           centerTitle: true,
         ),
         body: Form(
-          key: controller.formKey,
+          key: controller.changeFormKey,
           child: ListView(
             padding: EdgeInsets.symmetric(
               horizontal: 20.0.w,
@@ -43,7 +43,7 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
               24.hs,
               AppButton1(
                 title: AppStrings.save,
-                onPressed: controller.submitForm,
+                onPressed: controller.changePassword,
               )
             ],
           ),

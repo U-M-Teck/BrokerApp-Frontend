@@ -17,27 +17,31 @@ class SelectionRowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return Row(
-        spacing: 8.w,
-        children: List.generate(listLenght, (index) {
-          return ChoiceChip(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: index == controller.value
-                    ? AppColors.primary
-                    : AppColors
-                        .white4, // Different border color for selected/unselected
-                width: 2.w,
+      return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+
+        child: Row(
+          spacing: 8.w,
+          children: List.generate(listLenght, (index) {
+            return ChoiceChip(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: index == controller.value
+                      ? AppColors.primary
+                      : AppColors
+                          .white4, // Different border color for selected/unselected
+                  width: 2.w,
+                ),
+                borderRadius: BorderRadius.circular(12),
               ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            label: Center(child: Text(labels[index])),
-            selected: index == controller.value,
-            onSelected: (selected) {
-              controller.value = index;
-            },
-          );
-        }),
+              label: Center(child: Text(labels[index])),
+              selected: index == controller.value,
+              onSelected: (selected) {
+                controller.value = index;
+              },
+            );
+          }),
+        ),
       );
     });
   }

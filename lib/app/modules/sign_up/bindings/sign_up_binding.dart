@@ -5,8 +5,8 @@ import '../controllers/sign_up_controller.dart';
 class SignUpBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<SignUpController>(
-      () => SignUpController(),
+    Get.put<SignUpController>(
+       SignUpController(),
     );
   }
 }

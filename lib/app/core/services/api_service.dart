@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:broker/app/config/utils/app_utils/api_constans.dart';
 import 'package:dio/dio.dart';
 
-import '../../model/response_model.dart';
-import '../exceptions/exceptions.dart';
+import '../model/response_model.dart';
+import '../../config/utils/exceptions/exceptions.dart';
 
 
 class AppUrl {

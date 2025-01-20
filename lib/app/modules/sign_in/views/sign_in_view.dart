@@ -1,6 +1,6 @@
 import 'package:broker/app/config/style/app_text_styles.dart';
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_scaffold.dart';
 import 'package:broker/app/config/widgets/buttons/button_1.dart';
 import 'package:broker/app/config/widgets/form_fields/password_field.dart';
@@ -47,7 +47,7 @@ class SignInView extends GetView<SignInController> {
               alignment: Alignment.topLeft,
               child: TextButton(
                   onPressed: () {
-                    Get.toNamed(Routes.CHANGE_PASSWORD);
+                    Get.toNamed(Routes.Forget_PASSWORD);
                   },
                   child: Text(
                     AppStrings.forgetPassword,

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
-import '../../model/response_model.dart';
+import '../../../core/model/response_model.dart';
 
 
 class AppException implements Exception {

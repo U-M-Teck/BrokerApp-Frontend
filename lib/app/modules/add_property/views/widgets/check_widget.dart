@@ -15,7 +15,7 @@ class CheckWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Row(
-      spacing: 8.w,
+      spacing: 4.w,
             children: [
               AppImageView(svgPath: icon,height: 16.h,width: 16.w,color: AppColors.grey,),
               Text(title,style: AppTextStyle.font14grey400,),

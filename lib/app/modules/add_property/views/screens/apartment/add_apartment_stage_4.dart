@@ -1,6 +1,6 @@
 import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/style/app_text_styles.dart';
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_scaffold.dart';
 import 'package:broker/app/modules/home/views/widgets/selection_row_widget.dart';
 

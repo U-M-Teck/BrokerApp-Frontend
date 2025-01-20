@@ -1,4 +1,4 @@
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/home_app_bar.dart';
 import 'package:broker/app/modules/list_view/views/widgets/list_item.dart';
 import 'package:flutter/material.dart';

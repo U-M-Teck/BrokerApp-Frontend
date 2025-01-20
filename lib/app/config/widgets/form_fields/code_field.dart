@@ -1,11 +1,12 @@
 import 'package:broker/app/config/style/app_color.dart';
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/config/utils/app_utils/app_utils.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../style/app_text_styles.dart';
-import '../../utils/heplers/validation_form.dart';
+import '../../../core/heplers/validation_form.dart';
 
 
 
@@ -26,7 +27,7 @@ class CodeField extends StatelessWidget {
       ),
       length: 4,
       animationType: AnimationType.fade,
-      validator: (v)=>ValidationForm.codeValidator(v,"0000"),
+      validator: (v)=>ValidationForm.codeValidator(v,AppUtils.otp),
       mainAxisAlignment: MainAxisAlignment.center,
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../generated/assets.dart';
 import '../../utils/app_utils/app_strings.dart';
-import '../../utils/heplers/validation_form.dart';
+import '../../../core/heplers/validation_form.dart';
 import '../app_image_view.dart';
 
 

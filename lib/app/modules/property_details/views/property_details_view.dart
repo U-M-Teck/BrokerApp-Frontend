@@ -1,5 +1,5 @@
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
 import 'package:broker/app/modules/property_details/controllers/property_details_controller.dart';
 import 'package:broker/app/modules/property_details/views/widgets/advertiser_info.dart';

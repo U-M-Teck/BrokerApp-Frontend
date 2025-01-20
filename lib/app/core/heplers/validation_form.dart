@@ -1,4 +1,4 @@
-import '../app_utils/app_strings.dart';
+import '../../config/utils/app_utils/app_strings.dart';
 
 class ValidationForm {
   static String? phoneValidator(String? value) {
@@ -38,13 +38,7 @@ class ValidationForm {
   static String? nameValidator(String? v) {
     if ((v?.isEmpty ?? true)) {
       return AppStrings.pleaseEnterName;
-    } else {
-      // Split the name by spaces and check if it has exactly four parts
-      List<String> nameParts = v!.trim().split(RegExp(r'\s+'));
-      if (nameParts.length != 4) {
-        return AppStrings.pleaseEnterName;
-      }
-    }
+    } 
     return null;
   }
 
@@ -70,5 +64,18 @@ class ValidationForm {
     } else {
       return null;
     }
+  }
+
+  static String? emailValidator(String? value) {
+    if (value?.isEmpty ?? true) {
+      return AppStrings.pleaseEnterName;
+    } else {
+      // Regular expression to match a valid email format
+      bool isValid = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(value!);
+      if (!isValid) {
+        return AppStrings.email;
+      }
+    }
+    return null;
   }
 }

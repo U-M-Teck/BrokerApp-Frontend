@@ -1,6 +1,7 @@
 import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/style/app_text_styles.dart';
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/config/utils/app_utils/app_strings.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
 import 'package:broker/app/config/widgets/buttons/button_1.dart';
 import 'package:broker/app/config/widgets/buttons/outlined_app_button.dart';
@@ -21,7 +22,7 @@ class DeleteAd extends StatelessWidget {
       title: Row(
         children: [
           Text(
-            'Delete Ad?',
+            AppStrings.deleteAd,
             style: AppTextStyle.font18black600,
           ),
           Spacer(),
@@ -43,20 +44,20 @@ class DeleteAd extends StatelessWidget {
           ),
           16.hs,
           Text(
-            'Are you sure you want to delete Ad?',
+            AppStrings.areYouSureToDeleteAd,
             textAlign: TextAlign.center,
             style: AppTextStyle.font16black400,
           ),
         ],
       ),
       actions: [
-        AppButton1(title: 'Delete', onPressed: () {
+        AppButton1(title: AppStrings.delete, onPressed: () {
             Navigator.of(context).pop(); // إغلاق النافذة المنبثقة
 
         }),
         12.hs,
         OutlinedAppButton(
-          title: 'Cancel',
+          title: AppStrings.cancel,
           onPressed: () => Navigator.of(context).pop(),),
       ],
     );

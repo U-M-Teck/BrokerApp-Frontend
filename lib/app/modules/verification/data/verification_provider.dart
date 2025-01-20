@@ -1,6 +1,6 @@
 
 
-import '../../../config/utils/services/api_service.dart';
+import '../../../core/services/api_service.dart';
 
 
 class VerificationProvider extends ApiService {

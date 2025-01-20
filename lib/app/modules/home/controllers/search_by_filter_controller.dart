@@ -26,6 +26,7 @@ class SearchByFilterController extends GetxController {
     withParking.value = false;
     selectedFinishing.value = 0;
     selectedContractType.value = 0;
+    selectedRooms.value = 0;
     fromAreaController.clear();
     toAreaController.clear();
     fromPriceController.clear();

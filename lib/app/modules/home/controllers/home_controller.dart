@@ -8,6 +8,14 @@ class HomeController extends GetxController {
   //TODO: Implement HomeController
 
   final count = 0.obs;
+  var rating = 3.0.obs; // استخدام Rx لتتبع التقييم
+
+
+
+ 
+
+  @override
+
 
   @override
   void onInit() {

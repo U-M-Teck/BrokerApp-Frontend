@@ -1,12 +1,12 @@
 import 'package:broker/app/config/utils/app_utils/api_constans.dart';
-import 'package:broker/app/config/utils/services/api_response.dart';
+import 'package:broker/app/core/services/api_response.dart';
 import 'package:broker/app/modules/sign_in/data/model/check_otp_response_model.dart';
 import 'package:broker/app/modules/sign_in/data/model/login_response_model.dart';
 import 'package:dio/dio.dart';
 
-import '../../../../config/utils/services/api_service.dart';
+import '../../../../core/services/api_service.dart';
 
-class LoginProvider extends ApiService {
+class LoginProvider  {
   Future<ApiResponse<LoginResponseModel>> loginUser({
     Map<String, dynamic>? data,
   }) async {

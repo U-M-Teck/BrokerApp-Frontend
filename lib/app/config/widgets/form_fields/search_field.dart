@@ -1,4 +1,5 @@
 import 'package:broker/app/config/style/app_color.dart';
+import 'package:broker/app/config/utils/app_utils/app_strings.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
 import 'package:broker/generated/assets.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ prefixIcon: Padding(
             color: AppColors.grey,
           ),
         ), 
-        hintText: "Search",
+        hintText: AppStrings.search,
 
       ),
     );

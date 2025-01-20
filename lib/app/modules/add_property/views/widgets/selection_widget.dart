@@ -1,4 +1,4 @@
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -44,35 +44,7 @@ class SelectionWidget extends StatelessWidget {
         ),
         8.hs,
         Obx(() {
-          return isExpanded == true
-              ? Row(
-                  spacing: 8.w,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(listLenght, (index) {
-                    return Expanded(
-                      child: ChoiceChip(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            color: index == controller.value
-                                ? AppColors.primary
-                                : AppColors.white4,
-                            width: 2.w,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        label: Center(child: Text(labels[index])),
-                        selected: controller.value == index,
-                        onSelected: (selected) {
-                          if (selected) {
-                            controller.value =
-                                index; // Update the reactive value
-                          }
-                        },
-                      ),
-                    );
-                  }),
-                )
-              : SingleChildScrollView(
+          return SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     spacing: 8.w,

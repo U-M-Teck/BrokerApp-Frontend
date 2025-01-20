@@ -1,12 +1,14 @@
 import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/style/app_text_styles.dart';
-import 'package:broker/app/config/utils/extentions/extention.dart';
+import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
 import 'package:broker/app/config/widgets/buttons/button_1.dart';
 import 'package:broker/app/config/widgets/buttons/outlined_app_button.dart';
 import 'package:broker/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../utils/app_utils/app_strings.dart';
 
 class ClearAllFavorites extends StatelessWidget {
   const ClearAllFavorites({super.key});
@@ -21,7 +23,7 @@ class ClearAllFavorites extends StatelessWidget {
       title: Row(
         children: [
           Text(
-            'Clear Favorites?',
+            AppStrings.clearFavorites,
             style: AppTextStyle.font18black600,
           ),
           Spacer(),
@@ -43,7 +45,7 @@ class ClearAllFavorites extends StatelessWidget {
           ),
           16.hs,
           Text(
-            'Are you sure you want to clear favorites?',
+            AppStrings.areYouSureToClearFavorites,
             textAlign: TextAlign.center,
             style: AppTextStyle.font16black400,
           ),
@@ -51,13 +53,13 @@ class ClearAllFavorites extends StatelessWidget {
       ),
       actions: [
         AppButton1(
-            title: 'Clear',
+            title: AppStrings.clear,
             onPressed: () {
               Navigator.of(context).pop(); // إغلاق النافذة المنبثقة
             }),
         12.hs,
         OutlinedAppButton(
-          title: 'Cancel',
+          title: AppStrings.cancel,
           onPressed: () => Navigator.of(context).pop(),
         ),
       ],

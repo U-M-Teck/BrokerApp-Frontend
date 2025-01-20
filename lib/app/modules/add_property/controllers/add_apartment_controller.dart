@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../config/utils/heplers/image_picker.dart';
+import '../../../core/heplers/image_picker.dart';
 
 class AddApartmentController extends GetxController {
   final RxBool isWhatsAppAvailable = false.obs;
