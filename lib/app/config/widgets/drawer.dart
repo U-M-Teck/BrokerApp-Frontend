@@ -124,7 +124,9 @@ class DrawerWidget extends StatelessWidget {
               height: 24.h,
               width: 24.w,
             ),
-            title: Text(AppStrings.signout),
+            title: Text(StorageService.getData("token") == null
+                ? AppStrings.signIn
+                : AppStrings.signout),
           ),
         ],
       ),

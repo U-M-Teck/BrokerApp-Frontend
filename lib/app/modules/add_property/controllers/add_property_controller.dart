@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 class AddPropertyController extends GetxController {
 
-  //TODO: Implement AddPropertyController
 
 
   final count = 0.obs;

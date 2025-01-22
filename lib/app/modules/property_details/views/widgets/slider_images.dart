@@ -5,13 +5,11 @@ import 'package:get/get.dart';
 
 import '../../controllers/property_details_controller.dart';
 
-class PropertyImages extends StatelessWidget {
+class PropertyImages extends GetView<PropertyDetailsController> {
   const PropertyImages({super.key});
 
   @override
   Widget build(BuildContext context) {
-  final PropertyDetailsController controller =
-      Get.put<PropertyDetailsController>(PropertyDetailsController());
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -19,38 +17,41 @@ class PropertyImages extends StatelessWidget {
            () {
             return Stack(
               children: [
-                 CarouselSlider(
-                  options: CarouselOptions(
-                    autoPlay: true,
-                    enlargeCenterPage: true,
-                    viewportFraction: 1,
-                    aspectRatio: 16 / 9,
-                    onPageChanged: (index, reason) {
-                      controller.updateSliderValue(index.toDouble());
-                    },
-                  ),
-                  items:  controller.imagePaths.map((path) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin:  EdgeInsets.symmetric(horizontal: 8.0.w),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
-                            
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.asset(
-                              path,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        );
+                 FractionallySizedBox(
+                   widthFactor: 1.1.w,
+                   child: CarouselSlider(
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      viewportFraction: 1,
+                      aspectRatio: 16 / 9,
+                      onPageChanged: (index, reason) {
+                        controller.updateSliderValue(index.toDouble());
                       },
-                    );
-                  }).toList(),
-                ),
+                    ),
+                    items:  controller.imagePaths.map((path) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin:  EdgeInsets.symmetric(horizontal: 8.0.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.asset(
+                                path,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }).toList(),
+                                   ),
+                 ),
                 Positioned(
                   bottom: 10.0,
                   left: 0,

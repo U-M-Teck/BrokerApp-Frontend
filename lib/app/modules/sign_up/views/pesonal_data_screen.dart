@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../config/style/app_color.dart';
 import '../../../config/widgets/form_fields/name_field.dart';
 import '../controllers/sign_up_controller.dart';
 
@@ -52,8 +53,11 @@ class PersonalDataScreen extends GetView<SignUpController> {
               // AppButton2(title: AppStrings.verify, onPressed: () {}),
               EmailField(controller: controller.emailController),
               20.hs,
-              AppButton1(title: AppStrings.save, onPressed: 
-                controller.createAccount
+              AppButton1(title: controller.isLoading.value
+                    ? ""
+                    : AppStrings.save,
+                    leading: controller.isLoading.value? CircularProgressIndicator(color: AppColors.white,):null,
+                onPressed: controller.isLoading.value ? null : controller.createAccount,
               ),
             ],
           ),

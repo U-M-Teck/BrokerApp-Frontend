@@ -31,8 +31,7 @@ import '../modules/sign_up/views/sign_up_view.dart';
 import '../modules/sign_up/views/verification_sign_up_screen.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
-import '../modules/verification/bindings/verification_binding.dart';
-import '../modules/verification/views/verification_view.dart';
+import '../modules/sign_in/views/verification_view.dart';
 
 part 'app_routes.dart';
 
@@ -87,7 +86,7 @@ class AppPages {
     GetPage(
       name: _Paths.VERIFICATION,
       page: () => const VerificationView(),
-      binding: VerificationBinding(),
+      binding: SignInBinding(),
     ),
     GetPage(
       name: _Paths.CHANGE_PASSWORD,

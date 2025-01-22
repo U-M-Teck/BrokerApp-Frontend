@@ -22,6 +22,7 @@ class SignUpController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final isLoading = false.obs;
 
   bool _submitForm() {
     if (personalDataKey.currentState?.validate() ?? false) {
@@ -45,11 +46,13 @@ class SignUpController extends GetxController {
 
   Future<void> createAccount() async {
     if (_submitForm()) {
+      isLoading.value = true;
+
       final signUpData = {
         'userName': nameController.text,
         'userSurname': nameController.text,
         'userEmailAddress': emailController.text,
-        'userPhoneNumber': phoneController.text,
+        'userPhoneNumber': AppUtils.phoneNumber,
         'userPassword': passwordController.text,
       };
 
@@ -59,8 +62,7 @@ class SignUpController extends GetxController {
           if (response.data?.success == true) {
             Get.snackbar("Success", "Account created successfully");
             Get.offAllNamed(Routes.SIGN_IN);
-          }
-           else {
+          } else {
             _showError(response.data?.error ?? "");
           }
         } else if (selectedIndex.value == 1) {
@@ -68,8 +70,7 @@ class SignUpController extends GetxController {
           if (response.data?.success == true) {
             Get.snackbar("Success", "Account created successfully");
             Get.offAllNamed(Routes.SIGN_IN);
-          }
-           else {
+          } else {
             _showError(response.data?.error ?? "");
           }
         } else {
@@ -83,26 +84,57 @@ class SignUpController extends GetxController {
         }
       } catch (e) {
         _showError("An error occurred during login");
+      } finally {
+        isLoading.value = false;
       }
     }
   }
 
-  Future<void> sendOtp() async {
-    final checkData = {'phoneNumber': phoneController.text};
+  Future<void> resendOtp() async {
+    final checkData = {'phoneNumber': AppUtils.phoneNumber};
 
     try {
       final response = await _signUpProvider.checkOtp(data: checkData);
 
       if (response.statusCode == 200) {
         AppUtils.otp = response.data?.otp;
-        AppUtils.phoneNumber = phoneController.text;
-        Get.snackbar("Success", "OTP sent: ${response.data?.otp}");
-        Get.toNamed(Routes.signUpVerification);
+        stopWatchTimer.onStartTimer();
+        // Get.snackbar("Success", "OTP sent: ${response.data?.otp}");
       } else {
         _showError("Failed to send OTP");
       }
     } catch (e) {
       _showError("An error occurred while sending OTP");
+    }
+  }
+
+  Future<void> sendOtp() async {
+    isLoading.value = true;
+    final checkData = {'phoneNumber': phoneController.text};
+
+    try {
+      final checkPhoneNumberResponse = await _signUpProvider.checkPhoneNumber(
+        data: checkData,
+      );
+
+      if (checkPhoneNumberResponse.data?.isSuccess == false) {
+        _showError(checkPhoneNumberResponse.data?.message ?? "");
+      } else {
+        final response = await _signUpProvider.checkOtp(data: checkData);
+
+        if (response.statusCode == 200) {
+          AppUtils.otp = response.data?.otp;
+          AppUtils.phoneNumber = phoneController.text;
+          // Get.snackbar("Success", "OTP sent: ${response.data?.otp}");
+          Get.offAllNamed(Routes.signUpVerification);
+        } else {
+          _showError("Failed to send OTP");
+        }
+      }
+    } catch (e) {
+      _showError("An error occurred while sending OTP");
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -114,7 +146,11 @@ class SignUpController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    stopWatchTimer.onStartTimer();
+    print("Current route: ${Get.currentRoute}");
+    if (Get.currentRoute == Routes.signUpVerification) {
+      stopWatchTimer.onStartTimer();
+      print("Timer started");
+    }
   }
 
   @override
@@ -124,7 +160,8 @@ class SignUpController extends GetxController {
 
   @override
   void onClose() {
-    stopWatchTimer.dispose();
+    
+      phoneController.dispose();
 
     super.onClose();
   }

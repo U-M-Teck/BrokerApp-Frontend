@@ -3,4 +3,5 @@ class AppUtils {
   static  String? resetCode ;
   static  String? email ;
   static  String? phoneNumber ;
+  static  String? token ;
 }

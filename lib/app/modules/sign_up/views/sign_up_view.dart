@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
+import '../../../config/style/app_color.dart';
 import '../controllers/sign_up_controller.dart';
 
 class SignUpView extends GetView<SignUpController> {
@@ -16,18 +17,27 @@ class SignUpView extends GetView<SignUpController> {
   Widget build(BuildContext context) {
     return AppScaffold(
       appBar: AppBar(
-        title:  Text(AppStrings.signUp),
+        title: Text(AppStrings.signUp),
         centerTitle: true,
       ),
       body: Form(
         key: controller.signUpKey,
         child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0.w,vertical:24.h,),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.0.w,
+            vertical: 24.h,
+          ),
           child: Column(
             children: [
               PhoneNumberField(controller: controller.phoneController),
               24.hs,
-              AppButton1(title: AppStrings.signUp,onPressed: controller.sendOtp,)
+              AppButton1(
+                title: controller.isLoading.value
+                    ? ""
+                    : AppStrings.signUp,
+                    leading: controller.isLoading.value? CircularProgressIndicator(color: AppColors.white,):null,
+                onPressed: controller.isLoading.value ? null : controller.sendOtp,
+              )
             ],
           ),
         ),

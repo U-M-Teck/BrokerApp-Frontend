@@ -10,37 +10,33 @@ import 'package:oktoast/oktoast.dart';
 import 'app/core/heplers/localization_helper.dart';
 import 'app/core/services/storage_service.dart';
 import 'app/routes/app_pages.dart';
-import 'package:flutter_localizations/flutter_localizations.dart'
-    show
-        GlobalCupertinoLocalizations,
-        GlobalMaterialLocalizations,
-        GlobalWidgetsLocalizations;
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await GetStorage.init(); // Initialize GetStorage
+await ScreenUtil.ensureScreenSize();
 
   final savedLanguage = StorageService.getData<String>('selected_language') ?? 'en';
+  print(savedLanguage);
 
-  LocalizationHelper().changeLocale(
-    savedLanguage == 'ar' ? Language.arabic : Language.english,
+   LocalizationHelper().changeLocale(
+    savedLanguage == 'en' ? Language.english : Language.arabic,
   );
+
   runApp(ScreenUtilInit(
+    
     designSize: const Size(375, 812),
     splitScreenMode: true,
     builder: (_, child) => OKToast(
       child: GetMaterialApp(
-        supportedLocales: LocalizationHelper.locales,
-        localizationsDelegates: const [
-          GlobalCupertinoLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        locale: LocalizationHelper().initialLocale,
+
+      locale: LocalizationHelper().initialLocale,
         translations: LocalizationHelper(),
         initialBinding: InitialBinding(),
         theme: appTheme,
+        
         debugShowCheckedModeBanner: false,
         title: "Application",
         initialRoute: Routes.SPLASH,

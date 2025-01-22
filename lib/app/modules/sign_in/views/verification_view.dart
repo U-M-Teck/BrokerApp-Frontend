@@ -4,7 +4,7 @@ import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_scaffold.dart';
 import 'package:broker/app/config/widgets/buttons/button_1.dart';
 import 'package:broker/app/config/widgets/form_fields/code_field.dart';
-import 'package:broker/app/modules/sign_up/controllers/sign_up_controller.dart';
+import 'package:broker/app/modules/sign_in/controllers/sign_in_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,8 +12,8 @@ import 'package:get/get.dart';
 
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
-class VerificationSignUpScreen extends GetView<SignUpController> {
-  const VerificationSignUpScreen({super.key});
+class VerificationView extends GetView<SignInController> {
+  const VerificationView({super.key});
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -27,7 +27,7 @@ class VerificationSignUpScreen extends GetView<SignUpController> {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 24.h),
           child: Form(
-            key: controller.formKey,
+            key: controller.codeFormKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -56,9 +56,6 @@ class VerificationSignUpScreen extends GetView<SignUpController> {
                   stream: controller.stopWatchTimer.rawTime,
                   initialData: StopWatchTimer.getMilliSecFromMinute(1),
                   builder: (context, snap) {
-                    print(
-                        "StreamBuilder called"); // تأكد من أن هذه الطباعة تظهر
-
                     final displayTime = StopWatchTimer.getDisplayTime(
                         snap.data!,
                         hours: false,
@@ -72,7 +69,7 @@ class VerificationSignUpScreen extends GetView<SignUpController> {
                 24.hs,
                 AppButton1(
                   title: AppStrings.verify,
-                  onPressed: controller.submitForm,
+                  onPressed: controller.submitCodeForm,
                 )
               ],
             ),

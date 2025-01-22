@@ -24,7 +24,7 @@ ThemeData get appTheme => ThemeData(
         secondaryLabelStyle: AppTextStyle.font14primary400),
     badgeTheme: BadgeThemeData(backgroundColor: AppColors.secondary),
     useMaterial3: true,
-    fontFamily: "cairo",
+    fontFamily: "Alexandria",
     iconTheme: IconThemeData(color: AppColors.secondary),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColors.white,
@@ -91,74 +91,4 @@ ThemeData get appTheme => ThemeData(
     colorScheme: const ColorScheme.light(
         secondary: AppColors.secondary,
         primary: AppColors.primary,
-        surface: AppColors.backGround));
-
-ThemeData get profitTheme => ThemeData(
-    useMaterial3: true,
-    fontFamily: "cairo",
-    iconTheme: const IconThemeData(color: AppColors.secondary),
-    listTileTheme: ListTileThemeData(
-        iconColor: AppColors.secondary,
-        titleTextStyle: AppTextStyle.font16black500),
-    drawerTheme: DrawerThemeData(
-        shape: RoundedRectangleBorder(), backgroundColor: AppColors.backGround),
-    appBarTheme: AppBarTheme(
-        titleTextStyle: AppTextStyle.font16black600,
-        titleSpacing: 0,
-        systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarBrightness: Brightness.light,
-            statusBarColor: AppColors.white,
-            statusBarIconBrightness: Brightness.dark)),
-    tabBarTheme: TabBarTheme(
-      dividerColor: AppColors.desSelected,
-      dividerHeight: 1,
-      indicatorSize: TabBarIndicatorSize.tab,
-      indicator: BoxDecoration(
-        color: AppColors.primary,
-      ),
-      labelStyle: AppTextStyle.font14white600,
-      unselectedLabelStyle: AppTextStyle.font14desSelected600,
-    ),
-    scaffoldBackgroundColor: AppColors.backGround,
-    highlightColor: Colors.transparent,
-    focusColor: Colors.transparent,
-    hoverColor: Colors.transparent,
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-          textStyle: AppTextStyle.font16white500,
-          foregroundColor: AppColors.white,
-          fixedSize: Size.fromHeight(50.h),
-          shadowColor: Colors.transparent,
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: AppColors.primary,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-    ),
-    buttonTheme: ButtonThemeData(
-      buttonColor: AppColors.secondary,
-    ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-      side: BorderSide(color: AppColors.primary),
-      textStyle: AppTextStyle.font14black600,
-    )),
-    inputDecorationTheme: InputDecorationTheme(
-      prefixIconColor: AppColors.primary,
-      hintStyle: AppTextStyle.font16desSelected500,
-      suffixIconColor: AppColors.secondary,
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: AppColors.primary)),
-      enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: AppColors.primary)),
-      focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: AppColors.primary)),
-      contentPadding: EdgeInsets.only(top: 10.h, left: 10.w, right: 10.w),
-      suffixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
-    ),
-    colorScheme: const ColorScheme.light(
-        primary: AppColors.primary,
-        secondary: AppColors.secondary,
         surface: AppColors.backGround));

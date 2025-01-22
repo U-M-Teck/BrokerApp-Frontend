@@ -11,11 +11,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
+import '../../../config/style/app_color.dart';
 import '../controllers/sign_in_controller.dart';
 
 class SignInView extends GetView<SignInController> {
   const SignInView({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +30,17 @@ class SignInView extends GetView<SignInController> {
       body: Form(
         key: controller.formKey,
         child: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 20.0.w,vertical:24.h,),
-
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.0.w,
+            vertical: 24.h,
+          ),
           children: [
             Text(
               AppStrings.welcome,
               style: AppTextStyle.font18black400,
             ),
             24.hs,
-            PhoneNumberField(
-                controller: controller.phoneNumberController),
+            PhoneNumberField(controller: controller.phoneNumberController),
             24.hs,
             PasswordField(controller: controller.passwordController),
             16.hs,
@@ -55,10 +56,18 @@ class SignInView extends GetView<SignInController> {
                   )),
             ),
             24.hs,
-            AppButton1(
-              title: AppStrings.signIn,
-              onPressed: controller.login,
-            ),
+            Obx(() {
+              return AppButton1(
+                title: controller.isLoading.value ? "" : AppStrings.signIn,
+                leading: controller.isLoading.value
+                    ? Center(
+                        child: CircularProgressIndicator(
+                        color: AppColors.white,
+                      ))
+                    : null,
+                onPressed: controller.isLoading.value ? null : controller.login,
+              );
+            }),
             24.hs,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
