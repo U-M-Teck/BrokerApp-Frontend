@@ -45,12 +45,12 @@ class RateUsScreen extends GetView<HomeController> {
                 ),
                 onRatingUpdate: (rating) {
                   controller.rating.value = rating;
-                  print(rating);
                 },
               )),
           AppButton1(
             onPressed: () {
               Get.back();
+              controller.addRate(controller.rating.value);
             },
             title: AppStrings.submit,
           ),

@@ -17,84 +17,139 @@ import 'package:get/get.dart';
 
 import '../../../config/style/app_color.dart';
 import '../../../config/style/app_text_styles.dart';
+import '../../../config/widgets/loading_widget.dart';
+import '../../../core/services/storage_service.dart';
+import '../../layout/controllers/layout_controller.dart';
 
 class PropertyDetailsView extends GetView<PropertyDetailsController> {
- 
- const PropertyDetailsView({super.key});
+  const PropertyDetailsView({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.share_outlined)),
-            IconButton(
-                onPressed: () {},
-                icon: AppImageView(
-                  svgPath: Assets.assetsSvgFavorites,
-                ))
-          ],
-          title: Text(AppStrings.propertyDetails),
-        ),
-        body: Stack(
-          alignment: Alignment.center,
-          children: [
-            ListView(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+    final layoutController = Get.find<LayoutController>();
+
+    return Obx(() {
+      return Stack(
+        children: [
+          Scaffold(
+            bottomSheet: ContactWithAdviser(details: layoutController.advDetailsModel.value?.details,),
+            appBar: AppBar(
+              actions: [
+                // IconButton(onPressed: () {}, icon: Icon(Icons.share_outlined)),
+                StorageService.getData("token") == null &&
+                        StorageService.getData("userId") == null
+                    ? SizedBox()
+                    : Obx(() {
+                      final isFavourite =
+                          layoutController
+                              .advDetailsModel
+                              .value
+                              ?.details
+                              ?.isFavourite ??
+                          true;
+                      return IconButton(
+                        onPressed:
+                            isFavourite
+                                ? () {
+                                  layoutController.deleteFavoriteByAdId(
+                                    layoutController
+                                            .advDetailsModel
+                                            .value
+                                            ?.details
+                                            ?.id ??
+                                        0,
+                                  );
+                                }
+                                : () {
+                                  layoutController.createFavorite(
+                                    layoutController
+                                            .advDetailsModel
+                                            .value
+                                            ?.details
+                                            ?.id ??
+                                        0,
+                                  );
+                                },
+                        icon:
+                            isFavourite
+                                ? Icon(Icons.favorite, color: AppColors.primary)
+                                : AppImageView(
+                                  svgPath: Assets.assetsSvgFavorites,
+                                ),
+                      );
+                    }),
+              ],
+              title: Text(AppStrings.propertyDetails),
+            ),
+            body: ListView(
+              padding: EdgeInsets.only(
+                right: 20.w,
+                left: 20.w,
+                top: 12.h,
+                bottom: 120.h,
+              ),
               children: [
-                PropertyImages(),
+                PropertyImages(layoutController.advDetailsModel.value?.details),
                 16.hs,
-                Row(spacing: 8.w, children: [
-                  AppImageView(
-                    svgPath: Assets.assetsSvgPropertyDetails,
-                    height: 16.h,
-                    width: 16.w,
-                    color: AppColors.primary,
-                  ),
-                  Text(
-                    AppStrings.propertyDetails,
-                    style: AppTextStyle.font16black600,
-                  ),
-                ]),
-                16.hs,
-                PropertyDetailsInfo(),
-                16.hs,
-                Divider(
-                  color: AppColors.white3,
+                Row(
+                  spacing: 8.w,
+                  children: [
+                    AppImageView(
+                      svgPath: Assets.assetsSvgPropertyDetails,
+                      height: 16.h,
+                      width: 16.w,
+                      color: AppColors.primary,
+                    ),
+                    Text(
+                      AppStrings.propertyDetails,
+                      style: AppTextStyle.font16black600,
+                    ),
+                  ],
                 ),
                 16.hs,
-                PropertyDescription(),
-                16.hs,
-                Divider(
-                  color: AppColors.white3,
+                PropertyDetailsInfo(
+                  details: layoutController.advDetailsModel.value?.details,
                 ),
                 16.hs,
-                PropertyDesctiptionInfo(),
+                Divider(color: AppColors.white3),
                 16.hs,
-                Divider(
-                  color: AppColors.white3,
+                PropertyDescription(
+                  details: layoutController.advDetailsModel.value?.details,
                 ),
                 16.hs,
-                FacilitiesInfo(),
+                Divider(color: AppColors.white3),
                 16.hs,
-                Divider(
-                  color: AppColors.white3,
+                PropertyDesctiptionInfo(
+                  details: layoutController.advDetailsModel.value?.details,
                 ),
+                16.hs,
+                Divider(color: AppColors.white3),
+                16.hs,
+                FacilitiesInfo(
+                  details: layoutController.advDetailsModel.value?.details,
+                ),
+                16.hs,
+                Divider(color: AppColors.white3),
                 16.hs,
                 PropertyDetailsInfoItem(
                   title: AppStrings.adNumber,
-                  value: "56656",
+                  value:
+                      "${layoutController.advDetailsModel.value?.details?.id ?? 0}",
                   icon: Assets.assetsSvgAdNumber,
                 ),
                 16.hs,
-                Divider(
-                  color: AppColors.white3,
-                ),
+                Divider(color: AppColors.white3),
                 16.hs,
-                AdvertiserInfo(),
+                AdvertiserInfo(
+                  details: layoutController.advDetailsModel.value?.details,
+                ),
               ],
             ),
-            ContactWithAdviser(),
-          ],
-        ));
+          ),
+          layoutController.getAdsDetailsLodaing.value == true
+              ? const LoadingWidget()
+              : const SizedBox(),
+        ],
+      );
+    });
   }
 }

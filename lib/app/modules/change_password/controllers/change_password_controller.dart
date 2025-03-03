@@ -17,7 +17,6 @@ class ChangePasswordController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> verifyFormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> changeFormKey = GlobalKey<FormState>();
-  //TODO: Implement ChangePasswordController
   bool _submitForgetForm() {
     if (formKey.currentState?.validate() ?? false) {
       formKey.currentState?.save();
@@ -38,7 +37,7 @@ class ChangePasswordController extends GetxController {
 
   void verifyCode() {
     if (verifyFormKey.currentState!.validate()) {
-      Get.offAllNamed(Routes.CHANGE_PASSWORD);
+      Get.offAllNamed(Routes.changePassword);
     }
   }
 
@@ -56,7 +55,7 @@ class ChangePasswordController extends GetxController {
           AppUtils.resetCode = response.data?.result;
           AppUtils.email = emailController.text;
           Get.snackbar("Success", "Code sent: ${response.data?.result}");
-          Get.toNamed(Routes.Verify_Forget_PASSWORD);
+          Get.toNamed(Routes.verifyForgetPassword);
         } else {
           _showError("Invalid credentials");
         }
@@ -81,7 +80,7 @@ class ChangePasswordController extends GetxController {
 
         if (response.statusCode == 200) {
           Get.snackbar("Success", "Logged in successfully");
-          Get.offAllNamed(Routes.SIGN_IN);
+          Get.offAllNamed(Routes.signIn);
         } else {
           _showError("Invalid credentials");
         }
@@ -96,20 +95,8 @@ class ChangePasswordController extends GetxController {
   }
 
   final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
 }

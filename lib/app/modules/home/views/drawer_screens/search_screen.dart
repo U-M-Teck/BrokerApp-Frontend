@@ -1,41 +1,82 @@
-import 'package:broker/app/config/utils/app_utils/app_strings.dart';
-import 'package:broker/app/core/extentions/extention.dart';
-import 'package:broker/app/config/widgets/form_fields/search_field.dart';
+import 'package:broker/app/modules/home/data/provider/home_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+import '../../../../config/style/app_color.dart';
+import '../../../../config/style/app_text_styles.dart';
+import '../../data/models/suggestion_model.dart';
+
+class AddressSearch extends SearchDelegate<SuggestionModel> {
+  final LatLng _position;
+
+  AddressSearch(this._position, this._mapRepo,);
+
+  final HomeProvider _mapRepo;
 
   @override
-  Widget build(BuildContext context) {
-  final TextEditingController controller = TextEditingController();
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear,color: AppColors.black,),
+        onPressed: () {
+          query = '';
+        },
+      )
+    ];
+  }
 
-    return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: SearchField(controller: controller),
-              ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child:  Text(AppStrings.done)),
-            ],
-          ),
-          30.hs,
-          const Text('Recent'),
-          ListTile(title: Text('Apartment for rent in Shubra')),
-          ListTile(title: Text('Property 2')),
-          ListTile(title: Text('Property 3')),
-          ListTile(title: Text('Property 4')),
-          ListTile(title: Text('Property 5')),
-        ],
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(
+        Icons.arrow_back_ios_rounded,
+        color: AppColors.black,
       ),
+      onPressed: () {
+        close(context, SuggestionModel('', ''));
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return buildSuggestions(context);
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return FutureBuilder(
+      future: query == ""
+          ? null
+          : _mapRepo.fetchSuggestions(query, "ar",
+              _position.latitude, _position.longitude),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasError) {
+          print("Error: ${snapshot.error}");
+          return Center(child: Text("Error: ${snapshot.error}"));
+        }
+        return query == ''
+            ? Container()
+            : snapshot.hasData
+                ? ListView.builder(
+                    itemBuilder: (context, index) => ListTile(
+                      leading: const Icon(Icons.location_on_outlined),
+                      title: Text(
+                        (snapshot.data![index]).description,
+                        style: AppTextStyle.font14black400,
+                      ),
+                      onTap: () {
+                        close(context, snapshot.data![index]);
+                      },
+                    ),
+                    itemCount: snapshot.data?.length,
+                  )
+                : const Center(child: Text("No suggestions found."));
+      },
     );
   }
 }

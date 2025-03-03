@@ -7,6 +7,7 @@ class InitialBinding extends Bindings {
   void dependencies() {
     // Inject StorageService which internally uses GetStorage
     Get.put(StorageService());
+
   }
 }
 

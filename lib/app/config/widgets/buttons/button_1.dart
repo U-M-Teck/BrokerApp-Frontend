@@ -13,13 +13,14 @@ class AppButton1 extends StatelessWidget {
   final VoidCallback? onPressed;
   final double? horizontalTitleGap;
   final double? width;
+  final double? height;
 
   const AppButton1({
     super.key,
     this.title,
     this.leading,
     this.onPressed,
-    this.horizontalTitleGap, this.width,
+    this.horizontalTitleGap, this.width, this.height,
   });
 
   @override
@@ -30,7 +31,7 @@ class AppButton1 extends StatelessWidget {
         style: ButtonStyle(
           padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 12.w,vertical: 12.h)),
             fixedSize:
-                WidgetStatePropertyAll(Size(width??343.w, 50.h)),
+                WidgetStatePropertyAll(Size(width??343.w,height?? 50.h)),
             shadowColor: const WidgetStatePropertyAll(Colors.transparent),
             surfaceTintColor:
                 const WidgetStatePropertyAll(AppColors.primary),

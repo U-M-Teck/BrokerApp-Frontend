@@ -1,8 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
     <application
         android:label="broker"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+          <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyASFpQ0BJ99BZ-b19_2tGAka4sdB8E7tkE" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -45,9 +49,26 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+    <queries>
+    <intent>
+        <action android:name="android.intent.action.DIAL"/>
+        <data android:scheme="tel"/>
+    </intent>
+</queries>
+<queries>
+    <intent>
+        <action android:name="android.intent.action.VIEW"/>
+        <data android:scheme="https"/>
+    </intent>
+</queries>
+
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-feature android:name="android.hardware.location.gps"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
 </manifest>

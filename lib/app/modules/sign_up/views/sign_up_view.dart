@@ -31,12 +31,16 @@ class SignUpView extends GetView<SignUpController> {
             children: [
               PhoneNumberField(controller: controller.phoneController),
               24.hs,
-              AppButton1(
-                title: controller.isLoading.value
-                    ? ""
-                    : AppStrings.signUp,
-                    leading: controller.isLoading.value? CircularProgressIndicator(color: AppColors.white,):null,
-                onPressed: controller.isLoading.value ? null : controller.sendOtp,
+              Obx(
+                 () {
+                  return AppButton1(
+                    title: controller.isLoading.value
+                        ? ""
+                        : AppStrings.signUp,
+                        leading: controller.isLoading.value? Center(child: CircularProgressIndicator(color: AppColors.white,)):null,
+                    onPressed: controller.isLoading.value ? null : controller.sendOtp,
+                  );
+                }
               )
             ],
           ),

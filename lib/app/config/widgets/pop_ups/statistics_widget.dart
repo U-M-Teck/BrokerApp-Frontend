@@ -1,5 +1,6 @@
 import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/style/app_text_styles.dart';
+import 'package:broker/app/config/utils/app_utils/app_strings.dart';
 import 'package:broker/app/config/widgets/buttons/button_1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +15,7 @@ class StatisticsWidget extends StatelessWidget {
 
       actions: [
         AppButton1(
-            title: "Done",
+            title: AppStrings.done,
             onPressed: () {
               Navigator.of(context).pop();
             })

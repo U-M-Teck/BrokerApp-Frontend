@@ -1,36 +1,33 @@
 import 'package:broker/app/config/style/app_text_styles.dart';
 import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/buttons/button_1.dart';
-import 'package:broker/app/config/widgets/buttons/button_2.dart';
-import 'package:broker/app/config/widgets/buttons/gps_button.dart';
+import 'package:broker/app/config/widgets/buttons/gps_button.dart ';
 import 'package:broker/app/modules/add_property/views/widgets/check_widget.dart';
 import 'package:broker/app/modules/add_property/views/widgets/drop_down_widget.dart';
 import 'package:broker/app/modules/home/views/widgets/selection_row_widget.dart';
+import 'package:broker/app/modules/layout/controllers/layout_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/utils/app_utils/app_strings.dart';
-import '../../controllers/search_by_filter_controller.dart';
 
 class SearchByFilterScreen extends StatelessWidget {
-  final SearchByFilterController controller =
-      Get.put(SearchByFilterController());
-
-  SearchByFilterScreen({super.key});
+  const SearchByFilterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final LayoutController controller = Get.put(LayoutController());
     return Scaffold(
       appBar: AppBar(
-        title:  Text(AppStrings.searchDetails),
+        title: Text(AppStrings.searchDetails),
         actions: [
           TextButton(
-            onPressed: controller.resetFilters,
-            child: Text(
-              AppStrings.reset,
-              style: AppTextStyle.font16primary400,
-            ),
+            onPressed: () {
+              controller.resetFilters();
+              Get.back();
+            },
+            child: Text(AppStrings.reset, style: AppTextStyle.font16primary400),
           ),
         ],
       ),
@@ -39,20 +36,32 @@ class SearchByFilterScreen extends StatelessWidget {
         children: [
           // Dropdown for Property Type
           DropDownWidget(
-              items: [
-                AppStrings.apartment,
-                AppStrings.villa,
-                AppStrings.office
-              ],
-              controller: controller.selectedPropertyType,
-              label: AppStrings.typeOfProperty),
+            items: {
+              AppStrings.apartment: 1,
+              AppStrings.villa: 2,
+              AppStrings.chalet: 3,
+              AppStrings.building: 4,
+              AppStrings.office: 5,
+              AppStrings.shop: 6,
+              AppStrings.land: 7,
+            },
+            selectedIdController: controller.selectedPropertyTypeId,
+            controller: controller.selectedPropertyType,
+            label: AppStrings.typeOfProperty,
+          ),
 
           16.hs,
           // Dropdown for City
           DropDownWidget(
-              items: ["City A", "City B", "City C"],
-              controller: controller.selectedCity,
-              label: AppStrings.city),
+            items: {
+              for (var gov
+                  in controller.allGovernates.value?.governorates ?? [])
+                if (gov.name != null) gov.name!: gov.id, // Map name to ID
+            },
+            controller: controller.selectedGovernate,
+            selectedIdController: controller.selectedGovernateId, // Store ID
+            label: AppStrings.governate,
+          ),
 
           16.hs,
           // TextFormField for District
@@ -63,8 +72,7 @@ class SearchByFilterScreen extends StatelessWidget {
               Expanded(
                 child: TextFormField(
                   controller: controller.districtController,
-                  decoration:
-                       InputDecoration(labelText: AppStrings.district),
+                  decoration: InputDecoration(labelText: AppStrings.district),
                   onChanged: (value) {
                     controller.selectedDistrict.value = value;
                   },
@@ -77,17 +85,15 @@ class SearchByFilterScreen extends StatelessWidget {
           // Rooms Selection
           Row(
             children: [
-              Text(
-                AppStrings.rooms,
-                style: AppTextStyle.font14black400,
-              ),
+              Text(AppStrings.rooms, style: AppTextStyle.font14black400),
               16.ws,
               Expanded(
-                  child: SelectionRowWidget(
-                controller: controller.selectedRooms,
-                listLenght: 5,
-                labels: ["1", "2", "3", "4", "5+"],
-              )),
+                child: SelectionRowWidget(
+                  controller: controller.selectedRooms,
+                  listLenght: 5,
+                  labels: ["1", "2", "3", "4", "5+"],
+                ),
+              ),
             ],
           ),
 
@@ -95,10 +101,7 @@ class SearchByFilterScreen extends StatelessWidget {
           // Area (m²) Range
           Row(
             children: [
-              Text(
-                AppStrings.areaString,
-                style: AppTextStyle.font14black400,
-              ),
+              Text(AppStrings.areaString, style: AppTextStyle.font14black400),
               16.ws,
               Expanded(
                 child: TextFormField(
@@ -123,21 +126,19 @@ class SearchByFilterScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                AppStrings.finishing,
-                style: AppTextStyle.font14black400,
-              ),
+              Text(AppStrings.finishing, style: AppTextStyle.font14black400),
               16.ws,
               Expanded(
-                  child: SelectionRowWidget(
-                controller: controller.selectedFinishing,
-                listLenght: 3,
-                labels: [
-                  AppStrings.withoutString,
-                  AppStrings.half,
-                  AppStrings.fullString
-                ],
-              )),
+                child: SelectionRowWidget(
+                  controller: controller.selectedFinishing,
+                  listLenght: 3,
+                  labels: [
+                    AppStrings.withoutString,
+                    AppStrings.half,
+                    AppStrings.fullString,
+                  ],
+                ),
+              ),
             ],
           ),
 
@@ -154,11 +155,12 @@ class SearchByFilterScreen extends StatelessWidget {
               ),
               // With Parking Checkbox
               Expanded(
-                  child: CheckWidget(
-                controller: controller.withParking,
-                icon: "",
-                title: AppStrings.withParking,
-              )),
+                child: CheckWidget(
+                  controller: controller.withParking,
+                  icon: "",
+                  title: AppStrings.withParking,
+                ),
+              ),
             ],
           ),
 
@@ -166,15 +168,12 @@ class SearchByFilterScreen extends StatelessWidget {
           // Price Range
           Row(
             children: [
-              Text(
-                AppStrings.price,
-                style: AppTextStyle.font14black400,
-              ),
+              Text(AppStrings.price, style: AppTextStyle.font14black400),
               16.ws,
               Expanded(
                 child: TextFormField(
                   controller: controller.fromPriceController,
-                  decoration:  InputDecoration(labelText: AppStrings.from),
+                  decoration: InputDecoration(labelText: AppStrings.from),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -182,7 +181,7 @@ class SearchByFilterScreen extends StatelessWidget {
               Expanded(
                 child: TextFormField(
                   controller: controller.toPriceController,
-                  decoration:  InputDecoration(labelText: AppStrings.to),
+                  decoration: InputDecoration(labelText: AppStrings.to),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -200,11 +199,12 @@ class SearchByFilterScreen extends StatelessWidget {
               ),
               16.ws,
               Expanded(
-                  child: SelectionRowWidget(
-                controller: controller.selectedContractType,
-                listLenght: 2,
-                labels: [AppStrings.forSell, AppStrings.forRent],
-              )),
+                child: SelectionRowWidget(
+                  controller: controller.selectedContractType,
+                  listLenght: 2,
+                  labels: [AppStrings.forSell, AppStrings.forRent],
+                ),
+              ),
             ],
           ),
 
@@ -212,12 +212,12 @@ class SearchByFilterScreen extends StatelessWidget {
           // Buttons
           AppButton1(
             title: AppStrings.search,
-            onPressed: () {},
-          ),
-          8.hs,
-          AppButton2(
-            title: AppStrings.notifyMe,
-            onPressed: () {},
+            onPressed: () {
+              controller.getAllAdvertisement(
+                controller.selectedPropertyTypeId.value ?? 0,
+              );
+              Get.back();
+            },
           ),
         ],
       ),

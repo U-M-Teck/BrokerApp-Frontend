@@ -1,4 +1,5 @@
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
+import 'package:broker/app/modules/layout/data/model/get_adv_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,7 +9,8 @@ import '../../../../config/style/app_text_styles.dart';
 import '../../../../config/widgets/app_image_view.dart';
 
 class PropertyDescription extends StatelessWidget {
-  const PropertyDescription({super.key});
+  final Details ? details;
+  const PropertyDescription({super.key,required this.details});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class PropertyDescription extends StatelessWidget {
         ),
       ]),
       Text(
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+        details?.description ?? "",
         style: AppTextStyle.font14black400.copyWith(height: 1.3.h),
       )
     ]);

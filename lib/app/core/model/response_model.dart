@@ -7,10 +7,15 @@ class ResponseModel {
   dynamic messageAr;
    dynamic data={};
 
-  ResponseModel.fromJson(Map<String,dynamic> json) {
-    success = json['success'];
+  ResponseModel.fromJson(dynamic json) {
+    if (json is Map) {
+      success = json['success'];
     message = json['message'];
     messageAr = json['messageAR'];
     data = json;
+    }else{
+      data = json;
+    }
+    
   }
 }

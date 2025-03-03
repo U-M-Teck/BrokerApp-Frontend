@@ -6,24 +6,31 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/app_utils/app_strings.dart';
 import '../../../core/heplers/validation_form.dart';
 
-
 class NameField extends StatelessWidget {
+  final bool isReadOnly;
   final TextEditingController controller;
-  const NameField({super.key, required this.controller});
+  const NameField({
+    super.key,
+    required this.controller,
+    this.isReadOnly = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: isReadOnly,
       controller: controller,
       validator: ValidationForm.nameValidator,
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
-         
-        icon:  AppImageView(svgPath: Assets.assetsSvgUser,height: 24.h,width: 24.w,),
+        icon: AppImageView(
+          svgPath: Assets.assetsSvgUser,
+          height: 24.h,
+          width: 24.w,
+        ),
 
         hintText: AppStrings.name,
-        contentPadding:
-            EdgeInsets.symmetric(vertical: 12.h, horizontal: 15.w),
+        contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 15.w),
       ),
     );
   }

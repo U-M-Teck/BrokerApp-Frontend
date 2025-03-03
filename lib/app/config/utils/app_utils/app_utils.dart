@@ -4,4 +4,11 @@ class AppUtils {
   static  String? email ;
   static  String? phoneNumber ;
   static  String? token ;
+  static  int? userId ;
+  static  String? userName ;
+  static  bool? isWhatsappAvailable ;
+  static  String? whatsAppNumber ;
+  static  int? seekerId ;
+  static  int? brokerId ;
+  static  int? ownerId ;
 }

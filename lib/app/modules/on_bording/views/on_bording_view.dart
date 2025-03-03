@@ -28,15 +28,15 @@ class OnBordingView extends GetView<OnBordingController> {
             Text(AppStrings.welcomeToBroker,style: AppTextStyle.font18black600,),
             
             AppButton1(title: AppStrings.signIn,onPressed: (){
-              Get.toNamed(Routes.SIGN_IN);
+              Get.toNamed(Routes.signIn);
             },),
             
             AppButton2(title: AppStrings.createAccount,onPressed: (){
-              Get.toNamed(Routes.CREATE_ACCOUNT);
+              Get.toNamed(Routes.createAccount);
             },),
             
             AppButton1(title: AppStrings.goToMap,onPressed: (){
-              Get.offAllNamed(Routes.HOME);
+              Get.offAllNamed(Routes.home);
             },),
 
           ],

@@ -12,6 +12,10 @@ class ValidationForm {
     return null;
   }
 
+
+
+  
+
   static String? passwordValidator(String? v) {
     if (v?.isEmpty ?? true) {
       return AppStrings.pleaseEnterPassword;
@@ -78,4 +82,64 @@ class ValidationForm {
     }
     return null;
   }
+
+  static String? validateStreet(String? v) {
+    if (v?.isEmpty ?? true) {
+        return AppStrings.pleaseEnterStreet;
+    }
+    return null;
+  }
+
+  static String? validateDistrict(String? v) {
+    if (v?.isEmpty ?? true) {
+        return AppStrings.pleaseEnterDistrict;
+    }
+    return null;
+  }
+
+  static String? validateBuildingNo(String? v) {
+    if (v?.isEmpty ?? true) {
+        return AppStrings.pleaseEnterBuildingNo;
+    }
+    return null;
+  }
+
+  static String? validateTitle(String? v) {
+    if (v?.isEmpty ?? true) {
+        return AppStrings.pleaseEnterTitle;
+    }
+    return null;
+  }
+
+  static String? areaValidator(String? v) {
+    if (v?.isEmpty ?? true) {
+        return AppStrings.pleaseEnterArea;
+    }
+    return null;
+  }
+    static String? buildingAreaValidator(String? v) {
+    if (v?.isEmpty ?? true) {
+        return AppStrings.pleaseEnterArea;
+    }
+    return null;
+  }
+
+  static String? levelValidator(String? v) {
+    if (v?.isEmpty?? true) {
+        return AppStrings.pleaseEnterLevel;
+    }
+    return null;
+  }
+    static String? priceValidator(String? v, {required int type}) {
+        if (type == 1) {
+            if (v!.length <= 4) {
+                return AppStrings.pleaseEnterPrice; // Validates with 3 digits for sell
+            }
+        } else {
+            if (v!.length <= 5) {
+                return AppStrings.pleaseEnterPrice; // Validates with 4 digits for other types
+            }
+        }
+        return null;
+    }
 }

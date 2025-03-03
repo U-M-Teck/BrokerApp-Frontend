@@ -19,7 +19,6 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _stopWatchTimer.onStartTimer();
     _stopWatchTimer.secondTime.listen((event) {
@@ -33,7 +32,6 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _stopWatchTimer.dispose();
   }

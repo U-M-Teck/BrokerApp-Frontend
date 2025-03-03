@@ -7,7 +7,6 @@ import '../../../config/utils/app_utils/app_utils.dart';
 import '../../../routes/app_pages.dart';
 
 class SignUpController extends GetxController {
-  //TODO: Implement SignUpController
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController whatsappController = TextEditingController();
   final SignUpProvider _signUpProvider = SignUpProvider();
@@ -35,7 +34,7 @@ class SignUpController extends GetxController {
 
   void submitForm() {
     if (formKey.currentState!.validate()) {
-      Get.offAllNamed(Routes.PERSONAL_DATA);
+      Get.offAllNamed(Routes.personalData);
     }
   }
 
@@ -54,6 +53,8 @@ class SignUpController extends GetxController {
         'userEmailAddress': emailController.text,
         'userPhoneNumber': AppUtils.phoneNumber,
         'userPassword': passwordController.text,
+        "isWhatsApped":"${isWhatsappAvailable.value}",
+        "secondMobile": isWhatsappAvailable.value==true?whatsappController.text:"",
       };
 
       try {
@@ -61,7 +62,7 @@ class SignUpController extends GetxController {
           final response = await _signUpProvider.createSeeker(data: signUpData);
           if (response.data?.success == true) {
             Get.snackbar("Success", "Account created successfully");
-            Get.offAllNamed(Routes.SIGN_IN);
+            Get.offAllNamed(Routes.signIn);
           } else {
             _showError(response.data?.error ?? "");
           }
@@ -69,7 +70,7 @@ class SignUpController extends GetxController {
           final response = await _signUpProvider.createOwner(data: signUpData);
           if (response.data?.success == true) {
             Get.snackbar("Success", "Account created successfully");
-            Get.offAllNamed(Routes.SIGN_IN);
+            Get.offAllNamed(Routes.signIn);
           } else {
             _showError(response.data?.error ?? "");
           }
@@ -77,7 +78,7 @@ class SignUpController extends GetxController {
           final response = await _signUpProvider.createBroker(data: signUpData);
           if (response.data?.success == true) {
             Get.snackbar("Success", "Account created successfully");
-            Get.offAllNamed(Routes.SIGN_IN);
+            Get.offAllNamed(Routes.signIn);
           } else {
             _showError(response.data?.error ?? "");
           }
@@ -120,10 +121,9 @@ class SignUpController extends GetxController {
       if (checkPhoneNumberResponse.data?.isSuccess == false) {
         _showError(checkPhoneNumberResponse.data?.message ?? "");
       } else {
-        final response = await _signUpProvider.checkOtp(data: checkData);
 
-        if (response.statusCode == 200) {
-          AppUtils.otp = response.data?.otp;
+        if (checkPhoneNumberResponse.statusCode == 200) {
+          AppUtils.otp = checkPhoneNumberResponse.data?.otp;
           AppUtils.phoneNumber = phoneController.text;
           // Get.snackbar("Success", "OTP sent: ${response.data?.otp}");
           Get.offAllNamed(Routes.signUpVerification);
@@ -142,29 +142,17 @@ class SignUpController extends GetxController {
     Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM);
   }
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
-    print("Current route: ${Get.currentRoute}");
     if (Get.currentRoute == Routes.signUpVerification) {
       stopWatchTimer.onStartTimer();
-      print("Timer started");
+    }
+    if (Get.currentRoute == Routes.personalData) {
+      phoneController.text = AppUtils.phoneNumber??"";
     }
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    
-      phoneController.dispose();
 
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

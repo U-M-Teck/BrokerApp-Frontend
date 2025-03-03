@@ -48,7 +48,7 @@ class SignInView extends GetView<SignInController> {
               alignment: Alignment.topLeft,
               child: TextButton(
                   onPressed: () {
-                    Get.toNamed(Routes.Forget_PASSWORD);
+                    Get.toNamed(Routes.forgetPassword);
                   },
                   child: Text(
                     AppStrings.forgetPassword,
@@ -78,7 +78,7 @@ class SignInView extends GetView<SignInController> {
                 ),
                 TextButton(
                     onPressed: () {
-                      Get.toNamed(Routes.CREATE_ACCOUNT);
+                      Get.toNamed(Routes.createAccount);
                     },
                     child: Text(
                       AppStrings.createAccount,

@@ -19,49 +19,57 @@ class PersonalDataScreen extends GetView<SignUpController> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      appBar: AppBar(
-        title: Text(AppStrings.personalData),
-      ),
+      appBar: AppBar(title: Text(AppStrings.personalData)),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
-        children: [Form(
-          key: controller.personalDataKey,
-          child: Column(
-            spacing: 16.h,
-            children: [
-              NameField(controller: controller.nameController),
-              PhoneNumberField(controller: controller.phoneController),
-              PasswordField(controller: controller.passwordController),
-              // Row(
-              //   children: [
-              //     Text('Whatsapp Available'),
-              //     Switch(
-              //       value: controller.isWhatsappAvailable.value,
-              //       onChanged: (value) {
-              //         controller.isWhatsappAvailable.value = value;
-              //       },
-              //     ),
-              //   ],
-              // ),
-              // Obx(() {
-              //   if (controller.isWhatsappAvailable.value) {
-              //     return PhoneNumberField(
-              //         controller: controller.whatsappController);
-              //   }
-              //   return Container();
-              // }),
-              // AppButton2(title: AppStrings.verify, onPressed: () {}),
-              EmailField(controller: controller.emailController),
-              20.hs,
-              AppButton1(title: controller.isLoading.value
-                    ? ""
-                    : AppStrings.save,
-                    leading: controller.isLoading.value? CircularProgressIndicator(color: AppColors.white,):null,
-                onPressed: controller.isLoading.value ? null : controller.createAccount,
-              ),
-            ],
+        children: [
+          Form(
+            key: controller.personalDataKey,
+            child: Column(
+              spacing: 16.h,
+              children: [
+                NameField(controller: controller.nameController),
+                PhoneNumberField(controller: controller.phoneController),
+                PasswordField(controller: controller.passwordController),
+                // Obx(() {
+                //   return Row(
+                //     children: [
+                // Text(AppStrings.whatsappAvailable),
+                //       Spacer(),
+                //       Switch(
+                //         value: controller.isWhatsappAvailable.value,
+                //         onChanged: (value) {
+                //           controller.isWhatsappAvailable.value = value;
+                //         },
+                //       ),
+                //     ],
+                //   );
+                // }),
+                // Obx(() {
+                //   if (controller.isWhatsappAvailable.value) {
+                //     return PhoneNumberField(
+                //       controller: controller.whatsappController,
+                //     );
+                //   }
+                //   return Container();
+                // }),
+                EmailField(controller: controller.emailController),
+                20.hs,
+                AppButton1(
+                  title: controller.isLoading.value ? "" : AppStrings.save,
+                  leading:
+                      controller.isLoading.value
+                          ? CircularProgressIndicator(color: AppColors.white)
+                          : null,
+                  onPressed:
+                      controller.isLoading.value
+                          ? null
+                          : controller.createAccount,
+                ),
+              ],
+            ),
           ),
-        )],
+        ],
       ),
     );
   }

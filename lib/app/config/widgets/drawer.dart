@@ -1,5 +1,6 @@
-import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
+import 'package:broker/app/config/widgets/pop_ups/delete_account.dart';
+import 'package:broker/app/config/widgets/pop_ups/sign_out.dart';
 import 'package:broker/app/core/services/storage_service.dart';
 import 'package:broker/app/modules/home/views/drawer_screens/rate_us_screen.dart';
 import 'package:broker/app/routes/app_pages.dart';
@@ -23,57 +24,71 @@ class DrawerWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         children: [
           _drawerHeader(),
-          ListTile(
-            onTap: () {},
-            leading: AppImageView(
-              svgPath: Assets.assetsSvgUser,
-              color: AppColors.grey,
-              height: 24.h,
-              width: 24.w,
-            ),
-            title: Text(AppStrings.personalData),
-          ),
-          ListTile(
-            onTap: () {
-              Get.toNamed(Routes.brokerPoints);
-            },
-            leading: AppImageView(
-              svgPath: Assets.assetsSvgUAward,
-              color: AppColors.grey,
-              height: 24.h,
-              width: 24.w,
-            ),
-            title: Text(AppStrings.brokerPoints),
-          ),
-          ListTile(
-            onTap: () {
-              Get.toNamed(Routes.CHANGE_PASSWORD);
-            },
-            leading: AppImageView(
-              svgPath: Assets.assetsSvgLock,
-              color: AppColors.grey,
-              height: 24.h,
-              width: 24.w,
-            ),
-            title: Text(AppStrings.changePassword),
-          ),
-          ListTile(
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  return RateUsScreen();
+          StorageService.getData("token") == null &&
+                  StorageService.getData("userId") == null
+              ? SizedBox()
+              : ListTile(
+                onTap: () {
+                  Get.toNamed(Routes.userInformation);
                 },
-              );
-            },
-            leading: AppImageView(
-              svgPath: Assets.assetsSvgRateUs,
-              color: AppColors.grey,
-              height: 24.h,
-              width: 24.w,
-            ),
-            title: Text(AppStrings.rateUs),
-          ),
+                leading: AppImageView(
+                  svgPath: Assets.assetsSvgUser,
+                  color: AppColors.grey,
+                  height: 24.h,
+                  width: 24.w,
+                ),
+                title: Text(AppStrings.personalData),
+              ),
+          StorageService.getData("token") == null &&
+                  StorageService.getData("userId") == null
+              ? SizedBox()
+              : ListTile(
+                onTap: () {
+                  Get.toNamed(Routes.brokerPoints);
+                },
+                leading: AppImageView(
+                  svgPath: Assets.assetsSvgUAward,
+                  color: AppColors.grey,
+                  height: 24.h,
+                  width: 24.w,
+                ),
+                title: Text(AppStrings.brokerPoints),
+              ),
+          // StorageService.getData("token") == null &&
+          //         StorageService.getData("userId") == null
+          //     ? SizedBox()
+          //     : ListTile(
+          //       onTap: () {
+          //         Get.toNamed(Routes.changePassword);
+          //       },
+          //       leading: AppImageView(
+          //         svgPath: Assets.assetsSvgLock,
+          //         color: AppColors.grey,
+          //         height: 24.h,
+          //         width: 24.w,
+          //       ),
+          //       title: Text(AppStrings.changePassword),
+          //     ),
+          StorageService.getData("token") == null &&
+                  StorageService.getData("userId") == null
+              ? SizedBox()
+              : ListTile(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return RateUsScreen();
+                    },
+                  );
+                },
+                leading: AppImageView(
+                  svgPath: Assets.assetsSvgRateUs,
+                  color: AppColors.grey,
+                  height: 24.h,
+                  width: 24.w,
+                ),
+                title: Text(AppStrings.rateUs),
+              ),
           ListTile(
             onTap: () {
               showModalBottomSheet(
@@ -91,32 +106,42 @@ class DrawerWidget extends StatelessWidget {
             ),
             title: Text(AppStrings.language),
           ),
+          StorageService.getData("token") == null &&
+                  StorageService.getData("userId") == null
+              ? SizedBox()
+              : ListTile(
+                onTap: () {
+                  Get.toNamed(Routes.contactUs);
+                },
+                leading: AppImageView(
+                  svgPath: Assets.assetsSvgCalling,
+                  color: AppColors.grey,
+                  height: 24.h,
+                  width: 24.w,
+                ),
+                title: Text(AppStrings.contactUs),
+              ),
+          StorageService.getData("token") == null &&
+                  StorageService.getData("userId") == null
+              ? SizedBox()
+              : ListTile(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (builder) => DeleteAccount(),
+                  );
+                },
+                leading: AppImageView(
+                  svgPath: Assets.assetsSvgDeleteAccount,
+                  color: AppColors.grey,
+                  height: 24.h,
+                  width: 24.w,
+                ),
+                title: Text(AppStrings.deleteAccount),
+              ),
           ListTile(
             onTap: () {
-              Get.toNamed(Routes.contactUs);
-            },
-            leading: AppImageView(
-              svgPath: Assets.assetsSvgCalling,
-              color: AppColors.grey,
-              height: 24.h,
-              width: 24.w,
-            ),
-            title: Text(AppStrings.contactUs),
-          ),
-          ListTile(
-            onTap: () {},
-            leading: AppImageView(
-              svgPath: Assets.assetsSvgDeleteAccount,
-              color: AppColors.grey,
-              height: 24.h,
-              width: 24.w,
-            ),
-            title: Text(AppStrings.deleteAccount),
-          ),
-          ListTile(
-            onTap: () {
-              Get.offAllNamed(Routes.SIGN_IN);
-              StorageService.removeData("token");
+              showDialog(context: context, builder: (builder)=>SignOut());
             },
             leading: AppImageView(
               svgPath: Assets.assetsSvgSignOut,
@@ -124,9 +149,12 @@ class DrawerWidget extends StatelessWidget {
               height: 24.h,
               width: 24.w,
             ),
-            title: Text(StorageService.getData("token") == null
-                ? AppStrings.signIn
-                : AppStrings.signout),
+            title: Text(
+              StorageService.getData("token") == null &&
+                      StorageService.getData("userId") == null
+                  ? AppStrings.signIn
+                  : AppStrings.signout,
+            ),
           ),
         ],
       ),
@@ -134,28 +162,14 @@ class DrawerWidget extends StatelessWidget {
   }
 
   Widget _drawerHeader() => SizedBox(
-        height: 175.h,
-        child: Container(
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                AppImageView(
-                    width: 60.w,
-                    height: 60.h,
-                    fit: BoxFit.cover,
-                    shape: BoxShape.circle,
-                    url:
-                        'https://www.shutterstock.com/image-photo/profile-picture-smiling-successful-young-260nw-2040223583.jpg'),
-                10.ws,
-                Text(
-                  'Uday Hegde',
-                  style: AppTextStyle.font16black600,
-                ),
-              ],
-            )),
-      );
+    height: 175.h,
+    child: Container(
+      decoration: BoxDecoration(color: Colors.transparent),
+      padding: EdgeInsets.only(right: 20.w, top: 100.h, left: 20.w),
+      child: Text(
+        StorageService.getData("userName") ?? "",
+        style: AppTextStyle.font24black400,
+      ),
+    ),
+  );
 }

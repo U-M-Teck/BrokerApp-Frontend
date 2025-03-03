@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 class PropertyDetailsController extends GetxController {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  //TODO: Implement PropertyDetailsController
 
   final count = 0.obs;
+  final isFullScreen = false.obs;
   final RxDouble sliderValue = 0.0.obs;
   final List<String> imagePaths = [
     Assets.assetsTempImage,
@@ -16,20 +16,8 @@ class PropertyDetailsController extends GetxController {
     Assets.assetsTempImage2,
   ];
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
 

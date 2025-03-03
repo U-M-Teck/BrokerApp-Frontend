@@ -12,9 +12,9 @@ class DescriptionField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       validator: ValidationForm.nameValidator,
-      keyboardType: TextInputType.name,
-      minLines: 1,
-      maxLines: 3,
+      keyboardType: TextInputType.text,
+      minLines: 5,
+      maxLines: 10,
       decoration: InputDecoration(
         hintText: AppStrings.description,
       ),

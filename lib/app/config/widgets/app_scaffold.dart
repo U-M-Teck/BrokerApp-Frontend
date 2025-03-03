@@ -15,10 +15,7 @@ class AppScaffold extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         children: [
           AppImageView(svgPath: Assets.assetsSvgGroup),
-          Padding(
-            padding: EdgeInsets.zero,
-            child: body,
-          ),
+          body,
         ],
       ),
     );

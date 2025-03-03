@@ -16,8 +16,8 @@ import '../../my_ads/views/my_ads_view.dart';
 import '../controllers/layout_controller.dart';
 
 class LayoutView extends GetView<LayoutController> {
-   const LayoutView({super.key});
-   
+  const LayoutView({super.key});
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put<LayoutController>(LayoutController());
@@ -37,88 +37,90 @@ class LayoutView extends GetView<LayoutController> {
             return HomeView();
         }
       }),
-      bottomNavigationBar: Obx(() => Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15.0),
-                topRight: Radius.circular(15.0),
-              ),
+      bottomNavigationBar: Obx(
+        () => Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.0),
+              topRight: Radius.circular(15.0),
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15.0),
-                topRight: Radius.circular(15.0),
-              ),
-              child: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: AppColors.primary,
-                unselectedItemColor: AppColors.grey,
-                selectedLabelStyle: AppTextStyle.font10primary600,
-                unselectedLabelStyle: AppTextStyle.font10grey600,
-                currentIndex: controller.selectedIndex.value,
-                showUnselectedLabels: false,
-                showSelectedLabels: false,
-                onTap: (index) {
-                  if (index == 2) {
-                  } else {
-                    controller.changeIndex(index);
-                  }
-                },
-                items: [
-                  BottomNavigationBarItem(
-                    icon: BottomNavBarItem(
-                      isSelected: controller.selectedIndex.value == 0,
-                      icon: Assets.assetsSvgHome,
-                      title: AppStrings.home,
-                    ),
-                    label: '',
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.0),
+              topRight: Radius.circular(15.0),
+            ),
+            child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              selectedItemColor: AppColors.primary,
+              unselectedItemColor: AppColors.grey,
+              selectedLabelStyle: AppTextStyle.font10primary600,
+              unselectedLabelStyle: AppTextStyle.font10grey600,
+              currentIndex: controller.selectedIndex.value,
+              showUnselectedLabels: false,
+              showSelectedLabels: false,
+              onTap: (index) {
+                if (index == 2) {
+                } else {
+                  controller.changeIndex(index);
+                }
+              },
+              items: [
+                BottomNavigationBarItem(
+                  icon: BottomNavBarItem(
+                    isSelected: controller.selectedIndex.value == 0,
+                    icon: Assets.assetsSvgHome,
+                    title: AppStrings.home,
                   ),
-                  BottomNavigationBarItem(
-                    icon: BottomNavBarItem(
-                      isSelected: controller.selectedIndex.value == 1,
-                      icon: Assets.assetsSvgList,
-                      title: AppStrings.listView,
-                    ),
-                    label: '',
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: BottomNavBarItem(
+                    isSelected: controller.selectedIndex.value == 1,
+                    icon: Assets.assetsSvgList,
+                    title: AppStrings.listView,
                   ),
-                  BottomNavigationBarItem(
-                    icon: InkWell(
-                      onTap: () {
-                        Get.toNamed(Routes.addProperty);
-                      },
-                      child: Container(
-                        height: 40.h,
-                        width: 40.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.secondary,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(Icons.add, color: Colors.white, size: 35),
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: InkWell(
+                    onTap: () {
+                      Get.toNamed(Routes.addProperty);
+                    },
+                    child: Container(
+                      height: 40.h,
+                      width: 40.w,
+                      decoration: BoxDecoration(
+                        color: AppColors.secondary,
+                        shape: BoxShape.circle,
                       ),
+                      child: Icon(Icons.add, color: Colors.white, size: 35),
                     ),
-                    label: '',
                   ),
-                  BottomNavigationBarItem(
-                    icon: BottomNavBarItem(
-                      isSelected: controller.selectedIndex.value == 3,
-                      icon: Assets.assetsSvgFavorites,
-                      title: AppStrings.favorites,
-                    ),
-                    label: '',
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: BottomNavBarItem(
+                    isSelected: controller.selectedIndex.value == 3,
+                    icon: Assets.assetsSvgFavorites,
+                    title: AppStrings.favorites,
                   ),
-                  BottomNavigationBarItem(
-                    icon: BottomNavBarItem(
-                      isSelected: controller.selectedIndex.value == 4,
-                      icon: Assets.assetsSvgAds,
-                      title: AppStrings.myAds,
-                    ),
-                    label: '',
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: BottomNavBarItem(
+                    isSelected: controller.selectedIndex.value == 4,
+                    icon: Assets.assetsSvgAds,
+                    title: AppStrings.myAds,
                   ),
-                ],
-              ),
+                  label: '',
+                ),
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

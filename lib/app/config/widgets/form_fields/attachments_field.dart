@@ -14,6 +14,7 @@ class AttachmentsField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: true,
       controller: controller,
       validator: ValidationForm.nameValidator,
       keyboardType: TextInputType.name,

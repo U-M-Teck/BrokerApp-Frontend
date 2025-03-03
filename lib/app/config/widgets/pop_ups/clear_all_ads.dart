@@ -8,6 +8,9 @@ import 'package:broker/app/config/widgets/buttons/outlined_app_button.dart';
 import 'package:broker/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import '../../../modules/layout/controllers/layout_controller.dart';
 
 class ClearAllAds extends StatelessWidget {
   const ClearAllAds({super.key});
@@ -52,6 +55,8 @@ class ClearAllAds extends StatelessWidget {
       ),
       actions: [
         AppButton1(title: AppStrings.clear, onPressed: () {
+          Get.find<LayoutController>()
+                            .deleteAllByUserIdAdvertisement();
             Navigator.of(context).pop(); // إغلاق النافذة المنبثقة
 
         }),

@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app_color.dart';
 
 class AppTextStyle {
+  
   ///FontSize
   static final TextStyle _fontSize24 = TextStyle(fontSize: 24.sp);
+  static final TextStyle _fontSize22 = TextStyle(fontSize: 22.sp);
   static final TextStyle _fontSize18 = TextStyle(fontSize: 18.sp);
   static final TextStyle _fontSize16 = TextStyle(fontSize: 16.sp);
   static final TextStyle _fontSize14 = TextStyle(fontSize: 14.sp);
@@ -50,6 +52,10 @@ class AppTextStyle {
       .merge(_fontWeight400)
       .merge(_fontSize18)
       .copyWith(color: AppColors.black);
+        static TextStyle font18white400 = _fontAlexandria
+      .merge(_fontWeight400)
+      .merge(_fontSize18)
+      .copyWith(color: AppColors.white);
         static TextStyle font16black400 = _fontAlexandria
       .merge(_fontWeight400)
       .merge(_fontSize16)
@@ -113,6 +119,10 @@ class AppTextStyle {
       .merge(_fontWeight600)
       .merge(_fontSize16)
       .copyWith(color: AppColors.white);
+        static TextStyle font22white600 = _fontAlexandria
+      .merge(_fontWeight600)
+      .merge(_fontSize22)
+      .copyWith(color: AppColors.white);
   static TextStyle font14black600 = _fontAlexandria
       .merge(_fontWeight600)
       .merge(_fontSize14)
@@ -121,6 +131,10 @@ class AppTextStyle {
       .merge(_fontWeight400)
       .merge(_fontSize14)
       .copyWith(color: AppColors.grey);
+              static TextStyle font14green400 = _fontAlexandria
+      .merge(_fontWeight400)
+      .merge(_fontSize14)
+      .copyWith(color: AppColors.green);
               static TextStyle font14black400 = _fontAlexandria
       .merge(_fontWeight400)
       .merge(_fontSize14)

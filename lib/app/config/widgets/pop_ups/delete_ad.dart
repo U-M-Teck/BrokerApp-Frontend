@@ -8,9 +8,13 @@ import 'package:broker/app/config/widgets/buttons/outlined_app_button.dart';
 import 'package:broker/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import '../../../modules/layout/controllers/layout_controller.dart';
 
 class DeleteAd extends StatelessWidget {
-  const DeleteAd({super.key});
+  final int? adId;
+  const DeleteAd({super.key, this.adId});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +56,8 @@ class DeleteAd extends StatelessWidget {
       ),
       actions: [
         AppButton1(title: AppStrings.delete, onPressed: () {
-            Navigator.of(context).pop(); // إغلاق النافذة المنبثقة
+          Get.back();
+          Get.find<LayoutController>().deleteAdvertisement(adId??0);
 
         }),
         12.hs,

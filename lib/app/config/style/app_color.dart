@@ -13,6 +13,7 @@ class AppColors {
   static const Color black = Color(0xff000000);
   static const Color red = Color(0xffff0000);
   static const Color success = Color(0xff4CDA64);
+  static const Color green = Color(0xff128C7E);
   
   // Order Status Colors
   static const Color pending = Color(0xffFF6347);    // Orange

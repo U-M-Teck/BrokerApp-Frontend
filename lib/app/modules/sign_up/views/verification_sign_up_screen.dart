@@ -56,8 +56,7 @@ class VerificationSignUpScreen extends GetView<SignUpController> {
                   stream: controller.stopWatchTimer.rawTime,
                   initialData: StopWatchTimer.getMilliSecFromMinute(1),
                   builder: (context, snap) {
-                    print(
-                        "StreamBuilder called"); // تأكد من أن هذه الطباعة تظهر
+                    // تأكد من أن هذه الطباعة تظهر
 
                     final displayTime = StopWatchTimer.getDisplayTime(
                         snap.data!,

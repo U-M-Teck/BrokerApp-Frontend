@@ -28,23 +28,23 @@ class CreateAccountView extends GetView<SignUpController> {
           children: [
             Align(
               alignment: Alignment.topLeft,
-              child: Text("I'm .....",style: AppTextStyle.font16black600,)),
+              child: Text(AppStrings.im,style: AppTextStyle.font16black600,)),
             24.hs,
             AppImageView(imagePath: Assets.assetsImagesSignUp,width: 250.w,height: 240.h,),
             24.hs,
             SignUpButton(icon: Assets.assetsSvgSearch, title: AppStrings.propertySeeker, onPressed: () {
               controller.selectedIndex.value=0;
-              Get.toNamed(Routes.SIGN_UP);
+              Get.toNamed(Routes.signUp);
             }),
             24.hs,
             SignUpButton(icon: Assets.assetsSvgUser, title: AppStrings.propertyOwner, onPressed: () {
               controller.selectedIndex.value=1;
-              Get.toNamed(Routes.SIGN_UP);
+              Get.toNamed(Routes.signUp);
             }),
             24.hs,
             SignUpButton(icon: Assets.assetsSvgBroker, title: AppStrings.broker, onPressed: () {
               controller.selectedIndex.value=2;
-              Get.toNamed(Routes.SIGN_UP);
+              Get.toNamed(Routes.signUp);
             }),
           ],
         ),

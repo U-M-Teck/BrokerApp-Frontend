@@ -1,3 +1,4 @@
+import 'package:broker/app/modules/layout/data/model/get_adv_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,7 +8,8 @@ import '../../../../config/style/app_text_styles.dart';
 import '../../../../config/widgets/app_image_view.dart';
 
 class AdvertiserInfo extends StatelessWidget {
-  const AdvertiserInfo({super.key});
+  final Details? details;
+  const AdvertiserInfo({super.key,required this.details});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +28,11 @@ class AdvertiserInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 8.h, children: [
             Text(
-              "Mrs. Intisar Muhammad Refaat",
+              details?.advertiseMakerName??"",
               style: AppTextStyle.font14black600,
             ),
             Text(
-              "The Owner",
+              details?.advertiseMaker??"",
               style: AppTextStyle.font14black400,
             ),
           ]),

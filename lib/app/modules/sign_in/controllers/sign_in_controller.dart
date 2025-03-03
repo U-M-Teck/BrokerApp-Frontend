@@ -1,3 +1,5 @@
+import 'package:broker/app/config/utils/app_utils/app_strings.dart';
+import 'package:broker/app/core/heplers/firebase_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -26,16 +28,15 @@ class SignInController extends GetxController {
       formKey.currentState?.save();
       return true;
     }
-    Get.snackbar("Error", "Please fix the errors in the form");
     return false;
   }
 
   void submitCodeForm() async {
     if (codeFormKey.currentState!.validate()) {
       // Get.snackbar("Success", StorageService.getData("token")??"no token");
-      await StorageService.setData("token", AppUtils.token ?? "");
+      await StorageService.setData("userId", AppUtils.userId ?? 0);
 
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.home);
     }
   }
 
@@ -51,6 +52,8 @@ class SignInController extends GetxController {
       final loginData = {
         'userNameOrEmailAddress': phoneNumberController.text,
         'password': passwordController.text,
+        "rememberClient": "true",
+        "registrationDevice":await FirebaseNotifications.token(),
       };
 
       try {
@@ -58,13 +61,14 @@ class SignInController extends GetxController {
 
         if (response.statusCode == 200) {
           AppUtils.token = response.data?.accessToken ?? "";
+          AppUtils.userId = response.data?.userId ?? 0;
 
           // Send OTP after successful login
           await _sendOtp();
 
-          Get.offAllNamed(Routes.VERIFICATION);
+          Get.offAllNamed(Routes.verification);
         } else {
-          _showError("Invalid credentials");
+          _showError(AppStrings.invalidCredentials);
         }
       } catch (e) {
         _showError("An error occurred during login");
@@ -131,9 +135,9 @@ class SignInController extends GetxController {
   void onInit() {
     super.onInit();
     // Check if the current view is VerificationView
-    if (Get.currentRoute == Routes.VERIFICATION) {
+    if (Get.currentRoute == Routes.verification) {
       stopWatchTimer.onStartTimer();
-      print("Timer started"); // Debugging line to check if the timer starts
+      // Debugging line to check if the timer starts
     }
   }
 }

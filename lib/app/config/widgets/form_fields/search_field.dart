@@ -16,27 +16,44 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
       controller: controller,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.text,
       onChanged: onChanged,
       decoration: InputDecoration(
         isDense: true,
-         prefixIconConstraints: BoxConstraints(
-          minWidth: 24.w, // Adjust based on your needs
-          minHeight: 24.h, // Adjust based on your needs
+        contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
         ),
-prefixIcon: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide: BorderSide(color: AppColors.primary),
+        ),
+        prefixIconConstraints: BoxConstraints(
+          minWidth: 24.w,
+          minHeight: 24.h,
+        ),
+        prefixIcon: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: AppImageView(
             svgPath: Assets.assetsSvgSearch,
-            height: 24.h,
-            width: 24.w,
+            height: 20.h,
+            width: 20.w,
             color: AppColors.grey,
           ),
-        ), 
+        ),
         hintText: AppStrings.search,
-
+        hintStyle: TextStyle(
+          color: AppColors.grey,
+          fontSize: 14.sp,
+        ),
       ),
     );
   }

@@ -9,11 +9,16 @@ import '../../../core/heplers/validation_form.dart';
 
 class EmailField extends StatelessWidget {
   final TextEditingController controller;
-  const EmailField({super.key, required this.controller});
+    final bool isReadOnly;
+
+  const EmailField({super.key, required this.controller,
+      this.isReadOnly = false,
+});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: isReadOnly,
       controller: controller,
       validator: ValidationForm.emailValidator,
       keyboardType: TextInputType.name,

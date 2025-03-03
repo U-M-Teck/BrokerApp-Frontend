@@ -2,33 +2,47 @@
 class Assets {
   Assets._();
   
-  static const String assetsFontAlexandriaBlack = "assets/font/Alexandria-Black.ttf";
+  static const String assetsFontIBMPlexSansArabicBold = "assets/font/IBMPlexSansArabic-Bold.ttf";
 
-  static const String assetsFontAlexandriaBold = "assets/font/Alexandria-Bold.ttf";
+  static const String assetsFontIBMPlexSansArabicExtraLight = "assets/font/IBMPlexSansArabic-ExtraLight.ttf";
 
-  static const String assetsFontAlexandriaExtraBold = "assets/font/Alexandria-ExtraBold.ttf";
+  static const String assetsFontIBMPlexSansArabicLight = "assets/font/IBMPlexSansArabic-Light.ttf";
 
-  static const String assetsFontAlexandriaExtraLight = "assets/font/Alexandria-ExtraLight.ttf";
+  static const String assetsFontIBMPlexSansArabicMedium = "assets/font/IBMPlexSansArabic-Medium.ttf";
 
-  static const String assetsFontAlexandriaLight = "assets/font/Alexandria-Light.ttf";
+  static const String assetsFontIBMPlexSansArabicRegular = "assets/font/IBMPlexSansArabic-Regular.ttf";
 
-  static const String assetsFontAlexandriaMedium = "assets/font/Alexandria-Medium.ttf";
+  static const String assetsFontIBMPlexSansArabicSemiBold = "assets/font/IBMPlexSansArabic-SemiBold.ttf";
 
-  static const String assetsFontAlexandriaRegular = "assets/font/Alexandria-Regular.ttf";
+  static const String assetsFontIBMPlexSansArabicThin = "assets/font/IBMPlexSansArabic-Thin.ttf";
 
-  static const String assetsFontAlexandriaSemiBold = "assets/font/Alexandria-SemiBold.ttf";
+  static const String assetsFontIBMPlexSansThin = "assets/font/IBMPlexSans-Thin.ttf";
 
-  static const String assetsFontAlexandriaThin = "assets/font/Alexandria-Thin.ttf";
+  static const String assetsFontIBMPlexSansThinItalic = "assets/font/IBMPlexSans-ThinItalic.ttf";
 
   static const String assetsImagesChangeLanguage = "assets/images/change_language.jpg";
 
+  static const String assetsImagesEmptyAds = "assets/images/empty_ads.png";
+
+  static const String assetsImagesEmptyFavorite = "assets/images/empty_favorite.png";
+
+  static const String assetsImagesLoadingImage = "assets/images/loading_image.json";
+
+  static const String assetsImagesMapMarker = "assets/images/map_marker.png";
+
+  static const String assetsImagesNormalAdPin = "assets/images/normal_ad_pin.png";
+
   static const String assetsImagesOnBoarding = "assets/images/on_boarding.jpg";
+
+  static const String assetsImagesPermiumAdPin = "assets/images/permium_ad_pin.png";
 
   static const String assetsImagesRateUs = "assets/images/rate_us.jpg";
 
   static const String assetsImagesSignUp = "assets/images/sign_up.jpg";
 
   static const String assetsImagesSplash = "assets/images/splash.jpg";
+
+  static const String assetsImagesSuccess = "assets/images/success.png";
 
   static const String assetsImagesWarning = "assets/images/warning.jpg";
 
@@ -53,6 +67,10 @@ class Assets {
   static const String assetsSvgBroker = "assets/svg/broker.svg";
 
   static const String assetsSvgBuilding = "assets/svg/building.svg";
+
+  static const String assetsSvgBuildingDate = "assets/svg/building_date.svg";
+
+  static const String assetsSvgBuildingWidth = "assets/svg/building_width.svg";
 
   static const String assetsSvgCall = "assets/svg/call.svg";
 
@@ -126,6 +144,8 @@ class Assets {
 
   static const String assetsSvgMobile = "assets/svg/mobile.svg";
 
+  static const String assetsSvgNoPartitions = "assets/svg/noPartitions.svg";
+
   static const String assetsSvgNotification = "assets/svg/notification.svg";
 
   static const String assetsSvgOfficeBuilding = "assets/svg/office_building.svg";
@@ -133,6 +153,8 @@ class Assets {
   static const String assetsSvgParking = "assets/svg/parking.svg";
 
   static const String assetsSvgPath = "assets/svg/path.svg";
+
+  static const String assetsSvgPause = "assets/svg/pause.svg";
 
   static const String assetsSvgPhone = "assets/svg/phone.svg";
 
@@ -166,6 +188,8 @@ class Assets {
 
   static const String assetsSvgStatistics = "assets/svg/statistics.svg";
 
+  static const String assetsSvgStreetWidth = "assets/svg/street_width.svg";
+
   static const String assetsSvgText = "assets/svg/text.svg";
 
   static const String assetsSvgTiktok = "assets/svg/tiktok.svg";
@@ -173,6 +197,10 @@ class Assets {
   static const String assetsSvgUAward = "assets/svg/u_award.svg";
 
   static const String assetsSvgUser = "assets/svg/user.svg";
+
+  static const String assetsSvgUsingFor = "assets/svg/usingFor.svg";
+
+  static const String assetsSvgUsingFor2 = "assets/svg/using_for_2.svg";
 
   static const String assetsSvgViews = "assets/svg/views.svg";
 

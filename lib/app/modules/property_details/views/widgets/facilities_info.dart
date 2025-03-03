@@ -1,6 +1,7 @@
 import 'package:broker/app/config/style/app_text_styles.dart';
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
+import 'package:broker/app/modules/layout/data/model/get_adv_details_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -44,7 +45,8 @@ class FacilitiesInfoItem extends StatelessWidget {
 }
 
 class FacilitiesInfo extends StatelessWidget {
-  const FacilitiesInfo({super.key});
+  final Details? details;
+  const FacilitiesInfo({super.key, required this.details});
 
   @override
   Widget build(BuildContext context) {
@@ -67,14 +69,14 @@ class FacilitiesInfo extends StatelessWidget {
           Expanded(
             child: FacilitiesInfoItem(
               title: AppStrings.water,
-              value: AppStrings.yes,
+              value: details?.facilites?[1].isChecked ?? "",
               icon: Assets.assetsSvgWater,
             ),
           ),
           Expanded(
             child: FacilitiesInfoItem(
               title: AppStrings.electricity,
-              value: AppStrings.yes,
+              value: details?.facilites?[2].isChecked ?? "",
               icon: Assets.assetsSvgElectricity,
             ),
           ),
@@ -86,14 +88,14 @@ class FacilitiesInfo extends StatelessWidget {
           Expanded(
             child: FacilitiesInfoItem(
               title: AppStrings.gas,
-              value: AppStrings.no,
+              value: details?.facilites?[4].isChecked ?? "",
               icon: Assets.assetsSvgGas,
             ),
           ),
           Expanded(
             child: FacilitiesInfoItem(
               title: AppStrings.phone,
-              value: AppStrings.no,
+              value: details?.facilites?[5].isChecked ?? "",
               icon: Assets.assetsSvgPhone,
             ),
           ),
@@ -105,7 +107,7 @@ class FacilitiesInfo extends StatelessWidget {
           Expanded(
             child: FacilitiesInfoItem(
               title: AppStrings.internet,
-              value: AppStrings.no,
+              value: details?.facilites?[3].isChecked ?? "",
               icon: Assets.assetsSvgInternet,
             ),
           ),

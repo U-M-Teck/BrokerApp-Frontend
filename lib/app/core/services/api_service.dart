@@ -3,21 +3,8 @@ import 'dart:io';
 
 import 'package:broker/app/config/utils/app_utils/api_constans.dart';
 import 'package:dio/dio.dart';
-
-import '../model/response_model.dart';
 import '../../config/utils/exceptions/exceptions.dart';
-
-
-class AppUrl {
-  AppUrl._();
-
-  // receiveTimeout
-  static const Duration receiveTimeout = Duration(seconds: 5);
-
-  // connectTimeout
-  static const Duration connectionTimeout = Duration(seconds: 5);
-
-}
+import '../model/response_model.dart';
 
 class ApiService {
 
@@ -33,53 +20,57 @@ class ApiService {
     ..interceptors.add(LogInterceptor(
         request: false,
         responseHeader: false,
-        error: false,
+        error: true,
         requestBody: true,
         responseBody: true
     ));
 
-  // GET request
-  static Future<ResponseModel> get({required String endPoint,
+  /// Helper function to set headers
+  static void setHeaders({bool isFormData = false}) {
+    _dio.options.headers = {
+      'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
+      'Accept': 'application/json',
+    };
+  }
+
+  /// GET request
+  static Future<ResponseModel> get({
+    required String endPoint,
     Map<String, dynamic>? query,
     Map<String, dynamic> data = const {},
     bool showErrorMessage = true,
-    String? token,
-    ProgressCallback? onReceiveProgress}) async {
+    ProgressCallback? onReceiveProgress,
+  }) async {
     try {
-      _dio.options.headers = {
-        'Authorization': "Bearer $token",
-      };
-      final response = await _dio.get(endPoint,
-          data: jsonEncode(data),
-          queryParameters: query,
-          onReceiveProgress: onReceiveProgress);
-
+      setHeaders(isFormData: false);
+      final response = await _dio.get(
+        endPoint,
+        queryParameters: query,
+        onReceiveProgress: onReceiveProgress,
+      );
       return ResponseModel.fromJson(response.data);
     } on DioException catch (error) {
-      throw handleDioExceptions(error, showErrorMessage);
+      throw handleDioExceptions(error);
     } on SocketException {
       throw AppException('No Internet connection');
     } on FormatException catch (e) {
-      throw AppException(e.toString());
+      throw AppException("Invalid format: ${e.message}");
     } catch (e) {
-      throw AppException(e.toString());
+      throw AppException("Unexpected error: ${e.toString()}");
     }
   }
 
-  /// post
+  /// POST request
   static Future<ResponseModel> post({
     required String endPoint,
     bool showErrorMessage = true,
-      Map<String, dynamic> data = const {},
-      bool isFormData = false,
-      Map<String, dynamic>? query,
-      String? token,
-      ProgressCallback? onSendProgress}) async {
+    dynamic data = const {},
+    bool isFormData = false,
+    dynamic query,
+    ProgressCallback? onSendProgress,
+  }) async {
     try {
-      _dio.options.headers = {
-        'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
-        'Authorization': "Bearer $token",
-      };
+      setHeaders(isFormData: isFormData);
 
       final response = await _dio.post(
         endPoint,
@@ -87,75 +78,42 @@ class ApiService {
         queryParameters: query,
         onSendProgress: onSendProgress,
       );
-
+      
       return ResponseModel.fromJson(response.data);
     } on DioException catch (error) {
-      throw handleDioExceptions(error, showErrorMessage);
+      throw handleDioExceptions(error);
     } on SocketException {
       throw AppException('No Internet connection');
     } on FormatException catch (e) {
-      throw AppException(e.toString());
+      throw AppException("Invalid format: ${e.message}");
     } catch (e) {
-      throw AppException(e.toString());
+      throw AppException("Unexpected error: ${e.toString()}");
     }
   }
 
-  static Future<ResponseModel> patch({required String endPoint,
+  static Future<ResponseModel> delete({
+    required String endPoint,
     bool showErrorMessage = true,
     Map<String, dynamic> data = const {},
     bool isFormData = false,
     Map<String, dynamic>? query,
-    ProgressCallback? onSendProgress}) async {
+  }) async {
     try {
-      _dio.options.headers = {
-        'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
-      };
+      setHeaders(isFormData: isFormData);
 
-      final response = await _dio.patch(
-        endPoint,
-        data: isFormData ? FormData.fromMap(data) : jsonEncode(data),
-        queryParameters: query,
-        onSendProgress: onSendProgress,
-      );
+      final response = await _dio.delete(endPoint,
+          data: isFormData ? FormData.fromMap(data) : jsonEncode(data),
+          queryParameters: query);
 
       return ResponseModel.fromJson(response.data);
     } on DioException catch (error) {
-      throw handleDioExceptions(error, showErrorMessage);
+      throw handleDioExceptions(error);
     } on SocketException {
       throw AppException('No Internet connection');
     } on FormatException catch (e) {
-      throw AppException(e.toString());
+      throw AppException("Invalid format: ${e.message}");
     } catch (e) {
-      throw AppException(e.toString());
-    }
-  }
-  static Future<ResponseModel> put({required String endPoint,
-    bool showErrorMessage = true,
-    Map<String, dynamic> data = const {},
-    bool isFormData = false,
-    Map<String, dynamic>? query,
-    ProgressCallback? onSendProgress}) async {
-    try {
-      _dio.options.headers = {
-        'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
-      };
-
-      final response = await _dio.put(
-        endPoint,
-        data: isFormData ? FormData.fromMap(data) : jsonEncode(data),
-        queryParameters: query,
-        onSendProgress: onSendProgress,
-      );
-
-      return ResponseModel.fromJson(response.data);
-    } on DioException catch (error) {
-      throw handleDioExceptions(error, showErrorMessage);
-    } on SocketException {
-      throw AppException('No Internet connection');
-    } on FormatException catch (e) {
-      throw AppException(e.toString());
-    } catch (e) {
-      throw AppException(e.toString());
+      throw AppException("Unexpected error: ${e.toString()}");
     }
   }
 }
