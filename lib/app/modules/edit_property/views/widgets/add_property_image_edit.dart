@@ -53,7 +53,7 @@ class AddPropertyImageEdit extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ));;
+                  ));
               }
             },
             child: Container(

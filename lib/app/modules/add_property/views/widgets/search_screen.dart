@@ -56,7 +56,6 @@ class AddressSearch extends SearchDelegate<SuggestionModel> {
           return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasError) {
-          print("Error: ${snapshot.error}");
           return Center(child: Text("Error: ${snapshot.error}"));
         }
         return query == ''

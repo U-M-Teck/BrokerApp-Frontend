@@ -63,7 +63,6 @@ void onMapCreate(GoogleMapController mapController) {
   }
   
   controller.complete(mapController);
-  print("GoogleMapController initialized.");
 }
 
 

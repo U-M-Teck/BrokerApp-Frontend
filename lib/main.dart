@@ -1,7 +1,5 @@
 import 'package:broker/app/config/style/app_theme.dart';
 import 'package:broker/app/core/binding/initial_binding.dart';
-import 'package:broker/app/core/heplers/firebase_notification.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,10 +19,10 @@ void main() async {
   await GetStorage.init(); // Initialize GetStorage
 await ScreenUtil.ensureScreenSize();
 
-  final savedLanguage = StorageService.getData<String>('selected_language') ?? 'en';
+  final savedLanguage = StorageService.getData<String>('selected_language') ?? 'ar';
 
    LocalizationHelper().changeLocale(
-    savedLanguage == 'en' ? Language.english : Language.arabic,
+    savedLanguage == 'ar' ? Language.arabic : Language.english,
   );
 
 

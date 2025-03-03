@@ -61,7 +61,6 @@ static Future<void> moveCamera({
 }) async {
   // ✅ Ensure the Completer is valid
   if (!controller.isCompleted) {
-    print("GoogleMapController is not ready yet. Waiting...");
     await Future.delayed(Duration(milliseconds: 500));
     return moveCamera(controller: controller, target: target, zoom: zoom); // 🔄 Retry
   }
@@ -78,16 +77,13 @@ static Future<void> moveCamera({
       ),
     );
 
-    print("Camera moved to: $target");
   } catch (e) {
-    print("Error moving camera: $e");
 
     // ✅ Reset the Completer only if it is invalid
     if (controller.isCompleted) {
       controller = Completer<GoogleMapController>(); // 🆕 Reset
     }
 
-    print("GoogleMapController reset. Try again.");
   }
 }
 

@@ -510,7 +510,6 @@ class AddApartmentController extends GetxController {
 
           // Set initial text for street and district controllers
           if (place.street != null) {
-            print("asdasdasd${place.street}");
             streetController.text = place.street!;
           }
           if (place.subLocality != null) {
@@ -520,7 +519,7 @@ class AddApartmentController extends GetxController {
           selectedAddress.value = "No address found for this location";
         }
       } catch (e) {
-        print('Geocoding error: $e'); // Log the actual error
+        // Log the actual error
         selectedAddress.value = "Could not fetch address. Please try again.";
       }
     }
@@ -636,7 +635,6 @@ class AddApartmentController extends GetxController {
     }
 
     controller.complete(mapController);
-    print("GoogleMapController initialized.");
   }
 
   void getCurrentPosition() {

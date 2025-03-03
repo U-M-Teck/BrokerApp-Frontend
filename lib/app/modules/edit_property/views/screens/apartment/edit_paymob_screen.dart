@@ -21,7 +21,6 @@ class EditPaymobScreen extends StatelessWidget {
           ..setNavigationDelegate(
             NavigationDelegate(
               onNavigationRequest: (NavigationRequest request) {
-                print("asdfasdf${request.url}");
                 if (request.url.contains('success=true')) {
                   showDialog(
                     barrierDismissible: false,

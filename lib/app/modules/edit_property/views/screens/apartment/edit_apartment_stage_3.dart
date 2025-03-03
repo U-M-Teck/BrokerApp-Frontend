@@ -110,7 +110,6 @@ class EditApartmentStage3 extends GetView<EditApartmentController> {
                                   ),
                                 ),
                           );
-                          ;
                         }
                         : null, // Disable button when 3 or more images
                 title: AppStrings.addMorePhotos,
