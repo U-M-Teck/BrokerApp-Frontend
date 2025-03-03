@@ -15,7 +15,8 @@ class AddPropertyImageEdit extends StatelessWidget {
   final EditApartmentController controller;
   const AddPropertyImageEdit({
     super.key,
-    required this.index, required this.controller,
+    required this.index,
+    required this.controller,
   });
 
   @override
@@ -27,33 +28,41 @@ class AddPropertyImageEdit extends StatelessWidget {
             onTap: () {
               if (controller.apiPhotosList.length < 3) {
                 showModalBottomSheet(
-          constraints: BoxConstraints(maxWidth: double.infinity),
+                  constraints: BoxConstraints(maxWidth: double.infinity),
 
-                            backgroundColor: Colors.white,
-                  context: context, builder: (builder)=>Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 20.h),
-                    child: Column(
-                                spacing: 18.h,
-                                mainAxisSize: MainAxisSize.min,                    children: [
-                        AppButton1(
-                          title: AppStrings.camera,
-                          onPressed: (){
-                            controller.addImages(index,ImageSource.camera);
-                              Get.back();
-                    
-                          },
+                  backgroundColor: Colors.white,
+                  context: context,
+                  builder:
+                      (builder) => Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20.w,
+                          vertical: 20.h,
                         ),
-                        AppButton2(
-                          title: AppStrings.gallery,
-                          onPressed: (){
-                            controller.addImages(index,ImageSource.gallery);
-                              Get.back();
-                    
-                          },
+                        child: Column(
+                          spacing: 18.h,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AppButton1(
+                              title: AppStrings.camera,
+                              onPressed: () {
+                                controller.addImages(index, ImageSource.camera);
+                                Get.back();
+                              },
+                            ),
+                            AppButton2(
+                              title: AppStrings.gallery,
+                              onPressed: () {
+                                controller.addImages(
+                                  index,
+                                  ImageSource.gallery,
+                                );
+                                Get.back();
+                              },
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ));
+                      ),
+                );
               }
             },
             child: Container(
@@ -61,24 +70,25 @@ class AddPropertyImageEdit extends StatelessWidget {
               height: 100.h,
               decoration: BoxDecoration(
                 boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withAlpha(75),
-                      spreadRadius: 0,
-                      blurRadius: 10,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
+                  BoxShadow(
+                    color: Colors.black.withAlpha(75),
+                    spreadRadius: 0,
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12)
+                borderRadius: BorderRadius.circular(12),
               ),
-              child: index < controller.apiPhotosList.length
-                  ? AppImageView(
-                      radius: BorderRadius.circular(12),
-                      file:controller.imageFiles[index],
-                      url: controller.apiPhotosList[index],
-                      fit: BoxFit.fill,
-                    )
-                  :            Icon(Icons.add,color: AppColors.grey,size: 40,),
+              child:
+                  index < controller.apiPhotosList.length
+                      ? AppImageView(
+                        radius: BorderRadius.circular(12),
+                        file: controller.imageFiles[index],
+                        url: controller.apiPhotosList[index],
+                        fit: BoxFit.fill,
+                      )
+                      : Icon(Icons.add, color: AppColors.grey, size: 40),
             ),
           ),
           if (index < controller.apiPhotosList.length)
@@ -86,26 +96,31 @@ class AddPropertyImageEdit extends StatelessWidget {
               bottom: 0,
               left: 1,
               child: InkWell(
-                onTap:() {
-                      controller.removeImage(index);
-                    } ,
+                onTap: () {
+                  controller.removeImage(index);
+                },
                 child: Container(
-                  margin:EdgeInsets.symmetric(horizontal: 4.w,vertical: 4.h),
-                  padding: EdgeInsets.symmetric(horizontal: 4.w,vertical: 4.h),
+                  margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h),
+                  padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h),
                   height: 24.h,
                   width: 24.w,
                   decoration: BoxDecoration(
                     boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withAlpha(75),
-                      spreadRadius: 0,
-                      blurRadius: 10,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
+                      BoxShadow(
+                        color: Colors.black.withAlpha(75),
+                        spreadRadius: 0,
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),),
-                  child:Icon(Icons.delete_outline, color: Colors.red,size: 16.h,),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(
+                    Icons.delete_outline,
+                    color: Colors.red,
+                    size: 16.h,
+                  ),
                 ),
               ),
             ),

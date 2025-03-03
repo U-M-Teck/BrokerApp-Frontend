@@ -208,6 +208,7 @@ class LayoutController extends GetxController {
 
     response.fold((l) async {
       getAllAdvertisementForUser();
+      getUserNotifications();
     }, (r) => _showError(r.message));
   }
 
@@ -501,7 +502,7 @@ class LayoutController extends GetxController {
     String assetPath =
         prime
             ? Assets
-                .assetsImagesPermiumAdPin // Premium marker
+                .assetsImagesPremiumAdPin // Premium marker
             : Assets.assetsImagesNormalAdPin; // Normal marker
 
     final ByteData bytes = await rootBundle.load(assetPath);
@@ -585,7 +586,7 @@ class LayoutController extends GetxController {
       );
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks.first;
-        return "${place.locality} ,${place.administrativeArea}";
+        return "${place.administrativeArea}";
       }
     } catch (e) {}
     return "العنوان غير موجود";

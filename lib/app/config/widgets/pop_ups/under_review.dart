@@ -7,32 +7,23 @@ import 'package:broker/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class UnderReview extends StatelessWidget {
   final Widget button;
-  const UnderReview({super.key,   required this.button});
+  final bool isLoading;
+  const UnderReview({super.key, required this.button, required this.isLoading});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      
-      contentPadding: EdgeInsets.symmetric(
-        horizontal: 20.0.w,
-        vertical: 20.h,
-      ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 20.h),
       title: Row(
         children: [
-          Text(
-            AppStrings.underReview,
-            style: AppTextStyle.font18black600,
-          ),
+          Text(AppStrings.underReview, style: AppTextStyle.font18black600),
           Spacer(),
           IconButton(
-              onPressed: () => Navigator.of(context).pop(),
-              icon: Icon(
-                Icons.close,
-                color: AppColors.grey,
-              ))
+            onPressed: () => isLoading ? null : Navigator.of(context).pop(),
+            icon: Icon(Icons.close, color: AppColors.grey),
+          ),
         ],
       ),
       content: Column(
@@ -51,9 +42,7 @@ class UnderReview extends StatelessWidget {
           ),
         ],
       ),
-      actions: [
-        button,
-      ],
+      actions: [button],
     );
   }
 }

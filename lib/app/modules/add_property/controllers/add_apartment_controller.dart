@@ -439,6 +439,7 @@ class AddApartmentController extends GetxController {
 
         Get.offAllNamed(Routes.home);
         Get.find<LayoutController>().getAllAdvertisementForUser();
+        Get.find<LayoutController>().getUserNotifications();
       }
     }, (r) => _showError(r.message));
   }

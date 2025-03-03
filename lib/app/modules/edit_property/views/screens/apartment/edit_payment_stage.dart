@@ -60,7 +60,10 @@ class EditPaymentStage extends GetView<EditApartmentController> {
                           color: AppColors.white,
                           size: 48,
                         ),
-                        Text(AppStrings.premiumAd, style: AppTextStyle.font18white400),
+                        Text(
+                          AppStrings.premiumAd,
+                          style: AppTextStyle.font18white400,
+                        ),
                       ],
                     ),
                   ),
@@ -107,10 +110,7 @@ class EditPaymentStage extends GetView<EditApartmentController> {
               AppStrings.appearsInGoldColor,
               style: AppTextStyle.font14black400,
             ),
-            Text(
-              AppStrings.showsRemotely,
-              style: AppTextStyle.font14black400,
-            ),
+            Text(AppStrings.showsRemotely, style: AppTextStyle.font14black400),
             Obx(() {
               return AppButton1(
                 title:
@@ -124,15 +124,27 @@ class EditPaymentStage extends GetView<EditApartmentController> {
                         context: context,
                         builder:
                             (s) => UnderReview(
-                              button: Obx(
-           () {
-            return AppButton1(
-              leading: controller.editAdvertisementLoading.value==true?CircularProgressIndicator():SizedBox.shrink(),
-              title: AppStrings.done, onPressed: () {
-                                controller.editAdvertisement();
-                              });
-          }
-        ),
+                              button: Obx(() {
+                                return AppButton1(
+                                  leading:
+                                      controller
+                                                  .editAdvertisementLoading
+                                                  .value ==
+                                              true
+                                          ? CircularProgressIndicator(color: Colors.white,)
+                                          : SizedBox.shrink(),
+                                  title:controller
+                                                  .editAdvertisementLoading
+                                                  .value ==
+                                              true
+                                          ?"": AppStrings.done,
+                                  onPressed: () {
+                                    controller.editAdvertisement();
+                                  },
+                                );
+                              }), isLoading: controller
+                                                  .editAdvertisementLoading
+                                                  .value,
                             ),
                       )
                       : null;

@@ -34,7 +34,7 @@ class Assets {
 
   static const String assetsImagesOnBoarding = "assets/images/on_boarding.jpg";
 
-  static const String assetsImagesPermiumAdPin = "assets/images/permium_ad_pin.png";
+  static const String assetsImagesPremiumAdPin = "assets/images/premium_ad_pin.png";
 
   static const String assetsImagesRateUs = "assets/images/rate_us.jpg";
 

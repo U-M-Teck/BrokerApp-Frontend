@@ -34,28 +34,37 @@ class PaymentScreen extends StatelessWidget {
                                               .createAdvertisementLoading
                                               .value ==
                                           true
-                                      ? CircularProgressIndicator(color: Colors.white,)
+                                      ? CircularProgressIndicator(
+                                        color: Colors.white,
+                                      )
                                       : SizedBox.shrink(),
-                              title: AppStrings.done,
+                              title:Get.find<AddApartmentController>()
+                                              .createAdvertisementLoading
+                                              .value ==
+                                          true
+                                      ?"": AppStrings.done,
                               onPressed: () {
                                 Get.find<AddApartmentController>()
                                     .createAdvertisement();
                               },
                             );
-                          }),
+                          }), isLoading: Get.find<AddApartmentController>()
+                                              .createAdvertisementLoading
+                                              .value,
                         ),
                   );
                   return NavigationDecision.prevent;
                 } else if (request.url.contains('success=false')) {
                   Get.snackbar("Payment Failed", "Failed");
                   Get.offAllNamed(Routes.home);
+                  return NavigationDecision.prevent;
                 }
-                return NavigationDecision.prevent;
+                return NavigationDecision.navigate;
               },
               onPageFinished: (String url) {
                 controller.runJavaScript('''
               document.forms[0]?.addEventListener('submit', function() {
-                window.flutter_inappwebview.callHandler('formSubmitted');
+                window.parent.postMessage('formSubmitted', '*');
               });
             ''');
               },

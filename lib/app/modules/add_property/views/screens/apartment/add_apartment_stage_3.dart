@@ -22,89 +22,98 @@ class AddApartmentStage3 extends GetView<AddApartmentController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(controller.selectedAdType.value == 1
-            ? AppStrings.addApartment
-            : controller.selectedAdType.value == 2
-                ? AppStrings.addVilla
-                : controller.selectedAdType.value == 3
-                    ? AppStrings.addChalet
-                    : controller.selectedAdType.value == 4
-                        ? AppStrings.addBuilding
-                        : controller.selectedAdType.value == 5
-                            ? AppStrings.addOffice
-                            : controller.selectedAdType.value == 6
-                                ? AppStrings.addShop
-                                : AppStrings.addLand,)),
+      appBar: AppBar(
+        title: Text(
+          controller.selectedAdType.value == 1
+              ? AppStrings.addApartment
+              : controller.selectedAdType.value == 2
+              ? AppStrings.addVilla
+              : controller.selectedAdType.value == 3
+              ? AppStrings.addChalet
+              : controller.selectedAdType.value == 4
+              ? AppStrings.addBuilding
+              : controller.selectedAdType.value == 5
+              ? AppStrings.addOffice
+              : controller.selectedAdType.value == 6
+              ? AppStrings.addShop
+              : AppStrings.addLand,
+        ),
+      ),
       body: Form(
         key: controller.thirdStageFormKey,
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
           children: [
-            Text(AppStrings.propertyPhotos,
-                style: AppTextStyle.font16black400),
+            Text(AppStrings.propertyPhotos, style: AppTextStyle.font16black400),
             16.hs,
             Obx(() {
               return Wrap(
-                runSpacing: 8.h,
+                spacing: 8.w,
+                runSpacing: 8.w,
                 children: List.generate(
                   controller.imageFiles.length < 3
                       ? 3
                       : controller.imageFiles.length,
-                  (index) => Padding(
-                    padding:  EdgeInsets.only(right: 10.0.w),
-                    child: AddPropertyImage(
-                      index: index,
-                      controller: controller,
-                    ),
+                  (index) => AddPropertyImage(
+                    index: index,
+                    controller: controller,
                   ),
                 ),
               );
             }),
             32.hs,
-            Obx(
-              () {
-                // Example: Enable/disable button based on imageFiles length
-                return OutlinedAppButton(
-                  onPressed: controller.imageFiles.length < 6
-                      ?()=> showModalBottomSheet(
-                                  constraints: BoxConstraints(maxWidth: double.infinity),
-          backgroundColor: Colors.white,
-                        context: context, builder: (builder)=>Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 20.h),
-                        child: Column(
-                          
-                                            mainAxisSize: MainAxisSize.min,
-                                            
-                                            children: [
-                        AppButton1(
-                          title: AppStrings.camera,
-                          onPressed: (){
-                            controller.addImages(ImageSource.camera);
-                                                        Get.back();
-                        
-                          },
-                        ),
-                        AppButton2(
-                          title: AppStrings.gallery,
-                          onPressed: (){
-                            controller.addImages(ImageSource.gallery);
-                                                        Get.back();
-                        
-                          },
-                        ),
-                                            ],
-                                          ),
-                      ))
-                      : null, // Disable button when 3 or more images
-                  title:AppStrings.addMorePhotos,
-                );
-              },
-            ),
-        
+            Obx(() {
+              // Example: Enable/disable button based on imageFiles length
+              return OutlinedAppButton(
+                onPressed:
+                    controller.imageFiles.length < 6
+                        ? () => showModalBottomSheet(
+                          constraints: BoxConstraints(
+                            maxWidth: double.infinity,
+                          ),
+                          backgroundColor: Colors.white,
+                          context: context,
+                          builder:
+                              (builder) => Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 20.h,
+                                ),
+                                child: Column(
+                                  spacing: 18.h,
+                                  mainAxisSize: MainAxisSize.min,
+
+                                  children: [
+                                    AppButton1(
+                                      title: AppStrings.camera,
+                                      onPressed: () {
+                                        controller.addImages(
+                                          ImageSource.camera,
+                                        );
+                                        Get.back();
+                                      },
+                                    ),
+                                    AppButton2(
+                                      title: AppStrings.gallery,
+                                      onPressed: () {
+                                        controller.addImages(
+                                          ImageSource.gallery,
+                                        );
+                                        Get.back();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                        )
+                        : null, // Disable button when 3 or more images
+                title: AppStrings.addMorePhotos,
+              );
+            }),
+
             10.hs,
-            Text(AppStrings.addClearImages,
-                style: AppTextStyle.font12grey400),
-        
+            Text(AppStrings.addClearImages, style: AppTextStyle.font12grey400),
+
             // وصف العقار
             20.hs,
             Row(
@@ -116,33 +125,35 @@ class AddApartmentStage3 extends GetView<AddApartmentController> {
                   color: AppColors.grey,
                 ),
                 8.ws,
-                Text(AppStrings.propertyDescription, style: AppTextStyle.font16black600),
+                Text(
+                  AppStrings.propertyDescription,
+                  style: AppTextStyle.font16black600,
+                ),
               ],
             ),
             16.hs,
-            DescriptionField(
-              controller: controller.descriptionController),
+            DescriptionField(controller: controller.descriptionController),
             20.hs,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                    child: OutlinedAppButton(
-                  title: AppStrings.back,
-                  onPressed: () {
-                    Navigator.pop(
-                      context,
-                    );
-                  },
-                )),
+                  child: OutlinedAppButton(
+                    title: AppStrings.back,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
                 11.ws,
                 Expanded(
-                    child: AppButton1(
-                  title: AppStrings.next,
-                  onPressed: () {
-                    controller.checkThirdStageForm();
-                  },
-                ))
+                  child: AppButton1(
+                    title: AppStrings.next,
+                    onPressed: () {
+                      controller.checkThirdStageForm();
+                    },
+                  ),
+                ),
               ],
             ),
           ],

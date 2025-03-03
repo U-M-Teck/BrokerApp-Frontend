@@ -83,6 +83,7 @@ class EditApartmentStage3 extends GetView<EditApartmentController> {
                                     vertical: 20.h,
                                   ),
                                   child: Column(
+                                    spacing: 18.h,
                                     mainAxisSize: MainAxisSize.min,
 
                                     children: [
@@ -97,7 +98,7 @@ class EditApartmentStage3 extends GetView<EditApartmentController> {
                                         },
                                       ),
                                       AppButton2(
-                                        title: "Gallery",
+                                        title: AppStrings.gallery,
                                         onPressed: () {
                                           controller.addImages(
                                             controller.apiPhotosList.length,

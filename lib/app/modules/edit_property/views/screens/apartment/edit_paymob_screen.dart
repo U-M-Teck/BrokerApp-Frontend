@@ -34,30 +34,41 @@ class EditPaymobScreen extends StatelessWidget {
                                               .editAdvertisementLoading
                                               .value ==
                                           true
-                                      ? CircularProgressIndicator(color: Colors.white,)
+                                      ? CircularProgressIndicator(
+                                        color: Colors.white,
+                                      )
                                       : SizedBox.shrink(),
-                              title: AppStrings.done,
+                              title:
+                                  Get.find<EditApartmentController>()
+                                              .editAdvertisementLoading
+                                              .value ==
+                                          true
+                                      ? ""
+                                      : AppStrings.done,
                               onPressed: () {
                                 Get.find<EditApartmentController>()
                                     .editAdvertisement();
                               },
                             );
                           }),
+                          isLoading:
+                              Get.find<EditApartmentController>()
+                                  .editAdvertisementLoading
+                                  .value,
                         ),
                   );
                   return NavigationDecision.prevent;
                 } else if (request.url.contains('success=false')) {
-                  Get.snackbar("Failed", "Payment Failed");
+                  Get.snackbar("Payment Failed", "Failed");
                   Get.offAllNamed(Routes.home);
+                  return NavigationDecision.prevent;
                 }
-
-                return NavigationDecision.prevent;
+                return NavigationDecision.navigate;
               },
               onPageFinished: (String url) {
-                // Enable JavaScript form submission
                 controller.runJavaScript('''
               document.forms[0]?.addEventListener('submit', function() {
-                window.flutter_inappwebview.callHandler('formSubmitted');
+                window.parent.postMessage('formSubmitted', '*');
               });
             ''');
               },

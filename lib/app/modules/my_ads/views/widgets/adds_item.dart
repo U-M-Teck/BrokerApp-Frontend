@@ -88,9 +88,20 @@ class AddsItem extends StatelessWidget {
                       color: AppColors.grey,
                     ),
                     4.ws,
-                    Text(
-                      AppStrings.location,
-                      style: AppTextStyle.font14grey400,
+                    FutureBuilder<String>(
+                      future: Get.find<LayoutController>().getAddressFromLatLng(advertisements?.latitude, advertisements?.longitude),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Text("جاري التحميل...", style: AppTextStyle.font12black400);
+                        } else if (snapshot.hasError) {
+                          return Text("خطأ في التحميل", style: AppTextStyle.font12black400);
+                        } else {
+                          return Text(
+                            snapshot.data ?? "موقع غير متوفر",
+                            style: AppTextStyle.font12black400,
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

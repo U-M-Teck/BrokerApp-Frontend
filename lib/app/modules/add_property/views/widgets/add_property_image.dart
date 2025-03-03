@@ -28,22 +28,34 @@ class AddPropertyImage extends StatelessWidget {
             InkWell(
               onTap: () {
                 if (controller.imageFiles.length < 3) {
-                  showBottomSheet(context: context, builder: (builder)=>Column(
-                    children: [
-                      AppButton1(
-                        title: AppStrings.camera,
-                        onPressed: (){
-                          controller.addImages(ImageSource.camera);
-                        },
+                  showModalBottomSheet(
+                    constraints: BoxConstraints(maxWidth: double.infinity),
+                    backgroundColor: Colors.white,
+                    context: context, 
+                    builder: (builder) => Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                      child: Column(
+                        spacing: 18.h,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AppButton1(
+                            title: AppStrings.camera,
+                            onPressed: () {
+                              controller.addImages(ImageSource.camera);
+                              Get.back();
+                            },
+                          ),
+                          AppButton2(
+                            title: AppStrings.gallery,
+                            onPressed: () {
+                              controller.addImages(ImageSource.gallery);
+                              Get.back();
+                            },
+                          ),
+                        ],
                       ),
-                      AppButton2(
-                        title: AppStrings.gallery,
-                        onPressed: (){
-                          controller.addImages(ImageSource.gallery);
-                        },
-                      ),
-                    ],
-                  ));
+                    )
+                  );
                 }
               },
               child: Container(

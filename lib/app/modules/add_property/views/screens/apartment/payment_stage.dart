@@ -21,7 +21,6 @@ class PaymentStage extends GetView<AddApartmentController> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 24.h,
           children: [
             Align(
@@ -32,8 +31,9 @@ class PaymentStage extends GetView<AddApartmentController> {
               ),
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 16.w,
+              spacing: 10.w,
               children: [
                 InkWell(
                   onTap: () {
@@ -52,6 +52,7 @@ class PaymentStage extends GetView<AddApartmentController> {
                       vertical: 40.h,
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       spacing: 8.h,
                       children: [
@@ -93,24 +94,30 @@ class PaymentStage extends GetView<AddApartmentController> {
                 ),
               ],
             ),
-            Row(
+            Column(
+              spacing: 24.h,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.star, color: AppColors.grey),
-                Text(
-                  AppStrings.premiumAdAdvantages,
-                  style: AppTextStyle.font16black400,
+                Row(
+                  children: [
+                    Icon(Icons.star, color: AppColors.grey),
+                    Text(
+                      AppStrings.premiumAdAdvantages,
+                      style: AppTextStyle.font16black400,
+                    ),
+                  ],
                 ),
+                Text(
+                  AppStrings.increaseInViewership,
+                  style: AppTextStyle.font14black400,
+                ),
+                Text(
+                  AppStrings.appearsInGoldColor,
+                  style: AppTextStyle.font14black400,
+                ),
+                Text(AppStrings.showsRemotely, style: AppTextStyle.font14black400),
               ],
             ),
-            Text(
-              AppStrings.increaseInViewership,
-              style: AppTextStyle.font14black400,
-            ),
-            Text(
-              AppStrings.appearsInGoldColor,
-              style: AppTextStyle.font14black400,
-            ),
-            Text(AppStrings.showsRemotely, style: AppTextStyle.font14black400),
             Obx(() {
               return AppButton1(
                 title:
@@ -131,14 +138,20 @@ class PaymentStage extends GetView<AddApartmentController> {
                                                   .createAdvertisementLoading
                                                   .value ==
                                               true
-                                          ? CircularProgressIndicator()
+                                          ? CircularProgressIndicator(color: Colors.white,)
                                           : SizedBox.shrink(),
-                                  title: AppStrings.done,
+                                  title:controller
+                                                  .createAdvertisementLoading
+                                                  .value ==
+                                              true
+                                          ?"": AppStrings.done,
                                   onPressed: () {
                                     controller.createAdvertisement();
                                   },
                                 );
-                              }),
+                              }), isLoading: controller
+                                                  .createAdvertisementLoading
+                                                  .value,
                             ),
                       )
                       : null;

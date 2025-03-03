@@ -30,13 +30,19 @@ class MyAdsView extends GetView<MyAdsController> {
               drawer: DrawerWidget(),
               appBar: AppBar(
                 actions: [
-                  TextButton(
+                 Get.find<LayoutController>()
+                            .getAllAdsForUserModel
+                            .value
+                            ?.advertisements
+                            ?.isNotEmpty ??
+                        false
+                    ? TextButton(
                       onPressed: () {
                         showDialog(
                             context: context,
                             builder: (context) => ClearAllAds());
                       },
-                      child: Text(AppStrings.clearAll))
+                      child: Text(AppStrings.clearAll)):SizedBox.shrink()
                 ],
                 leading: IconButton(
                   onPressed: () {

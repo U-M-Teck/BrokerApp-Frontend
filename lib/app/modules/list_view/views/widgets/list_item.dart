@@ -49,12 +49,12 @@ class ListItem extends StatelessWidget {
                     style: AppTextStyle.font14black600,
                   ),
                 ),
-                8.hs,
+                15.hs,
                 Text(
                   advertisements?.price??"",
-                  style: AppTextStyle.font16secondary600,
+                  style: AppTextStyle.font16primary600,
                 ),
-                8.hs,
+                15.hs,
                 // Row(
                 //   children: [
                 //     AppImageView(

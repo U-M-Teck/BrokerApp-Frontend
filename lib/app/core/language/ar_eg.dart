@@ -265,5 +265,5 @@ Map<String, String> ar = {
   AppStrings.pleaseEnterLevel: 'برجاء ادخال الطابق',
   AppStrings.pleaseEnterPrice: 'برجاء ادخال السعر',
     AppStrings.camera: 'الكاميرا',
-  AppStrings.gallery: 'المعرض',
+  AppStrings.gallery: 'معرض الصور',
 };
