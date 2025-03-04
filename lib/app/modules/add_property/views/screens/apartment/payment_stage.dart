@@ -146,7 +146,11 @@ class PaymentStage extends GetView<AddApartmentController> {
                                               true
                                           ?"": AppStrings.done,
                                   onPressed: () {
-                                    controller.createAdvertisement();
+                                   controller
+                                                  .createAdvertisementLoading
+                                                  .value ==
+                                              true
+                                          ?null: controller.createAdvertisement();
                                   },
                                 );
                               }), isLoading: controller

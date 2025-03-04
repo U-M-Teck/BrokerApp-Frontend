@@ -139,7 +139,11 @@ class EditPaymentStage extends GetView<EditApartmentController> {
                                               true
                                           ?"": AppStrings.done,
                                   onPressed: () {
-                                    controller.editAdvertisement();
+                                   controller
+                                                  .editAdvertisementLoading
+                                                  .value ==
+                                              true
+                                          ?null: controller.editAdvertisement();
                                   },
                                 );
                               }), isLoading: controller

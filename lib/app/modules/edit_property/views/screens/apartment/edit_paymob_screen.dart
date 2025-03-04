@@ -46,7 +46,12 @@ class EditPaymobScreen extends StatelessWidget {
                                       ? ""
                                       : AppStrings.done,
                               onPressed: () {
-                                Get.find<EditApartmentController>()
+                              Get.find<EditApartmentController>()
+                                              .editAdvertisementLoading
+                                              .value ==
+                                          true
+                                      ? null
+                                      :  Get.find<EditApartmentController>()
                                     .editAdvertisement();
                               },
                             );

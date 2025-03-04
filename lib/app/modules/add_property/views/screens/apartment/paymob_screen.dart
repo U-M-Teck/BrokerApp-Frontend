@@ -44,7 +44,11 @@ class PaymentScreen extends StatelessWidget {
                                           true
                                       ?"": AppStrings.done,
                               onPressed: () {
-                                Get.find<AddApartmentController>()
+                               Get.find<AddApartmentController>()
+                                              .createAdvertisementLoading
+                                              .value ==
+                                          true
+                                      ?null: Get.find<AddApartmentController>()
                                     .createAdvertisement();
                               },
                             );
