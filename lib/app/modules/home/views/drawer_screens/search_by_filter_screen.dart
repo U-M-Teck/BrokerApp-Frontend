@@ -1,7 +1,6 @@
 import 'package:broker/app/config/style/app_text_styles.dart';
 import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/buttons/button_1.dart';
-import 'package:broker/app/config/widgets/buttons/gps_button.dart ';
 import 'package:broker/app/modules/add_property/views/widgets/check_widget.dart';
 import 'package:broker/app/modules/add_property/views/widgets/drop_down_widget.dart';
 import 'package:broker/app/modules/home/views/widgets/selection_row_widget.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/utils/app_utils/app_strings.dart';
+import '../../../../config/widgets/buttons/gps_button.dart';
 
 class SearchByFilterScreen extends StatelessWidget {
   const SearchByFilterScreen({super.key});

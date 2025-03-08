@@ -3,7 +3,7 @@
     <application
         android:label="broker"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
           <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyASFpQ0BJ99BZ-b19_2tGAka4sdB8E7tkE" />
