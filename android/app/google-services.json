@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1081363475363:android:bfcad91a5d727da1664816",
         "android_client_info": {
-          "package_name": "com.example.broker"
+          "package_name": "com.nahrdev.broker"
         }
       },
       "oauth_client": [
