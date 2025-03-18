@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
-import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/core/heplers/file_helper.dart';
 import 'package:broker/app/modules/add_property/data/models/get_all_durations_model.dart';
 import 'package:broker/app/modules/add_property/data/models/get_all_governates_model.dart';
@@ -11,8 +11,6 @@ import 'package:broker/app/modules/add_property/data/models/get_url_model.dart';
 import 'package:broker/app/modules/add_property/data/provider/add_property_provider.dart';
 import 'package:broker/app/modules/layout/controllers/layout_controller.dart';
 import 'package:broker/app/routes/app_pages.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
@@ -145,6 +143,7 @@ class AddApartmentController extends GetxController {
           "Error",
           AppStrings.pleaseSelectLocation,
           snackPosition: SnackPosition.BOTTOM,
+          colorText: AppColors.primary
         );
       } else {
         Get.toNamed(Routes.addApartmentStage2);
@@ -167,6 +166,8 @@ class AddApartmentController extends GetxController {
           "Error",
           AppStrings.pleaseAddAtLeastOneImage,
           snackPosition: SnackPosition.BOTTOM,
+                    colorText: AppColors.primary
+
         );
       } else {
         Get.toNamed(Routes.addApartmentStage4);
@@ -500,117 +501,136 @@ class AddApartmentController extends GetxController {
 
         if (placemarks.isNotEmpty) {
           Placemark place = placemarks.first;
-          // Build address only with non-null and non-empty components
-          List<String> addressParts =
-              [
-                place.street,
-                place.locality,
-              ].whereType<String>().where((part) => part.isNotEmpty).toList();
+          List<String> addressParts = [
+            place.street,
+            place.locality,
+          ].whereType<String>().where((part) => part.isNotEmpty).toList();
 
           selectedAddress.value = addressParts.join(', ');
 
-          // Set initial text for street and district controllers
           if (place.street != null) {
             streetController.text = place.street!;
           }
-          if (place.subLocality != null) {
+          if (place.locality != null) {
             districtController.text = place.locality!;
           }
         } else {
-          selectedAddress.value = "No address found for this location";
+          selectedAddress.value = "لم يتم العثور على عنوان لهذا الموقع";
         }
       } catch (e) {
-        // Log the actual error
-        selectedAddress.value = "Could not fetch address. Please try again.";
+        selectedAddress.value = "تعذر جلب العنوان. يرجى المحاولة مرة أخرى.";
       }
     }
 
     // Get initial address
     getAddressFromLatLng(initialPosition);
 
-    Get.defaultDialog(
-      titlePadding: EdgeInsets.zero,
-      title: "",
-      content: Column(
-        children: [
-          Obx(() {
-            return TextFormField(
-              onTap: () {
-                searchPlace(context);
+    Get.to(
+      () => Scaffold(
+        appBar: AppBar(
+          title: Text(AppStrings.selectLocation),
+          actions: [
+            IconButton(
+              onPressed: () {
+                currentLocation.value = Position(
+                  latitude: selectedPosition.value.latitude,
+                  longitude: selectedPosition.value.longitude,
+                  timestamp: DateTime.now(),
+                  accuracy: 1,
+                  altitude: 0,
+                  heading: 0,
+                  speed: 0,
+                  speedAccuracy: 0,
+                  altitudeAccuracy: 0,
+                  headingAccuracy: 0,
+                );
+                Get.back();
               },
-              controller: TextEditingController(text: address.value),
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.search_rounded),
-              ),
-              readOnly: true,
-            );
-          }),
-          SizedBox(
-            height: 400.h,
-            width: double.infinity,
-            child: Obx(
-              () => GoogleMap(
-                
-                initialCameraPosition: initialCameraPosition,
-                onMapCreated: onMapCreate,
-                onCameraIdle: () async {
-                  getAddress();
-                },
-                onCameraMove: onCameraMove,
-                myLocationEnabled: true,
-                mapType:
-                    MapType.normal, // Use MapType.none for minimal rendering
-                trafficEnabled: false,
-                buildingsEnabled: false,
-                indoorViewEnabled: false,
-                
-                // padding: EdgeInsets.only(bottom: 140.h),
-                markers: {
-                  Marker(
-                    markerId: MarkerId("selected"),
-                    position: selectedPosition.value,
+              icon: const Icon(Icons.check),
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(8.w),
+              child: Obx(() {
+                return TextFormField(
+                  onTap: () {
+                    searchPlace(context);
+                  },
+                  controller: TextEditingController(text: address.value),
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search_rounded),
+                    hintText: "ابحث عن موقع",
                   ),
-                },
-                onTap: (LatLng latLng) {
-                  selectedPosition.value = latLng;
-                  getAddressFromLatLng(latLng); // Update address
-                },
-                zoomGesturesEnabled: true,
-                scrollGesturesEnabled: true,
-                rotateGesturesEnabled: true,
-                tiltGesturesEnabled: true,
-                compassEnabled: false,
-                myLocationButtonEnabled: true,
-                zoomControlsEnabled: true,
-                gestureRecognizers:
-                    <Factory<OneSequenceGestureRecognizer>>{}.toSet(),
-                // gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{}..add(
-                //     Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
+                  readOnly: true,
+                );
+              }),
+            ),
+            Expanded(
+              child: Stack(
+                children: [
+                  Obx(
+                    () => GoogleMap(
+                      initialCameraPosition: initialCameraPosition,
+                      onMapCreated: onMapCreate,
+                      onCameraIdle: () async {
+                        getAddress();
+                      },
+                      onCameraMove: onCameraMove,
+                      myLocationEnabled: true,
+                      mapType: MapType.normal,
+                      trafficEnabled: false,
+                      buildingsEnabled: false,
+                      indoorViewEnabled: false,
+                      markers: {
+                        Marker(
+                          markerId: const MarkerId("selected"),
+                          position: selectedPosition.value,
+                        ),
+                      },
+                      onTap: (LatLng latLng) {
+                        selectedPosition.value = latLng;
+                        getAddressFromLatLng(latLng);
+                      },
+                      zoomGesturesEnabled: true,
+                      scrollGesturesEnabled: true,
+                      rotateGesturesEnabled: true,
+                      tiltGesturesEnabled: true,
+                      compassEnabled: false,
+                      myLocationButtonEnabled: true,
+                      zoomControlsEnabled: true,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 16.h,
+                    left: 60.w,
+                    right: 60.w,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 20.h),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(75),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Obx(() => Text(
+                        selectedAddress.value,
+                        style: TextStyle(fontSize: 14.sp),
+                      )),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          10.hs,
-          Obx(() => Text(selectedAddress.value)), // Display address
-          10.hs,
-          ElevatedButton(
-            onPressed: () {
-              currentLocation.value = Position(
-                latitude: selectedPosition.value.latitude,
-                longitude: selectedPosition.value.longitude,
-                timestamp: DateTime.now(),
-                accuracy: 1,
-                altitude: 0,
-                heading: 0,
-                speed: 0,
-                speedAccuracy: 0,
-                altitudeAccuracy: 0,
-                headingAccuracy: 0,
-              );
-              Get.back();
-            },
-            child: Text(AppStrings.confirmLocation),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -695,7 +715,7 @@ class AddApartmentController extends GetxController {
 
       response.fold((l) {}, (r) => _showError(r.message));
     } catch (e) {
-      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM,colorText: AppColors.primary);
     }
   }
 
@@ -717,12 +737,13 @@ class AddApartmentController extends GetxController {
         }
       }, (r) => _showError(r.message));
     } catch (e) {
-      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM,          colorText: AppColors.primary
+);
     }
   }
 
   void _showError(String message) {
-    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM,colorText: AppColors.primary);
   }
 
   void clearData() {

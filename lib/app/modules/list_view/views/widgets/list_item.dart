@@ -36,7 +36,7 @@ class ListItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           color: Colors.white,
         ),
-        padding: EdgeInsets.symmetric(horizontal: 24.0.w, vertical: 10.h),
+        padding: EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 10.h),
         child: Row(
           children: [
             Column(

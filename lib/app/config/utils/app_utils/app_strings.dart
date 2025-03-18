@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 class AppStrings {
     static String get all => "all".tr;
+    static String get disconnected => "disconnected".tr;
     static String get camera => "camera".tr;
     static String get gallery => "gallery".tr;
   static String get apartmentsForSale => "apartments_for_sale".tr;

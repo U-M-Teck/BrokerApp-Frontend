@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../config/style/app_color.dart';
 import '../../../config/utils/app_utils/app_utils.dart';
 import '../../../core/services/storage_service.dart';
 import '../../add_property/data/models/get_all_governates_model.dart';
@@ -363,6 +364,8 @@ class LayoutController extends GetxController {
         "Error",
         "Could not launch WhatsApp",
         snackPosition: SnackPosition.BOTTOM,
+                  colorText: AppColors.primary
+
       );
     }
   }
@@ -377,6 +380,8 @@ class LayoutController extends GetxController {
         "Error",
         "Could not place call",
         snackPosition: SnackPosition.BOTTOM,
+                  colorText: AppColors.primary
+
       );
     }
   }
@@ -514,10 +519,10 @@ class LayoutController extends GetxController {
 
     final ui.PictureRecorder recorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(recorder);
-    final Paint paint = Paint();
+    final Paint paint = Paint()..filterQuality=FilterQuality.high;
 
     // ✅ Adjust size for prime markers (1.5x bigger)
-    double scaleFactor = prime ? 1.5 : 1.0;
+    double scaleFactor = prime ? 1.7 : 1.2;
     int newWidth = (image.width * scaleFactor).toInt();
     int newHeight = (image.height * scaleFactor).toInt();
 
@@ -558,7 +563,9 @@ class LayoutController extends GetxController {
   }
 
   void _showError(String message) {
-    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM,
+              colorText: AppColors.primary
+);
   }
 
   Future<void> getAllGovernates() async {

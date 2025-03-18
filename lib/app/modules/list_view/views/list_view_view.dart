@@ -33,6 +33,7 @@ class ListViewView extends GetView<ListViewController> {
                 ),
               ),
               body: ListView.separated(
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
                 itemBuilder: (context, index) => ListItem(
                   advertisements: Get.find<LayoutController>()
                       .allAdsModel

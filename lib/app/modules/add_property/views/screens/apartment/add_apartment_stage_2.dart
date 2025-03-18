@@ -187,13 +187,18 @@ class AddApartmentStage2 extends GetView<AddApartmentController> {
                           controller.selectedAdType.value == 2 ||
                           controller.selectedAdType.value == 3
                       ? Expanded(
-                          child: CheckWidget(
-                              hasSpacer: controller.selectedAdType.value == 1
-                                  ? false
-                                  : true,
-                              controller: controller.hasParking,
-                              icon: Assets.assetsSvgParking,
-                              title: AppStrings.parking),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: CheckWidget(
+                                    hasSpacer: true,
+                                    controller: controller.hasParking,
+                                    icon: Assets.assetsSvgParking,
+                                    title: AppStrings.parking),
+                              ),
+                              Expanded(child: SizedBox())
+                            ],
+                          ),
                         )
                       : SizedBox(),
                   controller.selectedAdType.value == 2 ||
@@ -217,7 +222,6 @@ class AddApartmentStage2 extends GetView<AddApartmentController> {
                               icon: Assets.assetsSvgGarden,
                               title: AppStrings.garden),
                         ),
-                        8.ws,
                         Obx(() {
                           return Expanded(
                             child: TextFormField(
@@ -390,6 +394,7 @@ class AddApartmentStage2 extends GetView<AddApartmentController> {
               ),
             ],
           ),
+          
           Row(
             children: [
               Expanded(
@@ -406,11 +411,18 @@ class AddApartmentStage2 extends GetView<AddApartmentController> {
               ),
             ],
           ),
-          CheckWidget(
-              hasSpacer: false,
-              controller: controller.hasInternet,
-              icon: Assets.assetsSvgInternet,
-              title: AppStrings.internet),
+          Row(
+            children: [
+              Expanded(
+                child: CheckWidget(
+                    controller: controller.hasInternet,
+                    icon: Assets.assetsSvgInternet,
+                    title: AppStrings.internet),
+              ),
+              Expanded(
+                child: SizedBox()),
+            ],
+          ),
         ],
       );
   Widget _buildingPartitionsSelection() => Column(

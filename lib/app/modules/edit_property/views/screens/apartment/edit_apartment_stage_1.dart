@@ -6,7 +6,6 @@ import 'package:broker/app/config/widgets/buttons/button_1.dart';
 import 'package:broker/app/config/widgets/buttons/gps_button.dart';
 import 'package:broker/app/core/heplers/validation_form.dart';
 import 'package:broker/app/modules/edit_property/controllers/edit_apartment_controller.dart';
-import 'package:broker/app/modules/edit_property/views/widgets/selection_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,12 +13,13 @@ import 'package:get/get.dart';
 
 import '../../../../../config/widgets/buttons/outlined_app_button.dart';
 import '../../widgets/drop_down_widget.dart';
+import '../../widgets/selection_widget.dart';
 
 class EditApartmentStage1 extends GetView<EditApartmentController> {
   const EditApartmentStage1({super.key});
 
   @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
     return Obx(
        () {
         return Stack(
@@ -59,20 +59,23 @@ class EditApartmentStage1 extends GetView<EditApartmentController> {
                       style: AppTextStyle.font16black400,
                     ),
                     EditSelectionWidget(
-                        initialValue:
-                            controller.advDetailsModel.value?.agreementStatus ?? 0,
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          controller.selectedRoomLabel.value =
+                              value; 
+                        },
                         controller: controller.selectedContractType,
                         listLenght: 2,
                         labels: [AppStrings.forSell, AppStrings.forRent],
                         title: "",
-                        icon: ""),
+                        icon: "",
+                                                initialValue:
+                            controller.advDetailsModel.value?.agreementStatus ?? 0,),
                     32.hs,
                     TextFormField(
                       validator: ValidationForm.validateTitle,
                       controller: controller.titleController,
                       decoration: InputDecoration(
-                        labelText: 'Ad Title',
+                        labelText: AppStrings.adTitle,
                       ),
                     ),
                     8.hs,
@@ -82,6 +85,8 @@ class EditApartmentStage1 extends GetView<EditApartmentController> {
                     ),
                     20.hs,
                     EditDropDownWidget(
+                                            initialId: controller.selectedGovernateId.value ?? 2,
+
                       items: {
                         for (var gov
                             in controller.allGovernates.value?.governorates ?? [])
@@ -90,8 +95,31 @@ class EditApartmentStage1 extends GetView<EditApartmentController> {
                       controller: controller.selectedGovernate,
                       selectedIdController: controller.selectedGovernateId, // Store ID
                       label: AppStrings.governate,
-                      initialId: controller.selectedGovernateId.value ?? 2,
                     ),
+                    20.hs,
+                    Obx(() {
+                      return Row(
+                        children: [
+                          GpsButton(
+                            onPressed: () {
+                              controller.showLocationPicker(context);
+                            },
+                          ),
+                          16.ws,
+                          controller.currentLocation.value == null
+                              ? Text(
+                                  'Please use the GPS for Accurate location',
+                                  style: AppTextStyle.font12grey400,
+                                )
+                              : Expanded(
+                                  child: Text(
+                                  controller.selectedAddress.value,
+                                  style: AppTextStyle.font12grey400
+                                      .copyWith(height: 1.3.h),
+                                ))
+                        ],
+                      );
+                    }),
                     20.hs,
                     TextFormField(
                       validator: ValidationForm.validateStreet,
@@ -111,34 +139,7 @@ class EditApartmentStage1 extends GetView<EditApartmentController> {
                       controller: controller.buildingNoController,
                     ),
                     20.hs,
-                    Obx(() {
-                      return Row(
-                        children: [
-                          GpsButton(
-                            onPressed: () {
-                              controller.showLocationPicker(context);
-                            },
-                          ),
-                          16.ws,
-                          controller.currentLocation.value == null
-                              ? Text(
-                                  'Please use the GPS for Accurate location',
-                                  style: AppTextStyle.font12grey400,
-                                )
-                              : Obx(
-                                 () {
-                                  return Expanded(
-                                      child: Text(
-                                      controller.selectedAddress.value,
-                                      style: AppTextStyle.font12grey400
-                                          .copyWith(height: 1.3.h),
-                                    ));
-                                }
-                              )
-                        ],
-                      );
-                    }),
-                    20.hs,
+                    
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -166,7 +167,9 @@ class EditApartmentStage1 extends GetView<EditApartmentController> {
                 ),
               ),
             ),
-            controller.getAdsDetailsLodaing.value==true?LoadingWidget():SizedBox.shrink()
+                    controller.getAdsDetailsLodaing.value == true
+              ? const LoadingWidget()
+              : const SizedBox()
           ],
         );
       }

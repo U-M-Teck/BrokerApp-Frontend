@@ -2,6 +2,7 @@ import '../../config/utils/app_utils/app_strings.dart';
 
 Map<String, String> en = {
   AppStrings.all: "All",
+  AppStrings.disconnected: "Oops you are disconnected!",
   AppStrings.apartmentsForSale: "Apartments for Sale",
   AppStrings.apartmentsForRent: "Apartments for Rent",
   AppStrings.villasForSale: "Villas for Sale",

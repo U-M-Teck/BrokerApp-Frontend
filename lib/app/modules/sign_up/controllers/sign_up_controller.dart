@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
+import '../../../config/style/app_color.dart';
 import '../../../config/utils/app_utils/app_utils.dart';
 import '../../../routes/app_pages.dart';
 
@@ -28,7 +29,9 @@ class SignUpController extends GetxController {
       personalDataKey.currentState?.save();
       return true;
     }
-    Get.snackbar("Error", "Please fix the errors in the form");
+    Get.snackbar("Error", "Please fix the errors in the form",
+              colorText: AppColors.primary
+);
     return false;
   }
 
@@ -61,7 +64,9 @@ class SignUpController extends GetxController {
         if (selectedIndex.value == 0) {
           final response = await _signUpProvider.createSeeker(data: signUpData);
           if (response.data?.success == true) {
-            Get.snackbar("Success", "Account created successfully");
+            Get.snackbar("Success", "Account created successfully",
+                      colorText: AppColors.primary
+);
             Get.offAllNamed(Routes.signIn);
           } else {
             _showError(response.data?.error ?? "");
@@ -69,7 +74,8 @@ class SignUpController extends GetxController {
         } else if (selectedIndex.value == 1) {
           final response = await _signUpProvider.createOwner(data: signUpData);
           if (response.data?.success == true) {
-            Get.snackbar("Success", "Account created successfully");
+            Get.snackbar("Success", "Account created successfully",          colorText: AppColors.primary
+);
             Get.offAllNamed(Routes.signIn);
           } else {
             _showError(response.data?.error ?? "");
@@ -77,7 +83,8 @@ class SignUpController extends GetxController {
         } else {
           final response = await _signUpProvider.createBroker(data: signUpData);
           if (response.data?.success == true) {
-            Get.snackbar("Success", "Account created successfully");
+            Get.snackbar("Success", "Account created successfully",          colorText: AppColors.primary
+);
             Get.offAllNamed(Routes.signIn);
           } else {
             _showError(response.data?.error ?? "");
@@ -139,7 +146,9 @@ class SignUpController extends GetxController {
   }
 
   void _showError(String message) {
-    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM,
+              colorText: AppColors.primary
+);
   }
 
   @override

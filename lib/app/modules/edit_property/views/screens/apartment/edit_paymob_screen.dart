@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../../config/style/app_color.dart';
 import '../../../../../config/utils/app_utils/app_strings.dart';
 import '../../../../../config/widgets/buttons/button_1.dart';
 
@@ -64,7 +65,8 @@ class EditPaymobScreen extends StatelessWidget {
                   );
                   return NavigationDecision.prevent;
                 } else if (request.url.contains('success=false')) {
-                  Get.snackbar("Payment Failed", "Failed");
+                  Get.snackbar("Payment Failed", "Failed",          colorText: AppColors.primary
+);
                   Get.offAllNamed(Routes.home);
                   return NavigationDecision.prevent;
                 }

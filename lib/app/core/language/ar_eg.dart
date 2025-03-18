@@ -5,6 +5,8 @@ Map<String, String> ar = {
   AppStrings.pending: "قيد الانتظار",
 
     AppStrings.all: "الكل",
+  AppStrings.disconnected: "للاسف انت غير متصل بالانترنت",
+
   AppStrings.apartmentsForSale: "شقق للبيع",
   AppStrings.apartmentsForRent: "شقق للإيجار",
   AppStrings.villasForSale: "فيلات للبيع",

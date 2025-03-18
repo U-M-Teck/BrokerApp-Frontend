@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
+import '../../../config/style/app_color.dart';
 import '../../../config/utils/app_utils/app_utils.dart';
 import '../../../core/services/storage_service.dart';
 import '../../../routes/app_pages.dart';
@@ -117,7 +118,9 @@ class SignInController extends GetxController {
 
   // Helper to show error messages
   void _showError(String message) {
-    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM,
+              colorText: AppColors.primary
+);
   }
 
   // Increment counter

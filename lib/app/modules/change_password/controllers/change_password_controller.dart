@@ -2,6 +2,7 @@ import 'package:broker/app/modules/change_password/data/provider/change_password
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../config/style/app_color.dart';
 import '../../../config/utils/app_utils/app_utils.dart';
 import '../../../routes/app_pages.dart';
 
@@ -22,7 +23,8 @@ class ChangePasswordController extends GetxController {
       formKey.currentState?.save();
       return true;
     }
-    Get.snackbar("Error", "Please fix the errors in the form");
+    Get.snackbar("Error", "Please fix the errors in the form",          colorText: AppColors.primary
+);
     return false;
   }
 
@@ -31,7 +33,8 @@ class ChangePasswordController extends GetxController {
       formKey.currentState?.save();
       return true;
     }
-    Get.snackbar("Error", "Please fix the errors in the form");
+    Get.snackbar("Error", "Please fix the errors in the form",          colorText: AppColors.primary
+);
     return false;
   }
 
@@ -54,7 +57,8 @@ class ChangePasswordController extends GetxController {
         if (response.statusCode == 200) {
           AppUtils.resetCode = response.data?.result;
           AppUtils.email = emailController.text;
-          Get.snackbar("Success", "Code sent: ${response.data?.result}");
+          Get.snackbar("Success", "Code sent: ${response.data?.result}",          colorText: AppColors.primary
+);
           Get.toNamed(Routes.verifyForgetPassword);
         } else {
           _showError("Invalid credentials");
@@ -79,7 +83,8 @@ class ChangePasswordController extends GetxController {
             data: changePasswordData);
 
         if (response.statusCode == 200) {
-          Get.snackbar("Success", "Logged in successfully");
+          Get.snackbar("Success", "Logged in successfully",          colorText: AppColors.primary
+);
           Get.offAllNamed(Routes.signIn);
         } else {
           _showError("Invalid credentials");
@@ -91,7 +96,8 @@ class ChangePasswordController extends GetxController {
   }
 
   void _showError(String message) {
-    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM,          colorText: AppColors.primary
+);
   }
 
   final count = 0.obs;

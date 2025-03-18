@@ -4,49 +4,42 @@ import 'package:broker/app/core/heplers/local_notification.dart';
 import 'package:broker/app/routes/app_pages.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 import '../../../core/heplers/firebase_notification.dart';
 import '../../../core/services/storage_service.dart';
 
 class SplashController extends GetxController {
-
   final count = 0.obs;
 
   @override
-  void onInit()async {
+  void onInit() async {
     super.onInit();
-     await Firebase.initializeApp();
-  await   LocalNotifications.initialize();
- await FirebaseNotifications.init();
-  await  FirebaseNotifications.listen();
-    if (StorageService.getData("ownerId") != null) {
-    }if (StorageService.getData("seekerId") != null) {
-    }if (StorageService.getData("brokerId") != null) {
-    }
+    await Firebase.initializeApp();
+    await LocalNotifications.initialize();
+    await FirebaseNotifications.init();
+    await FirebaseNotifications.listen();
 
     _loading();
   }
 
-  _loading() {
-    Timer(const Duration(seconds: 3), () {
-      // check if the token is not null
-      if ( StorageService.getData("userId") != null) {
-        Get.offAllNamed(Routes.home);
-      } else {
-        Get.offAllNamed(Routes.onBording);
-      }
-    });
+  Future<void> _loading() async {
+    await Future.delayed(const Duration(seconds: 3)); // Simulate splash screen delay
+
+    var connectivityResult = await Connectivity().checkConnectivity();
+    
+    if (connectivityResult[0] == ConnectivityResult.none) {
+      Get.offAllNamed(Routes.noInternet);
+      return;
+    }
+
+    // Navigate based on user authentication status
+    if (StorageService.getData("userId") != null) {
+      Get.offAllNamed(Routes.home);
+    } else {
+      Get.offAllNamed(Routes.onBording);
+    }
   }
-
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
 
   void increment() => count.value++;
 }

@@ -6,6 +6,7 @@ import 'app_color.dart';
 import 'app_text_styles.dart';
 
 ThemeData get appTheme => ThemeData(
+  
   dialogTheme: DialogTheme(
       insetPadding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 20.h), 
   ),

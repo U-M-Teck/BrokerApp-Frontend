@@ -19,7 +19,7 @@ class PaymentStage extends GetView<AddApartmentController> {
     return AppScaffold(
       appBar: AppBar(title: Text(AppStrings.payment)),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
         child: Column(
           spacing: 24.h,
           children: [

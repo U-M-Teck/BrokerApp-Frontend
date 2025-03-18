@@ -69,11 +69,16 @@ class FavoritesItem extends StatelessWidget {
               ],
             ),
             12.hs,
-            AppImageView(
-              url: favorites?.photos?[0] ?? "",
-              width: double.infinity,
-              height: 130.h,
-              radius: BorderRadius.circular(12),
+            Align(
+              alignment: Alignment.center,
+              child: AppImageView(
+                      fit: BoxFit.fill,
+              
+                url: favorites?.photos?[0] ?? "",
+                width: 250.w,
+                height: 130.h,
+                radius: BorderRadius.circular(12),
+              ),
             ),
             12.hs,
             Row(
