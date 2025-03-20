@@ -1,6 +1,5 @@
 import 'package:broker/app/config/style/app_text_styles.dart';
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
-import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
 import 'package:broker/app/config/widgets/buttons/sign_up_button.dart';
 import 'package:broker/app/modules/sign_up/controllers/sign_up_controller.dart';
