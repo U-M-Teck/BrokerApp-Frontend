@@ -540,7 +540,7 @@ class LayoutController extends GetxController {
     final Paint paint = Paint()..filterQuality = FilterQuality.high;
 
     // ✅ Adjust size for prime markers (1.5x bigger)
-    double scaleFactor = prime ? 1.7 : 1.2;
+    double scaleFactor = prime ? 1.5 : 1.2;
     int newWidth = (image.width * scaleFactor).toInt();
     int newHeight = (image.height * scaleFactor).toInt();
 
