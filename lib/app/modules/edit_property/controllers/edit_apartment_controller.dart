@@ -18,7 +18,6 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../config/style/app_color.dart';
 import '../../../config/utils/app_utils/app_strings.dart';
-import '../../../core/heplers/image_picker.dart';
 import '../../../core/heplers/map_utils.dart';
 import '../../../core/services/storage_service.dart';
 import '../../add_property/data/models/get_all_durations_model.dart';
@@ -497,7 +496,7 @@ class EditApartmentController extends GetxController {
       "brokerPersonId": StorageService.getData("brokerId") ?? "0",
       "ownerId": StorageService.getData("ownerId") ?? "0",
       "paymentFacility": "1",
-      "isPublished": "true",
+      "isPublish": "true",
       "advertiseMakerName":
           StorageService.getData("userName") ??
           "${Get.find<LayoutController>().userData.value?.details?.name}",
@@ -507,7 +506,6 @@ class EditApartmentController extends GetxController {
           selectedAdType.value == 2 || selectedAdType.value == 3
               ? "${hasPool.value}"
               : "false",
-
       ...?firstApartmentStageData.value, // استخدام spread operator
       ...?secondApartmentStageData.value, // استخدام spread operator
       ...?thirdApartmentStageData.value, // استخدام spread operator

@@ -19,7 +19,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../core/heplers/image_picker.dart';
 import '../../../core/heplers/map_utils.dart';
 import '../../../core/services/storage_service.dart';
 import '../../home/data/models/suggestion_model.dart';
