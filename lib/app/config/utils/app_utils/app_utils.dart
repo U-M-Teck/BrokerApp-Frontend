@@ -11,5 +11,5 @@ class AppUtils {
   static int? seekerId;
   static int? brokerId;
   static int? ownerId;
-  static String version = "Version 2.5.2";
+  static String version = "Version 2.5.3";
 }
