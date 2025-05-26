@@ -1,6 +1,7 @@
 import 'package:broker/app/config/style/app_theme.dart';
 import 'package:broker/app/core/binding/initial_binding.dart';
 import 'package:broker/app/core/heplers/app_check_internet.dart';
+import 'package:broker/firebase_options.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   await GetStorage.init(); // Initialize GetStorage
   await ScreenUtil.ensureScreenSize();
@@ -48,7 +49,7 @@ void main() async {
                     translations: LocalizationHelper(),
                     initialBinding: InitialBinding(),
                     theme: appTheme,
-                  
+
                     debugShowCheckedModeBanner: false,
                     title: "Broker",
                     initialRoute: Routes.splash,

@@ -396,7 +396,7 @@ class AddApartmentController extends GetxController {
           String imageName = image.path.split('/').last;
           File file = File(image.path);
           imageFiles.add(file);
-          uploadImage(file);
+          await uploadImage(file);
           imageNames.add(imageName);
         }
       }
@@ -407,7 +407,7 @@ class AddApartmentController extends GetxController {
           String imageName = image.path.split('/').last;
           File file = File(image.path);
           imageFiles.add(file);
-          uploadImage(file);
+          await uploadImage(file);
           imageNames.add(imageName);
         }
       } else {
@@ -520,8 +520,21 @@ class AddApartmentController extends GetxController {
     }, (r) => _showError(r.message));
   }
 
-  void showLocationPicker(BuildContext context) {
-    LatLng initialPosition = LatLng(30.0444, 31.2357); // Default: Cairo
+  void showLocationPicker(BuildContext context) async {
+    // Try to get the user's current location
+    LatLng initialPosition;
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        locationSettings: LocationSettings(
+          accuracy: LocationAccuracy.high,
+          distanceFilter: 10,
+        ),
+      );
+      initialPosition = LatLng(position.latitude, position.longitude);
+    } catch (e) {
+      // Fallback to Cairo if location not available
+      initialPosition = LatLng(30.0444, 31.2357);
+    }
     Rx<LatLng> selectedPosition = Rx(initialPosition);
 
     // Function to get address from coordinates
@@ -557,7 +570,7 @@ class AddApartmentController extends GetxController {
     }
 
     // Get initial address
-    getAddressFromLatLng(initialPosition);
+    await getAddressFromLatLng(initialPosition);
 
     Get.to(
       () => Scaffold(
@@ -607,7 +620,10 @@ class AddApartmentController extends GetxController {
                 children: [
                   Obx(
                     () => GoogleMap(
-                      initialCameraPosition: initialCameraPosition,
+                      initialCameraPosition: CameraPosition(
+                        target: initialPosition,
+                        zoom: 15,
+                      ),
                       onMapCreated: onMapCreate,
                       onCameraIdle: () async {
                         getAddress();
@@ -752,14 +768,23 @@ class AddApartmentController extends GetxController {
 
       final response = await _addPropertyProvider.uploadImage(uploadImageData);
 
-      response.fold((l) {}, (r) => _showError(r.message));
-    } catch (e) {
-      Get.snackbar(
-        "Error",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        colorText: AppColors.primary,
+      response.fold(
+        (success) {
+          // Handle response correctly, like extracting image URL
+          print("Upload successful: $success");
+          // You may access success["data"]["image_url"] or similar if needed
+        },
+        (failure) {
+          // _showError(failure.message);
+        },
       );
+    } catch (e) {
+      // Get.snackbar(
+      //   "Error",
+      //   e.toString(),
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   colorText: AppColors.primary,
+      // );
     }
   }
 

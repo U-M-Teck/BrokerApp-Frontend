@@ -16,7 +16,7 @@ import '../../../home/data/models/route_model.dart';
 import '../../../home/data/models/suggestion_model.dart';
 
 class AddPropertyProvider {
-    static const String baseurl = 'https://maps.googleapis.com/maps/api';
+  static const String baseurl = 'https://maps.googleapis.com/maps/api';
 
   Future<String> getAddress(LatLng location) async {
     try {
@@ -70,8 +70,7 @@ class AddPropertyProvider {
     }
   }
 
-  Future<PlaceModel> 
-  getPlaceDetailFromId(String placeId) async {
+  Future<PlaceModel> getPlaceDetailFromId(String placeId) async {
     final request =
         '$baseurl/place/details/json?place_id=$placeId&key=${ApiConstans.mapKey}';
     final response = await Client().get(Uri.parse(request));
@@ -101,7 +100,8 @@ class AddPropertyProvider {
       return null;
     }
   }
-   Future<Either<dynamic, Failure>> createAdvertisement(
+
+  Future<Either<dynamic, Failure>> createAdvertisement(
     Map<String, dynamic>? data,
   ) async {
     try {
@@ -116,10 +116,8 @@ class AddPropertyProvider {
       return Right(failure);
     }
   }
-     Future<Either<dynamic, Failure>> uploadImage(
-    dynamic data,
-    
-  ) async {
+
+  Future<Either<dynamic, Failure>> uploadImage(dynamic data) async {
     try {
       ResponseModel response = await ApiService.post(
         isFormData: true,
@@ -133,10 +131,8 @@ class AddPropertyProvider {
       return Right(failure);
     }
   }
-   Future<Either<dynamic, Failure>> getPaymentUrl(
-    dynamic data,
-    
-  ) async {
+
+  Future<Either<dynamic, Failure>> getPaymentUrl(dynamic data) async {
     try {
       ResponseModel response = await ApiService.post(
         data: data ?? {},
@@ -149,7 +145,8 @@ class AddPropertyProvider {
       return Right(failure);
     }
   }
-     Future<Either<dynamic, Failure>> getAllGovernates(
+
+  Future<Either<dynamic, Failure>> getAllGovernates(
     Map<String, dynamic>? data,
   ) async {
     try {
@@ -164,7 +161,8 @@ class AddPropertyProvider {
       return Right(failure);
     }
   }
-       Future<Either<dynamic, Failure>> getAllDurations(
+
+  Future<Either<dynamic, Failure>> getAllDurations(
     Map<String, dynamic>? data,
   ) async {
     try {
@@ -179,7 +177,8 @@ class AddPropertyProvider {
       return Right(failure);
     }
   }
-         Future<Either<dynamic, Failure>> checkCoupon(
+
+  Future<Either<dynamic, Failure>> checkCoupon(
     Map<String, dynamic>? data,
   ) async {
     try {

@@ -314,7 +314,8 @@ class EditApartmentController extends GetxController {
 
   void saveDataFromForthStage() {
     forthApartmentStageData.value = {
-      "price": selectedAdType.value == 3 && selectedContractType.value == 1
+      "price":
+          selectedAdType.value == 3 && selectedContractType.value == 1
               ? dayController.text == ""
                   ? weekController.text
                   : dayController.text
@@ -550,8 +551,18 @@ class EditApartmentController extends GetxController {
     }, (r) => _showError(r.message));
   }
 
-  void showLocationPicker(BuildContext context) {
-    LatLng initialPosition = LatLng(30.0444, 31.2357); // Default: Cairo
+  void showLocationPicker(BuildContext context) async {
+    // Try to get the user's current location
+    LatLng initialPosition;
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      initialPosition = LatLng(position.latitude, position.longitude);
+    } catch (e) {
+      // Fallback to Cairo if location not available
+      initialPosition = LatLng(30.0444, 31.2357);
+    }
     Rx<LatLng> selectedPosition = Rx(initialPosition);
 
     // Function to get address from coordinates
@@ -587,7 +598,7 @@ class EditApartmentController extends GetxController {
     }
 
     // Get initial address
-    getAddressFromLatLng(initialPosition);
+    await getAddressFromLatLng(initialPosition);
 
     Get.to(
       () => Scaffold(
@@ -637,7 +648,10 @@ class EditApartmentController extends GetxController {
                 children: [
                   Obx(
                     () => GoogleMap(
-                      initialCameraPosition: initialCameraPosition,
+                      initialCameraPosition: CameraPosition(
+                        target: initialPosition,
+                        zoom: 15,
+                      ),
                       onMapCreated: onMapCreate,
                       onCameraIdle: () async {
                         getAddress();
