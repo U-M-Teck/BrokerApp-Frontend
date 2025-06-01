@@ -1,9 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 
 import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
-import 'package:broker/app/core/heplers/file_helper.dart';
 import 'package:broker/app/modules/add_property/data/models/get_all_durations_model.dart';
 import 'package:broker/app/modules/add_property/data/models/get_all_governates_model.dart';
 import 'package:broker/app/modules/add_property/data/models/get_discount_model.dart';
@@ -376,11 +377,9 @@ class AddApartmentController extends GetxController {
   }
 
   void addImages(ImageSource source) async {
-    // Check how many more images can be added
     int remainingSlots = 6 - imageFiles.length;
 
     if (remainingSlots <= 0) {
-      // You can show a warning or toast here
       _showError("You can only upload up to 6 images.");
       return;
     }
@@ -389,30 +388,57 @@ class AddApartmentController extends GetxController {
       List<XFile>? images = await ImagePicker().pickMultiImage();
 
       if (images.isNotEmpty) {
-        // Take only up to the allowed number of images
         List<XFile> limitedImages = images.take(remainingSlots).toList();
 
         for (var image in limitedImages) {
-          String imageName = image.path.split('/').last;
           File file = File(image.path);
           imageFiles.add(file);
-          await uploadImage(file);
-          imageNames.add(imageName);
+          List<int> imageBytes = await file.readAsBytes();
+          String base64Image = base64Encode(imageBytes);
+          // Generate a unique name for the image using md5 hash
+          String imageName = '${md5.convert(utf8.encode(base64Image))}.png';
+          print("Base64 Image: $base64Image");
+          print("Image Name: $imageName");
+          await uploadImageBase64(base64Image, imageName);
+          imageNames.add(imageName); // Store generated name
         }
       }
     } else if (source == ImageSource.camera) {
       if (imageFiles.length < 6) {
         XFile? image = await ImagePicker().pickImage(source: source);
         if (image != null) {
-          String imageName = image.path.split('/').last;
           File file = File(image.path);
           imageFiles.add(file);
-          await uploadImage(file);
-          imageNames.add(imageName);
+          List<int> imageBytes = await file.readAsBytes();
+          String base64Image = base64Encode(imageBytes);
+          String imageName = '${md5.convert(utf8.encode(base64Image))}.png';
+          print("Base64 Image: $base64Image");
+          print("Image Name: $imageName");
+
+          await uploadImageBase64(base64Image, imageName);
+          imageNames.add(imageName); // Store generated name
         }
       } else {
         _showError("You can only upload up to 6 images.");
       }
+    }
+  }
+
+  // Add this new method to handle base64 upload
+  Future<void> uploadImageBase64(String base64Image, String imageName) async {
+    try {
+      final uploadImageData = {"base64": base64Image, "fileName": imageName};
+      final response = await _addPropertyProvider.uploadImage(uploadImageData);
+      response.fold(
+        (success) {
+          print("Upload successful: $success");
+        },
+        (failure) {
+          // _showError(failure.message);
+        },
+      );
+    } catch (e) {
+      // Handle error if needed
     }
   }
 
@@ -762,31 +788,31 @@ class AddApartmentController extends GetxController {
     }
   }
 
-  Future<void> uploadImage(File imageFile) async {
-    try {
-      final uploadImageData = {"file": FileHelper.getMultiPartFile(imageFile)};
+  // Future<void> uploadImage(File imageFile) async {
+  //   try {
+  //     final uploadImageData = {"file": FileHelper.getMultiPartFile(imageFile)};
 
-      final response = await _addPropertyProvider.uploadImage(uploadImageData);
+  //     final response = await _addPropertyProvider.uploadImage(uploadImageData);
 
-      response.fold(
-        (success) {
-          // Handle response correctly, like extracting image URL
-          print("Upload successful: $success");
-          // You may access success["data"]["image_url"] or similar if needed
-        },
-        (failure) {
-          // _showError(failure.message);
-        },
-      );
-    } catch (e) {
-      // Get.snackbar(
-      //   "Error",
-      //   e.toString(),
-      //   snackPosition: SnackPosition.BOTTOM,
-      //   colorText: AppColors.primary,
-      // );
-    }
-  }
+  //     response.fold(
+  //       (success) {
+  //         // Handle response correctly, like extracting image URL
+  //         print("Upload successful: $success");
+  //         // You may access success["data"]["image_url"] or similar if needed
+  //       },
+  //       (failure) {
+  //         // _showError(failure.message);
+  //       },
+  //     );
+  //   } catch (e) {
+  //     // Get.snackbar(
+  //     //   "Error",
+  //     //   e.toString(),
+  //     //   snackPosition: SnackPosition.BOTTOM,
+  //     //   colorText: AppColors.primary,
+  //     // );
+  //   }
+  // }
 
   Future<void> getPaymentUrl(String amount) async {
     try {

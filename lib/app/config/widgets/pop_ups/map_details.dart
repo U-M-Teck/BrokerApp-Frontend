@@ -20,11 +20,7 @@ class MapDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<LayoutController>();
     return AlertDialog(
-      
-      contentPadding: EdgeInsets.symmetric(
-        horizontal: 20.0.w,
-        vertical: 20.h,
-      ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 20.h),
       title: Row(
         children: [
           Expanded(
@@ -35,11 +31,9 @@ class MapDetails extends StatelessWidget {
             ),
           ),
           IconButton(
-              onPressed: () => Navigator.of(context).pop(),
-              icon: Icon(
-                Icons.close,
-                color: AppColors.grey,
-              ))
+            onPressed: () => Navigator.of(context).pop(),
+            icon: Icon(Icons.close, color: AppColors.grey),
+          ),
         ],
       ),
       content: Column(
@@ -55,31 +49,40 @@ class MapDetails extends StatelessWidget {
         ],
       ),
       actions: [
-        Obx(() => AppButton1(
-            title: controller.isLoading.value 
-                ? ''
-                : AppStrings.details,
-            onPressed: controller.isLoading.value 
-                ? null
-                : () {
-                    Get.find<LayoutController>()
-                        .getAdvDetails(advertisements.id ?? 0)
-                        ;
-                      Navigator.of(Get.context??context).pop();
+        Obx(
+          () => AppButton1(
+            title: controller.isLoading.value ? '' : AppStrings.details,
+            onPressed:
+                controller.isLoading.value
+                    ? null
+                    : () {
+                      Get.find<LayoutController>().getAdvDetails(
+                        advertisements.id ?? 0,
+                      );
+                      Navigator.of(Get.context ?? context).pop();
+                      Get.find<LayoutController>().createViewForAdvertisement(
+                        advertisements.id ?? 0,
+                      );
                       Get.toNamed(Routes.propertyDetails);
-                    
-                },
-            leading: controller.isLoading.value 
-                ? Center(child: CircularProgressIndicator(color: Colors.white,))
-                : null,
-        )),
+                    },
+            leading:
+                controller.isLoading.value
+                    ? Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    )
+                    : null,
+          ),
+        ),
         12.hs,
-        Obx(() => OutlinedAppButton(
-          title: AppStrings.cancel,
-          onPressed: controller.isLoading.value 
-              ? null
-              : () => Navigator.of(context).pop(),
-        )),
+        Obx(
+          () => OutlinedAppButton(
+            title: AppStrings.cancel,
+            onPressed:
+                controller.isLoading.value
+                    ? null
+                    : () => Navigator.of(context).pop(),
+          ),
+        ),
       ],
     );
   }

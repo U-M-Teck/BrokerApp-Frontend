@@ -2,6 +2,9 @@ import '../../config/utils/app_utils/app_strings.dart';
 
 Map<String, String> en = {
   AppStrings.all: "All",
+  AppStrings.updateRequired: "Update Required",
+  AppStrings.updateNow: "Update Now",
+  AppStrings.newVersion: "We have launched a new and improved app.\n Please update to continue using the app.",
   AppStrings.whatsApp: "WhatsApp",
   AppStrings.disconnected: "Oops you are disconnected!",
   AppStrings.apartmentsForSale: "Apartments for Sale",

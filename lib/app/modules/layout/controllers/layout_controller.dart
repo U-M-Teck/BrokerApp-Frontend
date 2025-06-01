@@ -368,6 +368,7 @@ class LayoutController extends GetxController {
 
     response.fold((l) async {
       getAllAdvertisementForUser();
+      getAllAdvertisement(); // Refresh the advertisement list
     }, (r) => _showError(r.message));
   }
 
@@ -405,6 +406,11 @@ class LayoutController extends GetxController {
     if (isLoading.value) return; // Prevent multiple calls
     isLoading.value = true;
     final getAllAdvData = {
+      "userId":
+          StorageService.getData("token") == null &&
+                  StorageService.getData("userId") == null
+              ? "0"
+              : StorageService.getData("userId") ?? 0,
       "type":
           searchByFilter == true
               ? selectedPropertyTypeId.value ?? {}
@@ -493,7 +499,7 @@ class LayoutController extends GetxController {
   }
 
   Rxn<Set<Marker>> markers = Rxn<Set<Marker>>({});
-  void initMarkers(BuildContext? context) async {
+  void initMarkers(BuildContext? context, {double zoom = 14}) async {
     if (context == null) return;
 
     markers.value = {};
@@ -504,13 +510,22 @@ class LayoutController extends GetxController {
 
     for (Advertisements ad in advertisements ?? []) {
       final sameLocationAds =
-          advertisements
-              ?.where(
-                (otherAd) =>
-                    otherAd.latitude == ad.latitude &&
-                    otherAd.longitude == ad.longitude,
-              )
-              .toList();
+          advertisements?.where((otherAd) {
+            if (zoom >= 16) {
+              // Zoomed in: only exact matches
+              return otherAd.latitude == ad.latitude &&
+                  otherAd.longitude == ad.longitude;
+            } else {
+              // Zoomed out: group by range
+              const double range = 0.0005;
+              return (otherAd.latitude != null &&
+                      ad.latitude != null &&
+                      (otherAd.latitude! - ad.latitude!).abs() <= range) &&
+                  (otherAd.longitude != null &&
+                      ad.longitude != null &&
+                      (otherAd.longitude! - ad.longitude!).abs() <= range);
+            }
+          }).toList();
 
       final marker = Marker(
         onTap: () {
@@ -528,18 +543,28 @@ class LayoutController extends GetxController {
         },
         markerId: MarkerId(ad.id.toString()),
         position: LatLng(ad.latitude ?? 0, ad.longitude ?? 0),
-        icon: await _createCustomMarker(ad.price ?? "", ad.featuredAd ?? false),
+        icon: await _createCustomMarker(
+          ad.price ?? "",
+          ad.featuredAd ?? false,
+          ad.iViewed ?? false,
+        ),
       );
       markers.value?.add(marker);
     }
     markers.refresh();
   }
 
-  Future<BitmapDescriptor> _createCustomMarker(String text, bool prime) async {
+  Future<BitmapDescriptor> _createCustomMarker(
+    String text,
+    bool prime,
+    bool isViewed,
+  ) async {
     String assetPath =
         prime
             ? Assets
                 .assetsImagesPremiumAdPin // Premium marker
+            : isViewed == true
+            ? Assets.assetsImagesViewedAdPin
             : Assets.assetsImagesNormalAdPin; // Normal marker
 
     final ByteData bytes = await rootBundle.load(assetPath);

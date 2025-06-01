@@ -3,6 +3,10 @@
 Map<String, String> ar = {
     AppStrings.whatsappAvailable: "متاح واتساب ",
   AppStrings.pending: "قيد الانتظار",
+  AppStrings.newVersion: "لقد أطلقنا تطبيقًا جديدًا ومُحسَّنًا.\n يُرجى التحديث لمواصلة استخدام التطبيق.",
+  AppStrings.updateNow: "تحديث الآن",
+  AppStrings.updateRequired: "التحديث مطلوب",
+
 
     AppStrings.all: "الكل",
     AppStrings.whatsApp: "واتس اب",

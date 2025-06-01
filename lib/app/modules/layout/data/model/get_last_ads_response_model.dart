@@ -40,6 +40,7 @@ class Advertisements {
   String? price;
   bool? featuredAd;
   bool? isCompany;
+  bool? iViewed;
   String? companyLogo;
   int? id;
 
@@ -55,6 +56,7 @@ class Advertisements {
       this.price,
       this.featuredAd,
       this.isCompany,
+      this.iViewed,
       this.companyLogo,
       this.id});
 
@@ -70,6 +72,7 @@ class Advertisements {
     price = json['price'];
     featuredAd = json['featuredAd'];
     isCompany = json['isCompany'];
+    iViewed = json['iViewed'];
     companyLogo = json['companyLogo'];
     id = json['id'];
   }
@@ -87,6 +90,7 @@ class Advertisements {
     data['price'] = price;
     data['featuredAd'] = featuredAd;
     data['isCompany'] = isCompany;
+    data['iViewed'] = iViewed;
     data['companyLogo'] = companyLogo;
     data['id'] = id;
     return data;

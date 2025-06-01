@@ -120,9 +120,8 @@ class AddPropertyProvider {
   Future<Either<dynamic, Failure>> uploadImage(dynamic data) async {
     try {
       ResponseModel response = await ApiService.post(
-        isFormData: true,
         data: data ?? {},
-        endPoint: ApiConstans.uploadImage,
+        endPoint: ApiConstans.uploadBase64,
       );
       return Left(response.data);
     } on ResponseModel catch (responseModel) {

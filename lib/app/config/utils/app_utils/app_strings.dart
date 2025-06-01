@@ -2,6 +2,10 @@ import 'package:get/get.dart';
 
 class AppStrings {
     static String get all => "all".tr;
+    static String get newVersion => "newVersion".tr;
+    static String get updateNow => "updateNow".tr;
+
+    static String get updateRequired => "updateRequired".tr;
     static String get whatsApp => "whatsApp".tr;
     static String get disconnected => "disconnected".tr;
     static String get camera => "camera".tr;

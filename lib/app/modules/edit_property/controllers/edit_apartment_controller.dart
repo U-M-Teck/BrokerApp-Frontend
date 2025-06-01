@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:io' show File;
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 import 'package:broker/app/core/heplers/date_format_helper.dart';
 import 'package:broker/app/core/heplers/file_helper.dart';
@@ -420,41 +422,81 @@ class EditApartmentController extends GetxController {
   }
 
   void addImages(int index, ImageSource source) async {
+    int remainingSlots = 6 - imageFiles.length;
+
+    if (remainingSlots <= 0) {
+      _showError("You can only upload up to 6 images.");
+      return;
+    }
+
     if (source == ImageSource.gallery) {
       List<XFile>? images = await ImagePicker().pickMultiImage();
-
       if (images.isNotEmpty) {
-        for (int i = 0; i < images.length; i++) {
-          XFile image = images[i];
-          String imageName = image.path.split('/').last;
+        List<XFile> limitedImages = images.take(remainingSlots).toList();
+        for (int i = 0; i < limitedImages.length; i++) {
+          XFile image = limitedImages[i];
           File file = File(image.path);
-
-          // Ensure imageFiles list is big enough
+          List<int> imageBytes = await file.readAsBytes();
+          String base64Image = base64Encode(imageBytes);
+          String imageName = '${md5.convert(utf8.encode(base64Image))}.png';
+          print("Base64 Image: $base64Image");
+          print("Image Name: $imageName");
+          // Insert or replace at the correct index
           if (index + i < imageFiles.length) {
             imageFiles[index + i] = file;
           } else {
             imageFiles.add(file);
           }
-
-          uploadImage(file);
-          apiPhotosList.add(imageName);
+          await uploadImageBase64(base64Image, imageName);
+          if (index + i < imageNames.length) {
+            imageNames[index + i] = imageName;
+          } else {
+            imageNames.add(imageName);
+          }
         }
       }
     } else if (source == ImageSource.camera) {
-      XFile? image = await ImagePicker().pickImage(source: source);
-      if (image != null) {
-        String imageName = image.path.split('/').last;
-        File file = File(image.path);
-
-        if (index < imageFiles.length) {
-          imageFiles[index] = file;
-        } else {
-          imageFiles.add(file);
+      if (imageFiles.length < 6) {
+        XFile? image = await ImagePicker().pickImage(source: source);
+        if (image != null) {
+          File file = File(image.path);
+          List<int> imageBytes = await file.readAsBytes();
+          String base64Image = base64Encode(imageBytes);
+          String imageName = '${md5.convert(utf8.encode(base64Image))}.png';
+          print("Base64 Image: $base64Image");
+          print("Image Name: $imageName");
+          if (index < imageFiles.length) {
+            imageFiles[index] = file;
+          } else {
+            imageFiles.add(file);
+          }
+          await uploadImageBase64(base64Image, imageName);
+          if (index < imageNames.length) {
+            imageNames[index] = imageName;
+          } else {
+            imageNames.add(imageName);
+          }
         }
-
-        uploadImage(file);
-        apiPhotosList.add(imageName);
+      } else {
+        _showError("You can only upload up to 6 images.");
       }
+    }
+  }
+
+  Future<void> uploadImageBase64(String base64Image, String imageName) async {
+    try {
+      final uploadImageData = {"base64": base64Image, "fileName": imageName};
+      final response = await _editPropertyProvider.uploadImage(uploadImageData);
+      response.fold(
+        (success) {
+          print("Upload successful: $success");
+        },
+        (failure) {
+          // _showError(failure.message);
+        },
+      );
+    } catch (e) {
+      // Handle error if needed
     }
   }
 

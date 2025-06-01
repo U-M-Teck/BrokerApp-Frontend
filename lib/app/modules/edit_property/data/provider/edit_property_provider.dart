@@ -14,9 +14,9 @@ import '../../../home/data/models/route_model.dart';
 import '../../../home/data/models/suggestion_model.dart';
 
 class EditPropertyProvider {
-    static const String baseurl = 'https://maps.googleapis.com/maps/api';
+  static const String baseurl = 'https://maps.googleapis.com/maps/api';
 
-     Future<Either<dynamic, Failure>> getAllDurations(
+  Future<Either<dynamic, Failure>> getAllDurations(
     Map<String, dynamic>? data,
   ) async {
     try {
@@ -31,7 +31,8 @@ class EditPropertyProvider {
       return Right(failure);
     }
   }
-         Future<Either<dynamic, Failure>> checkCoupon(
+
+  Future<Either<dynamic, Failure>> checkCoupon(
     Map<String, dynamic>? data,
   ) async {
     try {
@@ -46,6 +47,7 @@ class EditPropertyProvider {
       return Right(failure);
     }
   }
+
   Future<String> getAddress(LatLng location) async {
     try {
       await setLocaleIdentifier("ar");
@@ -98,8 +100,7 @@ class EditPropertyProvider {
     }
   }
 
-  Future<PlaceModel> 
-  getPlaceDetailFromId(String placeId) async {
+  Future<PlaceModel> getPlaceDetailFromId(String placeId) async {
     final request =
         '$baseurl/place/details/json?place_id=$placeId&key=${ApiConstans.mapKey}';
     final response = await Client().get(Uri.parse(request));
@@ -129,6 +130,7 @@ class EditPropertyProvider {
       return null;
     }
   }
+
   Future<Either<dynamic, Failure>> editAdvertisement(
     Map<String, dynamic>? data,
   ) async {
@@ -144,10 +146,8 @@ class EditPropertyProvider {
       return Right(failure);
     }
   }
- Future<Either<dynamic, Failure>> getPaymentUrl(
-    dynamic data,
-    
-  ) async {
+
+  Future<Either<dynamic, Failure>> getPaymentUrl(dynamic data) async {
     try {
       ResponseModel response = await ApiService.post(
         data: data ?? {},
@@ -160,14 +160,13 @@ class EditPropertyProvider {
       return Right(failure);
     }
   }
-  Future<Either<dynamic, Failure>> uploadImage(
-    dynamic data,
-  ) async {
+
+  Future<Either<dynamic, Failure>> uploadImage(dynamic data) async {
     try {
       ResponseModel response = await ApiService.post(
         isFormData: true,
         data: data ?? {},
-        endPoint: ApiConstans.uploadImage,
+        endPoint: ApiConstans.uploadBase64,
       );
       return Left(response.data);
     } on ResponseModel catch (responseModel) {
@@ -193,8 +192,9 @@ class EditPropertyProvider {
     }
   }
 
-  Future<Either<dynamic, Failure>> getAdvDetailsForEdit(
-      {Map<String, dynamic>? data}) async {
+  Future<Either<dynamic, Failure>> getAdvDetailsForEdit({
+    Map<String, dynamic>? data,
+  }) async {
     try {
       ResponseModel response = await ApiService.post(
         data: data ?? {},

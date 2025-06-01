@@ -8,18 +8,18 @@
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyASFpQ0BJ99BZ-b19_2tGAka4sdB8E7tkE" />
 
-        <meta-data
-    android:name="com.facebook.sdk.ApplicationId"
-    android:value="@string/facebook_app_id"/>
+            <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/><meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+
 
 <activity android:name="com.facebook.FacebookActivity"
     android:configChanges=
         "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
     android:label="@string/app_name" />
 
-<provider android:authorities="com.facebook.app.FacebookContentProvider1065298598393601"
+<provider android:authorities="com.facebook.app.FacebookContentProvider1165973685210133"
     android:name="com.facebook.FacebookContentProvider"
     android:exported="true" />
+    
     
         <activity
             android:name=".MainActivity"
@@ -76,7 +76,7 @@
     </intent>
 </queries>
 
-
+    <uses-permission android:name="android.permission.INTERNET"/>   
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-feature android:name="android.hardware.location.gps"/>

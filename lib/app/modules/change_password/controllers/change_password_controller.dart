@@ -23,23 +23,37 @@ class ChangePasswordController extends GetxController {
       formKey.currentState?.save();
       return true;
     }
-    Get.snackbar("Error", "Please fix the errors in the form",          colorText: AppColors.primary
-);
+    Get.snackbar(
+      "Error",
+      "Please fix the errors in the form",
+      colorText: AppColors.primary,
+    );
     return false;
   }
 
   bool _submitChangeForm() {
     if (changeFormKey.currentState?.validate() ?? false) {
-      formKey.currentState?.save();
+      changeFormKey.currentState?.save();
       return true;
     }
-    Get.snackbar("Error", "Please fix the errors in the form",          colorText: AppColors.primary
-);
+    Get.snackbar(
+      "Error",
+      "Please fix the errors in the form",
+      colorText: AppColors.primary,
+    );
     return false;
   }
 
   void verifyCode() {
     if (verifyFormKey.currentState!.validate()) {
+      if (codeController.text != AppUtils.resetCode) {
+        Get.snackbar(
+          "Error",
+          "Invalid verification code",
+          colorText: AppColors.primary,
+        );
+        formKey.currentState?.save();
+      }
       Get.offAllNamed(Routes.changePassword);
     }
   }
@@ -52,7 +66,8 @@ class ChangePasswordController extends GetxController {
 
       try {
         final response = await _changePasswordProvider.forgetPassword(
-            data: forgetPasswordData);
+          data: forgetPasswordData,
+        );
 
         if (response.statusCode == 200) {
           AppUtils.resetCode = response.data?.result;
@@ -78,9 +93,10 @@ class ChangePasswordController extends GetxController {
 
       try {
         final response = await _changePasswordProvider.changePassword(
-            data: changePasswordData);
+          data: changePasswordData,
+        );
 
-        if (response.statusCode == 200) {
+        if (response.data?.result == true) {
           Get.offAllNamed(Routes.signIn);
         } else {
           _showError("Invalid credentials");
@@ -92,13 +108,15 @@ class ChangePasswordController extends GetxController {
   }
 
   void _showError(String message) {
-    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM,          colorText: AppColors.primary
-);
+    Get.snackbar(
+      "Error",
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      colorText: AppColors.primary,
+    );
   }
 
   final count = 0.obs;
-
-
 
   void increment() => count.value++;
 }

@@ -48,6 +48,8 @@ class Assets {
 
   static const String assetsImagesSuccess = "assets/images/success.png";
 
+  static const String assetsImagesViewedAdPin = "assets/images/viewed_ad_pin.png";
+
   static const String assetsImagesWarning = "assets/images/warning.jpg";
 
   static const String assetsSvgAc = "assets/svg/ac.svg";

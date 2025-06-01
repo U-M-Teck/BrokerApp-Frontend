@@ -23,6 +23,7 @@ class ApiConstans {
   static const String getAllGovernates = '/api/Common/GetAllGovernorates';
   static const String getAllPackages = '/api/Common/GetAllPackages';
   static const String uploadImage = '/api/Upload/UploadMobile';
+  static const String uploadBase64 = '/api/Upload/UploadBase64';
   static const String getPaymentUrl = '/api/TokenAuth/GetPaymentUrl';
   static const String getUserNotifications = '/api/Common/GetAllNotificationsForUserApi';
   static const String addRate = '/api/RateUs/CreateRate';

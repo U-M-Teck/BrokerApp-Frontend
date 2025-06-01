@@ -17,7 +17,7 @@ class VerifyCodeField extends StatelessWidget {
       validator: (v) => ValidationForm.codeValidator(v, AppUtils.resetCode),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        hintText: AppStrings.reset,
+        hintText: AppStrings.verificationCode,
         contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 15.w),
       ),
     );
