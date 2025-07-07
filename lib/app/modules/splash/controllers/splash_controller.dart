@@ -27,7 +27,9 @@ class SplashController extends GetxController {
     await Future.delayed(const Duration(seconds: 2)); // splash delay
 
     final connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
+    if (connectivityResult.every(
+      (result) => result == ConnectivityResult.none,
+    )) {
       Get.offAllNamed(Routes.noInternet);
       return;
     }
@@ -55,10 +57,6 @@ class SplashController extends GetxController {
         minimumFetchInterval: Duration.zero, // Always fetch latest
       ),
     );
-    await remoteConfig.setDefaults({
-      'latest_version_android': '2.5.2',
-      'latest_version_ios': '2.5.2',
-    });
     await remoteConfig.fetchAndActivate();
 
     String latestVersion;

@@ -39,9 +39,48 @@ class EditPaymentStage extends GetView<EditApartmentController> {
                   child: InkWell(
                     onTap: () {
                       controller.selectAd(0); // Index of Premium Ad
-                      Get.toNamed(Routes.editPremiumPaymentStage);
+                      controller.isPremium.value == true
+                          ? showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder:
+                                (s) => UnderReview(
+                                  button: Obx(() {
+                                    return AppButton1(
+                                      leading:
+                                          controller
+                                                      .editAdvertisementLoading
+                                                      .value ==
+                                                  true
+                                              ? CircularProgressIndicator(
+                                                color: Colors.white,
+                                              )
+                                              : SizedBox.shrink(),
+                                      title:
+                                          controller
+                                                      .editAdvertisementLoading
+                                                      .value ==
+                                                  true
+                                              ? ""
+                                              : AppStrings.done,
+                                      onPressed: () {
+                                        controller
+                                                    .editAdvertisementLoading
+                                                    .value ==
+                                                true
+                                            ? null
+                                            : controller.editAdvertisement();
+                                      },
+                                    );
+                                  }),
+                                  isLoading:
+                                      controller.editAdvertisementLoading.value,
+                                ),
+                          )
+                          : Get.toNamed(Routes.editPremiumPaymentStage);
                     },
                     child: Container(
+                      height: 167.h,
                       decoration: BoxDecoration(
                         color: AppColors.secondary,
                         borderRadius: BorderRadius.circular(8),
@@ -74,6 +113,7 @@ class EditPaymentStage extends GetView<EditApartmentController> {
                       controller.selectAd(1); // Index of Free Ad
                     },
                     child: Container(
+                      height: 167.h,
                       decoration: BoxDecoration(
                         color: AppColors.primary,
                         borderRadius: BorderRadius.circular(8),
@@ -131,24 +171,27 @@ class EditPaymentStage extends GetView<EditApartmentController> {
                                                   .editAdvertisementLoading
                                                   .value ==
                                               true
-                                          ? CircularProgressIndicator(color: Colors.white,)
+                                          ? CircularProgressIndicator(
+                                            color: Colors.white,
+                                          )
                                           : SizedBox.shrink(),
-                                  title:controller
+                                  title:
+                                      controller
                                                   .editAdvertisementLoading
                                                   .value ==
                                               true
-                                          ?"": AppStrings.done,
+                                          ? ""
+                                          : AppStrings.done,
                                   onPressed: () {
-                                   controller
-                                                  .editAdvertisementLoading
-                                                  .value ==
-                                              true
-                                          ?null: controller.editAdvertisement();
+                                    controller.editAdvertisementLoading.value ==
+                                            true
+                                        ? null
+                                        : controller.editAdvertisement();
                                   },
                                 );
-                              }), isLoading: controller
-                                                  .editAdvertisementLoading
-                                                  .value,
+                              }),
+                              isLoading:
+                                  controller.editAdvertisementLoading.value,
                             ),
                       )
                       : null;

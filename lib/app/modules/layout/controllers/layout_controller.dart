@@ -655,7 +655,9 @@ class LayoutController extends GetxController {
         Placemark place = placemarks.first;
         return "${place.administrativeArea}";
       }
-    } catch (e) {}
+    } catch (e) {
+      print("Error getting address: $e");
+    }
     return "العنوان غير موجود";
   }
 

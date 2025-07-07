@@ -70,7 +70,7 @@ class ChangePasswordController extends GetxController {
         );
 
         if (response.statusCode == 200) {
-          AppUtils.resetCode = response.data?.result;
+          AppUtils.resetCode = response.data?.result?.otp;
           AppUtils.email = emailController.text;
           Get.toNamed(Routes.verifyForgetPassword);
         } else {
@@ -115,8 +115,4 @@ class ChangePasswordController extends GetxController {
       colorText: AppColors.primary,
     );
   }
-
-  final count = 0.obs;
-
-  void increment() => count.value++;
 }

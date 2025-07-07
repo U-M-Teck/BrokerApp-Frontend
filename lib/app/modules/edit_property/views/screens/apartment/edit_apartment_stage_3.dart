@@ -53,9 +53,7 @@ class EditApartmentStage3 extends GetView<EditApartmentController> {
                   spacing: 12.w,
                   runSpacing: 10.h,
                   children: List.generate(
-                    controller.apiPhotosList.length < 3
-                        ? 3
-                        : controller.apiPhotosList.length,
+                    controller.apiPhotosList.length,
                     (index) => AddPropertyImageEdit(
                       index: index,
                       controller: controller,

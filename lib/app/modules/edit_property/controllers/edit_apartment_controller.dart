@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:io' show File;
 import 'dart:convert';
-import 'package:crypto/crypto.dart';
 
 import 'package:broker/app/core/heplers/date_format_helper.dart';
-import 'package:broker/app/core/heplers/file_helper.dart';
 import 'package:broker/app/modules/add_property/data/models/get_all_governates_model.dart';
 import 'package:broker/app/modules/edit_property/data/models/get_adv_details_model.dart';
 import 'package:broker/app/modules/edit_property/views/screens/apartment/edit_paymob_screen.dart';
@@ -84,7 +82,6 @@ class EditApartmentController extends GetxController {
   RxInt documents = 0.obs;
 
   var imageFiles = <File?>[].obs;
-  var imageNames = <String>[].obs; // قائمة جديدة لحفظ أسماء الصور
   var apiPhotosList = <String>[].obs; // قائمة جديدة لحفظ أسماء الصور
 
   final getAdsDetailsLodaing = false.obs;
@@ -297,6 +294,7 @@ class EditApartmentController extends GetxController {
       "latitude": currentLocation.value?.latitude,
       "longitude": currentLocation.value?.longitude,
     };
+    print("First Stage Data: ${firstApartmentStageData.value}");
   }
 
   void saveDataFromThirdStage() {
@@ -312,6 +310,7 @@ class EditApartmentController extends GetxController {
               )
               .toList(),
     };
+    print("API Photos List: $apiPhotosList");
   }
 
   void saveDataFromForthStage() {
@@ -422,7 +421,9 @@ class EditApartmentController extends GetxController {
   }
 
   void addImages(int index, ImageSource source) async {
-    int remainingSlots = 6 - imageFiles.length;
+    int remainingSlots = 6 - apiPhotosList.length;
+    print(index + 1);
+    print(imageFiles.length);
 
     if (remainingSlots <= 0) {
       _showError("You can only upload up to 6 images.");
@@ -438,20 +439,16 @@ class EditApartmentController extends GetxController {
           File file = File(image.path);
           List<int> imageBytes = await file.readAsBytes();
           String base64Image = base64Encode(imageBytes);
-          String imageName = '${md5.convert(utf8.encode(base64Image))}.png';
           print("Base64 Image: $base64Image");
-          print("Image Name: $imageName");
-          // Insert or replace at the correct index
-          if (index + i < imageFiles.length) {
-            imageFiles[index + i] = file;
+
+          imageFiles.add(file);
+          print(imageFiles.length);
+
+          // await uploadImageBase64(base64Image, imageName);
+          if (index + i < apiPhotosList.length) {
+            apiPhotosList[index + i] = base64Image;
           } else {
-            imageFiles.add(file);
-          }
-          await uploadImageBase64(base64Image, imageName);
-          if (index + i < imageNames.length) {
-            imageNames[index + i] = imageName;
-          } else {
-            imageNames.add(imageName);
+            apiPhotosList.add(base64Image);
           }
         }
       }
@@ -462,19 +459,19 @@ class EditApartmentController extends GetxController {
           File file = File(image.path);
           List<int> imageBytes = await file.readAsBytes();
           String base64Image = base64Encode(imageBytes);
-          String imageName = '${md5.convert(utf8.encode(base64Image))}.png';
           print("Base64 Image: $base64Image");
-          print("Image Name: $imageName");
-          if (index < imageFiles.length) {
-            imageFiles[index] = file;
+
+          imageFiles.add(file);
+
+          print("Image Names Length: ${apiPhotosList.length}");
+
+          // await uploadImageBase64(base64Image, imageName);
+          if (index < apiPhotosList.length) {
+            apiPhotosList[index] = base64Image;
+            print("Image Names Length: ${apiPhotosList.length}");
           } else {
-            imageFiles.add(file);
-          }
-          await uploadImageBase64(base64Image, imageName);
-          if (index < imageNames.length) {
-            imageNames[index] = imageName;
-          } else {
-            imageNames.add(imageName);
+            apiPhotosList.add(base64Image);
+            print("Image Names Length: ${apiPhotosList.length}");
           }
         }
       } else {
@@ -483,22 +480,22 @@ class EditApartmentController extends GetxController {
     }
   }
 
-  Future<void> uploadImageBase64(String base64Image, String imageName) async {
-    try {
-      final uploadImageData = {"base64": base64Image, "fileName": imageName};
-      final response = await _editPropertyProvider.uploadImage(uploadImageData);
-      response.fold(
-        (success) {
-          print("Upload successful: $success");
-        },
-        (failure) {
-          // _showError(failure.message);
-        },
-      );
-    } catch (e) {
-      // Handle error if needed
-    }
-  }
+  // Future<void> uploadImageBase64(String base64Image, String imageName) async {
+  //   try {
+  //     final uploadImageData = {"base64": base64Image, "fileName": imageName};
+  //     final response = await _editPropertyProvider.uploadImage(uploadImageData);
+  //     response.fold(
+  //       (success) {
+  //         print("Upload successful: $success");
+  //       },
+  //       (failure) {
+  //         // _showError(failure.message);
+  //       },
+  //     );
+  //   } catch (e) {
+  //     // Handle error if needed
+  //   }
+  // }
 
   void removeImage(int index) {
     if (index >= 0 && index < apiPhotosList.length) {
@@ -537,6 +534,12 @@ class EditApartmentController extends GetxController {
     editAdvertisementLoading.value = true;
 
     final createAdvertisementData = {
+      "featuredAd":
+          isPremium.value == true
+              ? "true"
+              : selectedAdIndex.value == 0
+              ? "true"
+              : "false",
       "id": advDetailsModel.value?.id ?? 0,
       "type": selectedAdType.value,
       "seekerId": StorageService.getData("seekerId") ?? "0",
@@ -598,7 +601,7 @@ class EditApartmentController extends GetxController {
     LatLng initialPosition;
     try {
       Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
+        locationSettings: LocationSettings(accuracy: LocationAccuracy.high),
       );
       initialPosition = LatLng(position.latitude, position.longitude);
     } catch (e) {
@@ -846,22 +849,22 @@ class EditApartmentController extends GetxController {
     }, (r) => _showError(r.message));
   }
 
-  Future<void> uploadImage(File imageFile) async {
-    try {
-      final uploadImageData = {"file": FileHelper.getMultiPartFile(imageFile)};
+  // Future<void> uploadImage(File imageFile) async {
+  //   try {
+  //     final uploadImageData = {"file": FileHelper.getMultiPartFile(imageFile)};
 
-      final response = await _editPropertyProvider.uploadImage(uploadImageData);
+  //     final response = await _editPropertyProvider.uploadImage(uploadImageData);
 
-      response.fold((l) {}, (r) => _showError(r.message));
-    } catch (e) {
-      Get.snackbar(
-        "Error",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        colorText: AppColors.primary,
-      );
-    }
-  }
+  //     response.fold((l) {}, (r) => _showError(r.message));
+  //   } catch (e) {
+  //     Get.snackbar(
+  //       "Error",
+  //       e.toString(),
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       colorText: AppColors.primary,
+  //     );
+  //   }
+  // }
 
   void _showError(String message) {
     Get.snackbar(
@@ -927,12 +930,14 @@ class EditApartmentController extends GetxController {
   void onInit() {
     super.onInit();
 
+    getAllDurations();
     getAllGovernates();
 
     // Set initial values for TextEditingControllers
     advDetailsModel.listen((advDetails) {
       if (advDetails != null) {
         titleController.text = advDetails.title ?? '';
+        isPremium.value = advDetails.featuredAd ?? false;
         buildingNoController.text = advDetails.buildingNumber ?? '';
         whatsappController.text = advDetails.secondMobileNumber ?? '';
         gardenAreaController.text = "${advDetails.gardenArea ?? ''}";
@@ -951,7 +956,6 @@ class EditApartmentController extends GetxController {
             advDetails.advertiseMaker == 1 ? "Owner" : "Broker";
         selectedBuildingUsingFor.value =
             advDetails.type == 4 ? advDetails.usingFor : 0;
-        imageFiles.value = List.generate(6, (index) => null);
         hasShop.value = advDetails.shop ?? false;
         buildingAreaController.text = "${advDetails.buildingArea ?? ""}";
         noShopsController.text = "${advDetails.shopsNumber ?? ''}";
@@ -985,6 +989,9 @@ class EditApartmentController extends GetxController {
                 )
                 .toList() ??
             [];
+        print("API Photos List: $apiPhotosList");
+        imageFiles.value = List.generate(apiPhotosList.length, (index) => null);
+
         currentLocation.value = Position(
           latitude: advDetails.latitude ?? 0,
           longitude: advDetails.longitude ?? 0,

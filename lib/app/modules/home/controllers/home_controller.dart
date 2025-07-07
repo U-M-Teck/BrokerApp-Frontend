@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
+import 'package:broker/app/config/utils/app_utils/app_utils.dart';
 import 'package:broker/app/modules/home/data/provider/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -135,6 +136,20 @@ class HomeController extends GetxController {
     }, (r) => _showMessage(r.message, isError: true));
   }
 
+  Future<void> getUserPoints() async {
+    final userRateData = {
+      "brokerId": StorageService.getData("brokerId") ?? 0,
+      "seekerId": StorageService.getData("seekerId") ?? 0,
+      "ownerId": StorageService.getData("ownerId") ?? 0,
+    };
+
+    final response = await _homeProvider.getUserPoints(data: userRateData);
+
+    response.fold((l) {
+      AppUtils.userPoints = l['result']["totalPoints"] ?? 20;
+    }, (r) => _showMessage(r.message, isError: true));
+  }
+
   // Contact Us
   Future<void> addContactUs() async {
     final userId = StorageService.getData("userId");
@@ -178,5 +193,6 @@ class HomeController extends GetxController {
     init();
 
     getCurrentPosition();
+    getUserPoints();
   }
 }

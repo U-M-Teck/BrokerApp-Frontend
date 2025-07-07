@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:crypto/crypto.dart';
-
 import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
 import 'package:broker/app/modules/add_property/data/models/get_all_durations_model.dart';
@@ -395,12 +393,8 @@ class AddApartmentController extends GetxController {
           imageFiles.add(file);
           List<int> imageBytes = await file.readAsBytes();
           String base64Image = base64Encode(imageBytes);
-          // Generate a unique name for the image using md5 hash
-          String imageName = '${md5.convert(utf8.encode(base64Image))}.png';
           print("Base64 Image: $base64Image");
-          print("Image Name: $imageName");
-          await uploadImageBase64(base64Image, imageName);
-          imageNames.add(imageName); // Store generated name
+          imageNames.add(base64Image); // Store generated name
         }
       }
     } else if (source == ImageSource.camera) {
@@ -411,34 +405,13 @@ class AddApartmentController extends GetxController {
           imageFiles.add(file);
           List<int> imageBytes = await file.readAsBytes();
           String base64Image = base64Encode(imageBytes);
-          String imageName = '${md5.convert(utf8.encode(base64Image))}.png';
           print("Base64 Image: $base64Image");
-          print("Image Name: $imageName");
 
-          await uploadImageBase64(base64Image, imageName);
-          imageNames.add(imageName); // Store generated name
+          imageNames.add(base64Image); // Store generated name
         }
       } else {
         _showError("You can only upload up to 6 images.");
       }
-    }
-  }
-
-  // Add this new method to handle base64 upload
-  Future<void> uploadImageBase64(String base64Image, String imageName) async {
-    try {
-      final uploadImageData = {"base64": base64Image, "fileName": imageName};
-      final response = await _addPropertyProvider.uploadImage(uploadImageData);
-      response.fold(
-        (success) {
-          print("Upload successful: $success");
-        },
-        (failure) {
-          // _showError(failure.message);
-        },
-      );
-    } catch (e) {
-      // Handle error if needed
     }
   }
 

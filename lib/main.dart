@@ -11,12 +11,14 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:oktoast/oktoast.dart';
 
+import 'app/config/utils/app_utils/app_utils.dart';
 import 'app/core/heplers/localization_helper.dart';
 import 'app/core/services/storage_service.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppUtils.loadVersion();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   await GetStorage.init(); // Initialize GetStorage

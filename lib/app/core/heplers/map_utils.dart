@@ -8,9 +8,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class MapUtils {
-    MapUtils._();
+  MapUtils._();
 
   static Future<Position> getCurrentPosition() async {
     bool serviceEnabled;
@@ -34,12 +33,13 @@ class MapUtils {
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
       return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+        'Location permissions are permanently denied, we cannot request permissions.',
+      );
     }
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high
+      locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
     );
   }
 
@@ -54,39 +54,36 @@ class MapUtils {
     return Geolocator.distanceBetween(lat1, lon1, lat2, lon2) / 1000;
   }
 
-static Future<void> moveCamera({
-  required Completer<GoogleMapController> controller,
-  required LatLng target,
-  double zoom = 15,
-}) async {
-  // ✅ Ensure the Completer is valid
-  if (!controller.isCompleted) {
-    await Future.delayed(Duration(milliseconds: 500));
-    return moveCamera(controller: controller, target: target, zoom: zoom); // 🔄 Retry
-  }
-
-  try {
-    final GoogleMapController mapController = await controller.future;
-
-    await mapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: target,
-          zoom: zoom,
-        ),
-      ),
-    );
-
-  } catch (e) {
-
-    // ✅ Reset the Completer only if it is invalid
-    if (controller.isCompleted) {
-      controller = Completer<GoogleMapController>(); // 🆕 Reset
+  static Future<void> moveCamera({
+    required Completer<GoogleMapController> controller,
+    required LatLng target,
+    double zoom = 15,
+  }) async {
+    // ✅ Ensure the Completer is valid
+    if (!controller.isCompleted) {
+      await Future.delayed(Duration(milliseconds: 500));
+      return moveCamera(
+        controller: controller,
+        target: target,
+        zoom: zoom,
+      ); // 🔄 Retry
     }
 
-  }
-}
+    try {
+      final GoogleMapController mapController = await controller.future;
 
+      await mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(target: target, zoom: zoom),
+        ),
+      );
+    } catch (e) {
+      // ✅ Reset the Completer only if it is invalid
+      if (controller.isCompleted) {
+        controller = Completer<GoogleMapController>(); // 🆕 Reset
+      }
+    }
+  }
 
   static cameraMoveBounds({
     required LatLng fromLocation,
@@ -116,56 +113,67 @@ static Future<void> moveCamera({
       nLng = lngFrom;
     }
     if (controller.isCompleted) {
-      controller.future.then((value) => value.moveCamera(
-            CameraUpdate.newLatLngBounds(
-              bounds ??
-                  LatLngBounds(
-                    southwest: LatLng(sLat, sLng),
-                    northeast: LatLng(nLat, nLng),
-                  ),
-              150,
-            ),
-          ));
+      controller.future.then(
+        (value) => value.moveCamera(
+          CameraUpdate.newLatLngBounds(
+            bounds ??
+                LatLngBounds(
+                  southwest: LatLng(sLat, sLng),
+                  northeast: LatLng(nLat, nLng),
+                ),
+            150,
+          ),
+        ),
+      );
     }
   }
 
-  static Future<Marker> createMarker(
-      {required LatLng position,
-      String? title,
-      int? size,
-      required MarkerId markerId,
-      required String image}) async {
+  static Future<Marker> createMarker({
+    required LatLng position,
+    String? title,
+    int? size,
+    required MarkerId markerId,
+    required String image,
+  }) async {
     return Marker(
-        markerId: markerId,
-        position: position,
-        anchor: const Offset(.5, .5),
-        infoWindow: InfoWindow(title: title),
-        icon: BitmapDescriptor.bytes(
-            await _getBytesFromAsset(image, size ?? 100) ?? Uint8List(0)));
+      markerId: markerId,
+      position: position,
+      anchor: const Offset(.5, .5),
+      infoWindow: InfoWindow(title: title),
+      icon: BitmapDescriptor.bytes(
+        await _getBytesFromAsset(image, size ?? 100) ?? Uint8List(0),
+      ),
+    );
   }
 
   static Future<Uint8List?> _getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: width);
+    ui.Codec codec = await ui.instantiateImageCodec(
+      data.buffer.asUint8List(),
+      targetWidth: width,
+    );
     ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))
-        ?.buffer
-        .asUint8List();
+    return (await fi.image.toByteData(
+      format: ui.ImageByteFormat.png,
+    ))?.buffer.asUint8List();
   }
 
-  static bool comparePosition(
-      {required LatLng? position1, required LatLng? position2}) {
+  static bool comparePosition({
+    required LatLng? position1,
+    required LatLng? position2,
+  }) {
     if (position1 != null && position2 != null) {
       return position1 == position2;
     } else {
       return false;
     }
   }
-   static Future<Polyline> createPolyline(
-      {required PolylineId polylineId,
-      required List<LatLng> points,
-      Color? color}) async {
+
+  static Future<Polyline> createPolyline({
+    required PolylineId polylineId,
+    required List<LatLng> points,
+    Color? color,
+  }) async {
     final Polyline polyline = Polyline(
       polylineId: polylineId,
       consumeTapEvents: true,
@@ -176,22 +184,18 @@ static Future<void> moveCamera({
     return polyline;
   }
 
-
   static launchLocation(LatLng location) async {
     String googleUrl =
         'http://maps.google.com/maps?q=${location.latitude},${location.longitude}';
-    await launchUrl(
-      Uri.parse(googleUrl),
-      mode: LaunchMode.externalApplication,
-    );
+    await launchUrl(Uri.parse(googleUrl), mode: LaunchMode.externalApplication);
   }
 
-  static launchDirections({required LatLng fromLocation, required LatLng toLocation}) async {
+  static launchDirections({
+    required LatLng fromLocation,
+    required LatLng toLocation,
+  }) async {
     String googleUrl =
         'https://www.google.com/maps/dir/?api=1&origin=${fromLocation.latitude},${fromLocation.longitude}&destination=${toLocation.latitude},${toLocation.longitude}';
-    await launchUrl(
-      Uri.parse(googleUrl),
-      mode: LaunchMode.externalApplication,
-    );
+    await launchUrl(Uri.parse(googleUrl), mode: LaunchMode.externalApplication);
   }
 }

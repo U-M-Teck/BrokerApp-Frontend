@@ -14,65 +14,74 @@ class EditPremiumPaymentStage extends GetView<EditApartmentController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppStrings.payment.tr),
-      ),
+      appBar: AppBar(title: Text(AppStrings.payment.tr)),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
         children: [
           // Duration Section
           Text(AppStrings.duration, style: AppTextStyle.font16black600),
           16.hs,
-          Obx(() => Row(
-                children: [
-                  Expanded(
-                    child: _DurationCard(
-                      isSelected: controller.selectedDuration.value == 0,
-                      duration: AppStrings.oneMonth,
-                      price: "${controller.allDurations.value?.durations?[0].amount??0}EGP",
-                      onTap: () => controller.selectedDuration.value = 0,
-                    ),
+          Obx(
+            () => Row(
+              children: [
+                Expanded(
+                  child: _DurationCard(
+                    isSelected: controller.selectedDuration.value == 0,
+                    duration: AppStrings.oneMonth,
+                    price:
+                        "${controller.allDurations.value?.durations?[0].amount ?? 0}EGP",
+                    onTap: () => controller.selectedDuration.value = 0,
                   ),
-                  8.ws,
-                  Expanded(
-                    child: _DurationCard(
-                      isSelected: controller.selectedDuration.value == 1,
-                      duration: AppStrings.twoMonths,
-                      price: "${controller.allDurations.value?.durations?[1].amount??0}EGP",
-                      onTap: () => controller.selectedDuration.value = 1,
-                    ),
+                ),
+                8.ws,
+                Expanded(
+                  child: _DurationCard(
+                    isSelected: controller.selectedDuration.value == 1,
+                    duration: AppStrings.twoMonths,
+                    price:
+                        "${controller.allDurations.value?.durations?[1].amount ?? 0}EGP",
+                    onTap: () => controller.selectedDuration.value = 1,
                   ),
-                  8.ws,
-                  Expanded(
-                    child: _DurationCard(
-                      isSelected: controller.selectedDuration.value == 2,
-                      duration: AppStrings.threeMonths,
-                      price: "${controller.allDurations.value?.durations?[2].amount??0}EGP",
-                      onTap: () => controller.selectedDuration.value = 2,
-                    ),
+                ),
+                8.ws,
+                Expanded(
+                  child: _DurationCard(
+                    isSelected: controller.selectedDuration.value == 2,
+                    duration: AppStrings.threeMonths,
+                    price:
+                        "${controller.allDurations.value?.durations?[2].amount ?? 0}EGP",
+                    onTap: () => controller.selectedDuration.value = 2,
                   ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
 
           24.hs,
 
           // Premium Features
           ListTile(
             leading: Icon(Icons.trending_up, color: AppColors.grey),
-            title: Text(AppStrings.increaseInViewership,
-                style: AppTextStyle.font14black400),
+            title: Text(
+              AppStrings.increaseInViewership,
+              style: AppTextStyle.font14black400,
+            ),
             dense: true,
           ),
           ListTile(
             leading: Icon(Icons.star, color: AppColors.grey),
-            title: Text(AppStrings.appearsInGoldColor,
-                style: AppTextStyle.font14black400),
+            title: Text(
+              AppStrings.appearsInGoldColor,
+              style: AppTextStyle.font14black400,
+            ),
             dense: true,
           ),
           ListTile(
             leading: Icon(Icons.visibility, color: AppColors.grey),
-            title: Text(AppStrings.showsRemotely,
-                style: AppTextStyle.font14black400),
+            title: Text(
+              AppStrings.showsRemotely,
+              style: AppTextStyle.font14black400,
+            ),
             dense: true,
           ),
 
@@ -105,25 +114,44 @@ class EditPremiumPaymentStage extends GetView<EditApartmentController> {
           Text(AppStrings.summary, style: AppTextStyle.font16black600),
           16.hs,
           Obx(() {
-            final basePrice = controller.selectedDuration.value == 0
-                ? (controller.allDurations.value?.durations?[0].amount ?? 0)
-                : controller.selectedDuration.value == 1
+            final basePrice =
+                controller.selectedDuration.value == 0
+                    ? (controller.allDurations.value?.durations?[0].amount ?? 0)
+                    : controller.selectedDuration.value == 1
                     ? (controller.allDurations.value?.durations?[1].amount ?? 0)
-                    : (controller.allDurations.value?.durations?[2].amount ?? 0);
+                    : (controller.allDurations.value?.durations?[2].amount ??
+                        0);
 
             final vat = ((basePrice) * 0.14).round();
-            final discount = controller.discountCode.text.isNotEmpty ? controller.discount.value : 0;
-            final total = basePrice + vat - (discount > 0 ? (basePrice * discount.toInt() / 100).round() : 0);
+            final discount =
+                controller.discountCode.text.isNotEmpty
+                    ? controller.discount.value
+                    : 0;
+            final total =
+                basePrice +
+                vat -
+                (discount > 0
+                    ? (basePrice * discount.toInt() / 100).round()
+                    : 0);
 
             return Column(
               children: [
-                _SummaryItem('$basePrice EGP (${AppStrings.duration.tr})',
-                    '$basePrice EGP'),
+                _SummaryItem(
+                  '$basePrice EGP (${AppStrings.duration.tr})',
+                  '$basePrice EGP',
+                ),
                 _SummaryItem('VAT (14%)', '+$vat EGP'),
-                if (controller.discount.value!=0.0)
-                  _SummaryItem(AppStrings.discountCode, '-${discount.toInt()} %'),
+                if (controller.discount.value != 0.0)
+                  _SummaryItem(
+                    AppStrings.discountCode,
+                    '-${discount.toInt()} %',
+                  ),
                 Divider(),
-                _SummaryItem(AppStrings.totalAmount, '$total EGP', isTotal: true),
+                _SummaryItem(
+                  AppStrings.totalAmount,
+                  '$total EGP',
+                  isTotal: true,
+                ),
               ],
             );
           }),
@@ -135,8 +163,9 @@ class EditPremiumPaymentStage extends GetView<EditApartmentController> {
             height: 50.h,
             child: Obx(() {
               final total = _calculateTotal(
-                  controller.selectedDuration.value,
-                  controller.discountCode.text.isNotEmpty);
+                controller.selectedDuration.value,
+                controller.discountCode.text.isNotEmpty,
+              );
 
               return ElevatedButton(
                 onPressed: () => controller.getPaymentUrl(total.toString()),
@@ -150,15 +179,18 @@ class EditPremiumPaymentStage extends GetView<EditApartmentController> {
   }
 
   double _calculateTotal(int duration, bool hasDiscount) {
-    final basePrice = duration == 0
-        ? (controller.allDurations.value?.durations?[0].amount ?? 0)
-        : duration == 1
+    final basePrice =
+        duration == 0
+            ? (controller.allDurations.value?.durations?[0].amount ?? 0)
+            : duration == 1
             ? (controller.allDurations.value?.durations?[1].amount ?? 0)
             : (controller.allDurations.value?.durations?[2].amount ?? 0);
-  final vat = ((basePrice) * 0.14).round();
-            final discount = controller.discountCode.text.isNotEmpty ? controller.discount.value : 0;
-            return basePrice + vat - (discount > 0 ? (basePrice * discount.toInt() / 100).round() : 0);
-
+    final vat = ((basePrice) * 0.14).round();
+    final discount =
+        controller.discountCode.text.isNotEmpty ? controller.discount.value : 0;
+    return basePrice +
+        vat -
+        (discount > 0 ? (basePrice * discount.toInt() / 100).round() : 0);
   }
 }
 
@@ -199,6 +231,7 @@ class _DurationCard extends StatelessWidget {
     );
   }
 }
+
 class _SummaryItem extends StatelessWidget {
   final String label;
   final String value;
@@ -213,14 +246,20 @@ class _SummaryItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style: isTotal
-                  ? AppTextStyle.font16black600
-                  : AppTextStyle.font14black400),
-          Text(value,
-              style: isTotal
-                  ? AppTextStyle.font16black600
-                  : AppTextStyle.font14black400),
+          Text(
+            label,
+            style:
+                isTotal
+                    ? AppTextStyle.font16black600
+                    : AppTextStyle.font14black400,
+          ),
+          Text(
+            value,
+            style:
+                isTotal
+                    ? AppTextStyle.font16black600
+                    : AppTextStyle.font14black400,
+          ),
         ],
       ),
     );

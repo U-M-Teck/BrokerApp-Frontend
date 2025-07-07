@@ -19,7 +19,9 @@ class ListItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.toNamed(Routes.propertyDetails);
-        Get.find<LayoutController>().createViewForAdvertisement(advertisements?.id ?? 0);
+        Get.find<LayoutController>().createViewForAdvertisement(
+          advertisements?.id ?? 0,
+        );
 
         Get.find<LayoutController>().getAdvDetails(advertisements?.id ?? 0);
       },
@@ -45,11 +47,13 @@ class ListItem extends StatelessWidget {
                 children: [
                   Text(
                     advertisements?.title ?? "",
-                    style: AppTextStyle.font14black600,
+                    style: AppTextStyle.font14black600.copyWith(height: 1.5),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   15.hs,
                   Text(
-                    advertisements?.price??"",
+                    advertisements?.price ?? "",
                     style: AppTextStyle.font16primary600,
                   ),
                   15.hs,
@@ -91,12 +95,21 @@ class ListItem extends StatelessWidget {
                   // ),
                   // 8.hs,
                   FutureBuilder<String>(
-                    future: Get.find<LayoutController>().getAddressFromLatLng(advertisements?.latitude, advertisements?.longitude),
+                    future: Get.find<LayoutController>().getAddressFromLatLng(
+                      advertisements?.latitude,
+                      advertisements?.longitude,
+                    ),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Text("جاري التحميل...", style: AppTextStyle.font12black400);
+                        return Text(
+                          "جاري التحميل...",
+                          style: AppTextStyle.font12black400,
+                        );
                       } else if (snapshot.hasError) {
-                        return Text("خطأ في التحميل", style: AppTextStyle.font12black400);
+                        return Text(
+                          "خطأ في التحميل",
+                          style: AppTextStyle.font12black400,
+                        );
                       } else {
                         return Text(
                           snapshot.data ?? "موقع غير متوفر",
@@ -112,8 +125,11 @@ class ListItem extends StatelessWidget {
               child: AppImageView(
                 radius: BorderRadius.circular(8),
                 fit: BoxFit.cover,
-                  url: advertisements?.photos?[0]??"" , height: 105.h,width: 140.w,),
-            )
+                url: advertisements?.photos?[0] ?? "",
+                height: 105.h,
+                width: 140.w,
+              ),
+            ),
           ],
         ),
       ),
