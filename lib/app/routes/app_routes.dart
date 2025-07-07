@@ -18,7 +18,7 @@ abstract class Routes {
   static const addApartmentStage4 = _Paths.addApartmentStage4;
   static const addApartmentStage5 = _Paths.addApartmentStage5;
   static const addApartmentStage6 = _Paths.addApartmentStage6;
-    static const editApartment = _Paths.editApartment;
+  static const editApartment = _Paths.editApartment;
   static const editApartmentStage2 = _Paths.editApartmentStage2;
   static const editApartmentStage3 = _Paths.editApartmentStage3;
   static const editApartmentStage4 = _Paths.editApartmentStage4;

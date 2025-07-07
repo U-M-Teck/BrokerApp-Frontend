@@ -54,7 +54,7 @@ class SignInController extends GetxController {
         'userNameOrEmailAddress': phoneNumberController.text,
         'password': passwordController.text,
         "rememberClient": "true",
-        "registrationDevice":await FirebaseNotifications.token(),
+        "registrationDevice": await FirebaseNotifications.token(),
       };
 
       try {
@@ -106,8 +106,9 @@ class SignInController extends GetxController {
 
       if (response.statusCode == 200) {
         AppUtils.otp = response.data?.otp;
+        stopWatchTimer.onResetTimer();
         stopWatchTimer.onStartTimer();
-        // Get.snackbar("Success", "OTP sent: ${response.data?.otp}");
+        codeController.clear();
       } else {
         _showError("Failed to send OTP");
       }
@@ -118,13 +119,13 @@ class SignInController extends GetxController {
 
   // Helper to show error messages
   void _showError(String message) {
-    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM,
-              colorText: AppColors.primary
-);
+    Get.snackbar(
+      "Error",
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      colorText: AppColors.primary,
+    );
   }
-
-  // Increment counter
-  void increment() => count.value++;
 
   @override
   void onClose() {

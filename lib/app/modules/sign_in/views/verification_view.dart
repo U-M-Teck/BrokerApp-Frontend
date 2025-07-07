@@ -17,63 +17,72 @@ class VerificationView extends GetView<SignInController> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-        appBar: AppBar(
-          title: Text(
-            AppStrings.verification,
-            style: AppTextStyle.font16black600,
-          ),
-          centerTitle: true,
+      appBar: AppBar(
+        title: Text(
+          AppStrings.verification,
+          style: AppTextStyle.font16black600,
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 24.h),
-          child: Form(
-            key: controller.codeFormKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      AppStrings.verificationCode,
-                      style: AppTextStyle.font18black400,
-                    )),
-                24.hs,
-                CodeField(
-                  controller: controller.codeController,
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 24.h),
+        child: Form(
+          key: controller.codeFormKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  AppStrings.verificationCode,
+                  style: AppTextStyle.font18black400,
                 ),
-                TextButton(
-                    onPressed: controller.stopWatchTimer.rawTime.value == 0
-                        ? () {
-                            controller.resendOtp();
-                          }
-                        : null,
+              ),
+              24.hs,
+              CodeField(controller: controller.codeController),
+              StreamBuilder<int>(
+                stream: controller.stopWatchTimer.rawTime,
+                initialData: StopWatchTimer.getMilliSecFromMinute(1),
+                builder: (context, snap) {
+                  final canResend = (snap.data ?? 1) == 0;
+                  return TextButton(
+                    onPressed:
+                        canResend
+                            ? () {
+                              controller.resendOtp();
+                            }
+                            : null,
                     child: Text(
                       AppStrings.resendCode,
                       style: AppTextStyle.font16primary400,
-                    )),
-                24.hs,
-                StreamBuilder<int>(
-                  stream: controller.stopWatchTimer.rawTime,
-                  initialData: StopWatchTimer.getMilliSecFromMinute(1),
-                  builder: (context, snap) {
-                    final displayTime = StopWatchTimer.getDisplayTime(
-                        snap.data!,
-                        hours: false,
-                        minute: true,
-                        second: true,
-                        milliSecond: false);
-                    return Text(displayTime,
-                        style: AppTextStyle.font24black400);
-                  },
-                ),
-                24.hs,
-                AppButton1(
-                  title: AppStrings.verify,
-                  onPressed: controller.submitCodeForm,
-                )
-              ],
-            ),
+                    ),
+                  );
+                },
+              ),
+              24.hs,
+              StreamBuilder<int>(
+                stream: controller.stopWatchTimer.rawTime,
+                initialData: StopWatchTimer.getMilliSecFromMinute(1),
+                builder: (context, snap) {
+                  final displayTime = StopWatchTimer.getDisplayTime(
+                    snap.data!,
+                    hours: false,
+                    minute: true,
+                    second: true,
+                    milliSecond: false,
+                  );
+                  return Text(displayTime, style: AppTextStyle.font24black400);
+                },
+              ),
+              24.hs,
+              AppButton1(
+                title: AppStrings.verify,
+                onPressed: controller.submitCodeForm,
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -64,7 +64,7 @@ class SignInView extends GetView<SignInController> {
                         child: CircularProgressIndicator(
                         color: AppColors.white,
                       ))
-                    : null,
+                    : SizedBox.shrink(),
                 onPressed: controller.isLoading.value ? null : controller.login,
               );
             }),

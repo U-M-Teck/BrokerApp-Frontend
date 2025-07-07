@@ -31,7 +31,7 @@ class CodeField extends StatelessWidget {
         ),
         length: 4,
         animationType: AnimationType.fade,
-        validator: (v)=>ValidationForm.codeValidator(v,AppUtils.otp),
+        validator: (v)=>ValidationForm.codeValidator(v,code??AppUtils.otp),
         mainAxisAlignment: MainAxisAlignment.center,
         pinTheme: PinTheme(
           

@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
+import '../../../config/style/app_color.dart' show AppColors;
 import '../controllers/change_password_controller.dart';
 
 class ChangePasswordView extends GetView<ChangePasswordController> {
@@ -18,35 +19,41 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-        appBar: AppBar(
-          title:  Text(AppStrings.changePassword),
-          centerTitle: true,
-        ),
-        body: Form(
-          key: controller.changeFormKey,
-          child: ListView(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20.0.w,
-              vertical: 24.h,
+      appBar: AppBar(title: Text(AppStrings.changePassword), centerTitle: true),
+      body: Form(
+        key: controller.changeFormKey,
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 24.h),
+          children: [
+            Text(AppStrings.enterPassword, style: AppTextStyle.font16black600),
+            24.hs,
+            PasswordField(controller: controller.passwordController),
+            24.hs,
+            ConfirmPasswordField(
+              controller: controller.confirmPasswordController,
+              password: controller.passwordController,
             ),
-            children: [
-              Text(
-                AppStrings.enterPassword,
-                style: AppTextStyle.font16black600,
-              ),
-              24.hs,
-              PasswordField(controller: controller.passwordController),
-              24.hs,
-              ConfirmPasswordField(
-                  controller: controller.confirmPasswordController,
-                  password: controller.passwordController),
-              24.hs,
-              AppButton1(
-                title: AppStrings.save,
-                onPressed: controller.changePassword,
-              )
-            ],
-          ),
-        ));
+            24.hs,
+            Obx(() {
+              return AppButton1(
+                title: controller.isLoading.value ? "" : AppStrings.save,
+                leading:
+                    controller.isLoading.value
+                        ? Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.white,
+                          ),
+                        )
+                        : SizedBox.shrink(),
+                onPressed:
+                    controller.isLoading.value
+                        ? null
+                        : controller.changePassword,
+              );
+            }),
+          ],
+        ),
+      ),
+    );
   }
 }
