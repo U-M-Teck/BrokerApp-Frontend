@@ -1,3 +1,4 @@
+import 'package:broker/app/config/utils/app_utils/app_utils.dart';
 import 'package:broker/app/config/widgets/app_image_view.dart';
 import 'package:broker/app/config/widgets/pop_ups/delete_account.dart';
 import 'package:broker/app/config/widgets/pop_ups/sign_out.dart';
@@ -156,8 +157,12 @@ class DrawerWidget extends StatelessWidget {
                   : AppStrings.signout,
             ),
           ),
+          ListTile(
+            leading: Text(AppUtils.version ,style: AppTextStyle.font18black600,),
+          )
         ],
       ),
+      
     );
   }
 

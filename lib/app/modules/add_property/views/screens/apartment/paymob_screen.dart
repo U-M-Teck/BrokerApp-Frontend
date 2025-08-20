@@ -1,3 +1,4 @@
+import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/widgets/pop_ups/under_review.dart';
 import 'package:broker/app/modules/add_property/controllers/add_apartment_controller.dart';
 import 'package:broker/app/routes/app_pages.dart';
@@ -59,7 +60,8 @@ class PaymentScreen extends StatelessWidget {
                   );
                   return NavigationDecision.prevent;
                 } else if (request.url.contains('success=false')) {
-                  Get.snackbar("Payment Failed", "Failed");
+                  Get.snackbar("Payment Failed", "Failed",          colorText: AppColors.primary
+);
                   Get.offAllNamed(Routes.home);
                   return NavigationDecision.prevent;
                 }

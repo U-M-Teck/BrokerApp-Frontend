@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
+import '../../../config/style/app_color.dart' show AppColors;
 import '../controllers/change_password_controller.dart';
 
 class ForgetPasswordView extends GetView<ChangePasswordController> {
@@ -30,9 +31,19 @@ class ForgetPasswordView extends GetView<ChangePasswordController> {
             children: [
               EmailField(controller: controller.emailController),
               24.hs,
-              AppButton1(
-                title: AppStrings.send,
-                onPressed: controller.forgetPassword,
+              Obx(
+                 () {
+                  return AppButton1(
+                    title:controller.isLoading.value ? "" : AppStrings.send,
+                    leading: controller.isLoading.value
+                        ? Center(
+                            child: CircularProgressIndicator(
+                            color: AppColors.white,
+                          ))
+                        : SizedBox.shrink(),
+                    onPressed: controller.isLoading.value ? null : controller.forgetPassword,
+                  );
+                }
               )
             ],
           ),

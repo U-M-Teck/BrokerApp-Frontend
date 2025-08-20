@@ -12,6 +12,7 @@ import 'package:broker/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsScreen extends GetView<HomeController> {
   const ContactUsScreen({super.key});
@@ -89,10 +90,22 @@ class ContactUsScreen extends GetView<HomeController> {
               AppStrings.followUsOn,
               style: AppTextStyle.font16black400,
             ),
-            SocialMediaIcon(icon: Assets.assetsSvgFacebook),
-            SocialMediaIcon(icon: Assets.assetsSvgSnapchat),
-            SocialMediaIcon(icon: Assets.assetsSvgInstagram),
-            SocialMediaIcon(icon: Assets.assetsSvgTiktok),
+            SocialMediaIcon(
+              icon: Assets.assetsSvgFacebook,
+              onPressed: () => launchUrl(Uri.parse('https://www.facebook.com/brokerapp')),
+            ),
+            SocialMediaIcon(
+              icon: Assets.assetsSvgSnapchat,
+              onPressed: () => launchUrl(Uri.parse('https://x.com/brokerApp_EG')),
+            ),
+            SocialMediaIcon(
+              icon: Assets.assetsSvgInstagram,
+              onPressed: () => launchUrl(Uri.parse('https://www.instagram.com/brokerapp_/')),
+            ),
+            SocialMediaIcon(
+              icon: Assets.assetsSvgTiktok,
+              onPressed: () => launchUrl(Uri.parse('https://www.tiktok.com/@brokerapp_eg?lang=en')),
+            ),
           ],
         ),
       ),

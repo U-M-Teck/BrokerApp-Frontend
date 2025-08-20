@@ -6,7 +6,8 @@ import 'app_color.dart';
 import 'app_text_styles.dart';
 
 ThemeData get appTheme => ThemeData(
-  dialogTheme: DialogTheme(
+  
+  dialogTheme: DialogThemeData(
       insetPadding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 20.h), 
   ),
   checkboxTheme: CheckboxThemeData(
@@ -82,7 +83,7 @@ ThemeData get appTheme => ThemeData(
             backgroundColor: AppColors.primary,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8)))),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData(
       dividerColor: Colors.transparent,
       indicatorSize: TabBarIndicatorSize.tab,
       labelStyle: AppTextStyle.font16primary600,

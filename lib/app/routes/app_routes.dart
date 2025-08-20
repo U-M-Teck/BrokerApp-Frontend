@@ -18,7 +18,7 @@ abstract class Routes {
   static const addApartmentStage4 = _Paths.addApartmentStage4;
   static const addApartmentStage5 = _Paths.addApartmentStage5;
   static const addApartmentStage6 = _Paths.addApartmentStage6;
-    static const editApartment = _Paths.editApartment;
+  static const editApartment = _Paths.editApartment;
   static const editApartmentStage2 = _Paths.editApartmentStage2;
   static const editApartmentStage3 = _Paths.editApartmentStage3;
   static const editApartmentStage4 = _Paths.editApartmentStage4;
@@ -29,6 +29,7 @@ abstract class Routes {
   static const editPremiumPaymentStage = _Paths.editPremiumPaymentStage;
   static const editPaymentStage = _Paths.editPaymentStage;
   static const splash = _Paths.splash;
+  static const noInternet = _Paths.noInternet;
   static const onBording = _Paths.onBording;
   static const signIn = _Paths.signIn;
   static const verification = _Paths.verification;
@@ -44,6 +45,7 @@ abstract class Routes {
 abstract class _Paths {
   _Paths._();
   static const home = '/home';
+  static const noInternet = '/noInternet';
   static const notification = '/notification';
   static const searchByFilter = '/searchByFilter';
   static const search = '/search';

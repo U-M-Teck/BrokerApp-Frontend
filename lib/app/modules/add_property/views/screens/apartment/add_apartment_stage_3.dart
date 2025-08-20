@@ -47,16 +47,19 @@ class AddApartmentStage3 extends GetView<AddApartmentController> {
             Text(AppStrings.propertyPhotos, style: AppTextStyle.font16black400),
             16.hs,
             Obx(() {
-              return Wrap(
-                spacing: 8.w,
-                runSpacing: 8.w,
-                children: List.generate(
-                  controller.imageFiles.length < 3
-                      ? 3
-                      : controller.imageFiles.length,
-                  (index) => AddPropertyImage(
-                    index: index,
-                    controller: controller,
+              return Align(
+                alignment: Alignment.center,
+                child: Wrap(
+                  spacing: 12.w,
+                  runSpacing: 8.w,
+                  children: List.generate(
+                    controller.imageFiles.length < 3
+                        ? 3
+                        : controller.imageFiles.length,
+                    (index) => AddPropertyImage(
+                      index: index,
+                      controller: controller,
+                    ),
                   ),
                 ),
               );

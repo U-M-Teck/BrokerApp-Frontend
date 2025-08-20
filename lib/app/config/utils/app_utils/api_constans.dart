@@ -1,5 +1,5 @@
 class ApiConstans {
-  static const String baseUrl = 'http://62.146.178.31:9100';
+  static const String baseUrl = 'http://212.47.65.183:9100';
   static const String mapKey = 'AIzaSyASFpQ0BJ99BZ-b19_2tGAka4sdB8E7tkE';
   
   //Auth Endpoints
@@ -8,7 +8,7 @@ class ApiConstans {
   static const String checkPhoneNumber = '/api/TokenAuth/CheckPhoneNumberOtpForUpdatePhone';
   static const String verifyOtp = '/api/TokenAuth/CheckPhoneNumberOtp';
   static const String changePassword = '/api/services/app/User/ResetPasswordForForget';
-  static const String forgetPassword = '/api/services/app/User/ForgetPassword';
+  static const String forgetPassword = '/api/TokenAuth/ForgetPassword';
   static const String createOwner = '/api/Owner/CreateOwner';
   static const String createSeeker = '/api/Seeker/CreateSeeker';
   static const String createBroker = '/api/BrokerPerson/CreateBrokerPerson';
@@ -23,9 +23,11 @@ class ApiConstans {
   static const String getAllGovernates = '/api/Common/GetAllGovernorates';
   static const String getAllPackages = '/api/Common/GetAllPackages';
   static const String uploadImage = '/api/Upload/UploadMobile';
+  static const String uploadBase64 = '/api/Upload/UploadBase64';
   static const String getPaymentUrl = '/api/TokenAuth/GetPaymentUrl';
   static const String getUserNotifications = '/api/Common/GetAllNotificationsForUserApi';
   static const String addRate = '/api/RateUs/CreateRate';
+  static const String getUserPoints = '/api/Advertisement/GetAdsPointsByUserIdApi';
   static const String addContactUs = '/api/ContactUs/CreateContactUs';
   static const String deleteAccount = '/api/Common/DeleteAccountApi';
   static const String getAllDurations = '/api/Common/GetAllDurations';
@@ -33,8 +35,8 @@ class ApiConstans {
   static const String changeActiveStatus = '/api/Advertisement/ChangeActiveStatus';
 
   //Advertisement Endpoints
-  static const String createAdvertisement = '/api/Advertisement/CreateAdvertisement';
-  static const String editAdvertisement = '/api/services/app/Advertisement/Manage';
+  static const String createAdvertisement = '/api/Advertisement/AddAdvertisement';
+  static const String editAdvertisement = '/api/Advertisement/EditAdvertisement';
   static const String getAllAdvertisement = '/api/Advertisement/GetAllAdvertisements';
   static const String getAllAdvertisementForUser = '/api/Advertisement/GetAllAdsByUserIdApi';
   static const String getAdvDetails = '/api/Advertisement/GetAdvertiseDetails';

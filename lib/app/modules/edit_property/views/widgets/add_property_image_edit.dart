@@ -66,8 +66,8 @@ class AddPropertyImageEdit extends StatelessWidget {
               }
             },
             child: Container(
-              width: 100.w,
-              height: 100.h,
+              width: 90.w,
+              height: 90.h,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -80,15 +80,41 @@ class AddPropertyImageEdit extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child:
-                  index < controller.apiPhotosList.length
-                      ? AppImageView(
-                        radius: BorderRadius.circular(12),
+              child: Builder(
+                builder: (_) {
+                  final isLocalImage = index < controller.imageFiles.length;
+                  final isApiImage = index < controller.apiPhotosList.length;
+
+                  if (isLocalImage && !isApiImage) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: AppImageView(
                         file: controller.imageFiles[index],
-                        url: controller.apiPhotosList[index],
                         fit: BoxFit.fill,
-                      )
-                      : Icon(Icons.add, color: AppColors.grey, size: 40),
+                        width: 90.w,
+                        height: 90.h,
+                      ),
+                    );
+                  } else if (isApiImage && !isLocalImage) {
+                    return AppImageView(
+                      radius: BorderRadius.circular(12),
+                      url: controller.apiPhotosList[index],
+                      fit: BoxFit.fill,
+                    );
+                  } else if (isLocalImage && isApiImage) {
+                    // لو عندك صورة من API و File في نفس المكان
+                    return AppImageView(
+                      radius: BorderRadius.circular(12),
+                      file: controller.imageFiles[index],
+                      url: controller.apiPhotosList[index],
+                      fit: BoxFit.fill,
+                    );
+                  } else {
+                    // زر الإضافة
+                    return Icon(Icons.add, color: AppColors.grey, size: 40);
+                  }
+                },
+              ),
             ),
           ),
           if (index < controller.apiPhotosList.length)

@@ -42,20 +42,19 @@ class EditApartmentStage3 extends GetView<EditApartmentController> {
       body: Form(
         key: controller.thirdStageFormKey,
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
           children: [
             Text(AppStrings.propertyPhotos, style: AppTextStyle.font16black400),
             16.hs,
             Obx(() {
-              return Wrap(
-                runSpacing: 10.h,
-                children: List.generate(
-                  controller.apiPhotosList.length < 3
-                      ? 3
-                      : controller.apiPhotosList.length,
-                  (index) => Padding(
-                    padding: EdgeInsets.only(right: 10.0.w),
-                    child: AddPropertyImageEdit(
+              return Align(
+                alignment: Alignment.center,
+                child: Wrap(
+                  spacing: 12.w,
+                  runSpacing: 10.h,
+                  children: List.generate(
+                    controller.apiPhotosList.length,
+                    (index) => AddPropertyImageEdit(
                       index: index,
                       controller: controller,
                     ),

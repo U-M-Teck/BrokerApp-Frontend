@@ -3,8 +3,15 @@
 Map<String, String> ar = {
     AppStrings.whatsappAvailable: "متاح واتساب ",
   AppStrings.pending: "قيد الانتظار",
+  AppStrings.newVersion: "لقد أطلقنا تطبيقًا جديدًا ومُحسَّنًا.\n يُرجى التحديث لمواصلة استخدام التطبيق.",
+  AppStrings.updateNow: "تحديث الآن",
+  AppStrings.updateRequired: "التحديث مطلوب",
+
 
     AppStrings.all: "الكل",
+    AppStrings.whatsApp: "واتس اب",
+  AppStrings.disconnected: "للاسف انت غير متصل بالانترنت",
+
   AppStrings.apartmentsForSale: "شقق للبيع",
   AppStrings.apartmentsForRent: "شقق للإيجار",
   AppStrings.villasForSale: "فيلات للبيع",
@@ -62,7 +69,7 @@ Map<String, String> ar = {
   AppStrings.youHaveAlreadySubmittedYourRating: "لقد قمت بالفعل بتقديم تقييمك",
   AppStrings.contactRequestSentSuccessfully: "تم إرسال طلب الاتصال بنجاح!",
   AppStrings.landArea: "مساحة الأرض",
-  AppStrings.invalidCredentials: "بيانات الاعتماد غير صالحة",
+  AppStrings.invalidCredentials: "لقد أدخلت رقم موبايل أو كلمة مرور غير صحيحة",
   AppStrings.im: "أنا .....",
   AppStrings.payment: "الدفع",
   AppStrings.premiumAd: "إعلان مميز",
@@ -107,7 +114,7 @@ Map<String, String> ar = {
   AppStrings.chalet: 'شاليه',
   AppStrings.building: 'مبنى',
   AppStrings.office: 'مكتب',
-  AppStrings.shop: 'متجر',
+  AppStrings.shop: 'محل',
   AppStrings.land: 'أرض',
   AppStrings.propertyStatus: 'حالة العقار',
   AppStrings.finishing: 'التشطيب',
@@ -130,7 +137,7 @@ Map<String, String> ar = {
   AppStrings.rent: 'إيجار',
   AppStrings.minimumTime: 'الحد الأدنى من الوقت',
   AppStrings.documents: 'المستندات',
-  AppStrings.views: "فيو",
+  AppStrings.views: "المشاهدات",
   AppStrings.facilities: 'مرافق',
   AppStrings.water: 'ماء',
   AppStrings.electricity: 'كهرباء',

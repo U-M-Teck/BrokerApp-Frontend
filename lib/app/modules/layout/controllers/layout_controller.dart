@@ -12,7 +12,9 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../config/style/app_color.dart';
 import '../../../config/utils/app_utils/app_utils.dart';
+import '../../../config/widgets/pop_ups/multi_map_details.dart';
 import '../../../core/services/storage_service.dart';
 import '../../add_property/data/models/get_all_governates_model.dart';
 import '../data/model/create_favorite_response_model.dart';
@@ -40,10 +42,18 @@ class LayoutController extends GetxController {
   final getAllAdsForUserModel = Rxn<user_ads.GetAllAdsForUserModel>();
   final userNotificationsModel = Rxn<UserNotificationsModel>();
   final createFavoriteResponseModel = Rxn<CreateFavoriteResponseModel>();
-      final TextEditingController userEmailController = TextEditingController(text: StorageService.getData("email") ?? "");
-  final TextEditingController nameController = TextEditingController(text: StorageService.getData("userName") ?? "");
-    final TextEditingController phoneController = TextEditingController(text: StorageService.getData("phoneNumber") ?? "");
-  final TextEditingController whatsappController = TextEditingController(text: StorageService.getData("whatsAppNumber") ?? "");
+  final TextEditingController userEmailController = TextEditingController(
+    text: StorageService.getData("email") ?? "",
+  );
+  final TextEditingController nameController = TextEditingController(
+    text: StorageService.getData("userName") ?? "",
+  );
+  final TextEditingController phoneController = TextEditingController(
+    text: StorageService.getData("phoneNumber") ?? "",
+  );
+  final TextEditingController whatsappController = TextEditingController(
+    text: StorageService.getData("whatsAppNumber") ?? "",
+  );
   final RxBool isWhatsappAvailable = false.obs;
 
   void changeIndex(int index) {
@@ -61,10 +71,13 @@ class LayoutController extends GetxController {
       getFavoritesLoading.value = false;
     }, (r) => _showError(r.message));
   }
-    Future<void> changeActiveStatus(int? adId) async {
+
+  Future<void> changeActiveStatus(int? adId) async {
     final changeActiveStatusData = adId;
 
-    final response = await _layoutProvider.changeActiveStatus(changeActiveStatusData);
+    final response = await _layoutProvider.changeActiveStatus(
+      changeActiveStatusData,
+    );
 
     response.fold((l) async {
       getAllAdvertisementForUser();
@@ -84,11 +97,13 @@ class LayoutController extends GetxController {
         getBrokerDetails().then((r) async {
           if (userData.value?.success == true) {
             AppUtils.brokerId = userData.value?.details?.id ?? 0;
-        AppUtils.phoneNumber = userData.value?.details?.phoneNumber;
-        AppUtils.userName = userData.value?.details?.name ?? "";
-        AppUtils.email=userData.value?.details?.emailAddress??"";
-        AppUtils.whatsAppNumber=userData.value?.details?.secondMobile??"";
-        AppUtils.isWhatsappAvailable=userData.value?.details?.isWhatsApped??false;
+            AppUtils.phoneNumber = userData.value?.details?.phoneNumber;
+            AppUtils.userName = userData.value?.details?.name ?? "";
+            AppUtils.email = userData.value?.details?.emailAddress ?? "";
+            AppUtils.whatsAppNumber =
+                userData.value?.details?.secondMobile ?? "";
+            AppUtils.isWhatsappAvailable =
+                userData.value?.details?.isWhatsApped ?? false;
 
             await StorageService.setData("brokerId", AppUtils.brokerId ?? 0);
             await StorageService.setData(
@@ -109,11 +124,13 @@ class LayoutController extends GetxController {
             getOwnerDetails().then((r) async {
               if (userData.value?.success == true) {
                 AppUtils.ownerId = userData.value?.details?.id ?? 0;
-        AppUtils.phoneNumber = userData.value?.details?.phoneNumber;
-        AppUtils.userName = userData.value?.details?.name ?? "";
-        AppUtils.email=userData.value?.details?.emailAddress??"";
-        AppUtils.whatsAppNumber=userData.value?.details?.secondMobile??"";
-        AppUtils.isWhatsappAvailable=userData.value?.details?.isWhatsApped??false;
+                AppUtils.phoneNumber = userData.value?.details?.phoneNumber;
+                AppUtils.userName = userData.value?.details?.name ?? "";
+                AppUtils.email = userData.value?.details?.emailAddress ?? "";
+                AppUtils.whatsAppNumber =
+                    userData.value?.details?.secondMobile ?? "";
+                AppUtils.isWhatsappAvailable =
+                    userData.value?.details?.isWhatsApped ?? false;
 
                 await StorageService.setData("ownerId", AppUtils.ownerId ?? 0);
               }
@@ -138,9 +155,10 @@ class LayoutController extends GetxController {
         AppUtils.seekerId = userData.value?.details?.id ?? 0;
         AppUtils.phoneNumber = userData.value?.details?.phoneNumber;
         AppUtils.userName = userData.value?.details?.name ?? "";
-        AppUtils.email=userData.value?.details?.emailAddress??"";
-        AppUtils.whatsAppNumber=userData.value?.details?.secondMobile??"";
-        AppUtils.isWhatsappAvailable=userData.value?.details?.isWhatsApped??false;
+        AppUtils.email = userData.value?.details?.emailAddress ?? "";
+        AppUtils.whatsAppNumber = userData.value?.details?.secondMobile ?? "";
+        AppUtils.isWhatsappAvailable =
+            userData.value?.details?.isWhatsApped ?? false;
         await StorageService.setData("seekerId", AppUtils.seekerId ?? 0);
         await StorageService.setData("phoneNumber", AppUtils.phoneNumber ?? 0);
         await StorageService.setData("userName", AppUtils.userName ?? "");
@@ -350,6 +368,7 @@ class LayoutController extends GetxController {
 
     response.fold((l) async {
       getAllAdvertisementForUser();
+      getAllAdvertisement(); // Refresh the advertisement list
     }, (r) => _showError(r.message));
   }
 
@@ -363,6 +382,7 @@ class LayoutController extends GetxController {
         "Error",
         "Could not launch WhatsApp",
         snackPosition: SnackPosition.BOTTOM,
+        colorText: AppColors.primary,
       );
     }
   }
@@ -377,18 +397,27 @@ class LayoutController extends GetxController {
         "Error",
         "Could not place call",
         snackPosition: SnackPosition.BOTTOM,
+        colorText: AppColors.primary,
       );
     }
   }
 
-  Future<void> getAllAdvertisement(int index) async {
+  Future<void> getAllAdvertisement({int? index, bool? searchByFilter}) async {
     if (isLoading.value) return; // Prevent multiple calls
     isLoading.value = true;
     final getAllAdvData = {
+      "userId":
+          StorageService.getData("token") == null &&
+                  StorageService.getData("userId") == null
+              ? "0"
+              : StorageService.getData("userId") ?? 0,
       "type":
-          index > 0
-              ? ((index - 1) ~/ 2 + 1)
+          searchByFilter == true
+              ? selectedPropertyTypeId.value ?? {}
+              : (index ?? 0) > 0
+              ? (((index ?? 0) - 1) ~/ 2 + 1)
               : selectedPropertyTypeId.value ?? {},
+
       "governorateId": selectedGovernateId.value ?? {},
       "streetOrCompund":
           districtController.text.isNotEmpty ? districtController.text : {},
@@ -400,11 +429,12 @@ class LayoutController extends GetxController {
       "furnished": isFurnished.value ? isFurnished.value : {},
       "parking": withParking.value ? withParking.value : {},
       "agreementStatus":
-          index != 0
-              ? (index % 2 == 0 ? 2 : 1)
-              : selectedContractType.value > 0
-              ? selectedContractType.value + 1
+          (index ?? 0) != 0
+              ? ((index ?? 0) % 2 == 0 ? 2 : 1)
+              : (selectedContractType.value) > 0
+              ? (selectedContractType.value) + 1
               : {},
+
       "priceFrom":
           fromPriceController.text.isNotEmpty ? fromPriceController.text : {},
       "priceTo":
@@ -465,11 +495,11 @@ class LayoutController extends GetxController {
     fromPriceController.clear();
     toPriceController.clear();
     districtController.clear();
-    getAllAdvertisement(0);
+    getAllAdvertisement(index: 0);
   }
 
   Rxn<Set<Marker>> markers = Rxn<Set<Marker>>({});
-  void initMarkers(BuildContext? context) async {
+  void initMarkers(BuildContext? context, {double zoom = 14}) async {
     if (context == null) return;
 
     markers.value = {};
@@ -479,30 +509,62 @@ class LayoutController extends GetxController {
             .toList();
 
     for (Advertisements ad in advertisements ?? []) {
+      final sameLocationAds =
+          advertisements?.where((otherAd) {
+            if (zoom >= 16) {
+              // Zoomed in: only exact matches
+              return otherAd.latitude == ad.latitude &&
+                  otherAd.longitude == ad.longitude;
+            } else {
+              // Zoomed out: group by range
+              const double range = 0.0005;
+              return (otherAd.latitude != null &&
+                      ad.latitude != null &&
+                      (otherAd.latitude! - ad.latitude!).abs() <= range) &&
+                  (otherAd.longitude != null &&
+                      ad.longitude != null &&
+                      (otherAd.longitude! - ad.longitude!).abs() <= range);
+            }
+          }).toList();
+
       final marker = Marker(
         onTap: () {
           if (Get.context != null) {
             showDialog(
               barrierDismissible: false,
               context: Get.context!,
-              builder: (context) => MapDetails(advertisements: ad),
+              builder:
+                  (context) =>
+                      sameLocationAds != null && sameLocationAds.length > 1
+                          ? MultiMapDetails(advertisements: sameLocationAds)
+                          : MapDetails(advertisements: ad),
             );
           }
         },
         markerId: MarkerId(ad.id.toString()),
         position: LatLng(ad.latitude ?? 0, ad.longitude ?? 0),
-        icon: await _createCustomMarker(ad.price ?? "", ad.featuredAd ?? false),
+        icon: await _createCustomMarker(
+          ad.price ?? "",
+          ad.featuredAd ?? false,
+          ad.iViewed ?? false,
+        ),
       );
       markers.value?.add(marker);
     }
     markers.refresh();
   }
 
-  Future<BitmapDescriptor> _createCustomMarker(String text, bool prime) async {
+  Future<BitmapDescriptor> _createCustomMarker(
+    String text,
+    bool prime,
+    bool isViewed,
+  ) async {
     String assetPath =
         prime
             ? Assets
                 .assetsImagesPremiumAdPin // Premium marker
+            : isViewed == true
+            ? Assets.assetsImagesViewedAdPin
             : Assets.assetsImagesNormalAdPin; // Normal marker
 
     final ByteData bytes = await rootBundle.load(assetPath);
@@ -514,10 +576,10 @@ class LayoutController extends GetxController {
 
     final ui.PictureRecorder recorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(recorder);
-    final Paint paint = Paint();
+    final Paint paint = Paint()..filterQuality = FilterQuality.high;
 
     // ✅ Adjust size for prime markers (1.5x bigger)
-    double scaleFactor = prime ? 1.5 : 1.0;
+    double scaleFactor = prime ? 1.5 : 1.2;
     int newWidth = (image.width * scaleFactor).toInt();
     int newHeight = (image.height * scaleFactor).toInt();
 
@@ -558,7 +620,12 @@ class LayoutController extends GetxController {
   }
 
   void _showError(String message) {
-    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar(
+      "Error",
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      colorText: AppColors.primary,
+    );
   }
 
   Future<void> getAllGovernates() async {
@@ -588,15 +655,17 @@ class LayoutController extends GetxController {
         Placemark place = placemarks.first;
         return "${place.administrativeArea}";
       }
-    } catch (e) {}
+    } catch (e) {
+      print("Error getting address: $e");
+    }
     return "العنوان غير موجود";
   }
 
   void upadteUserData() {
-        userEmailController.text =  StorageService.getData("email") ;
-    nameController.text =  StorageService.getData("userName") ;
-      phoneController.text =  StorageService.getData("phoneNumber") ;
-    whatsappController.text = StorageService.getData("whatsAppNumber") ;
+    userEmailController.text = StorageService.getData("email");
+    nameController.text = StorageService.getData("userName");
+    phoneController.text = StorageService.getData("phoneNumber");
+    whatsappController.text = StorageService.getData("whatsAppNumber");
     isWhatsappAvailable.value = StorageService.getData("isWhatsApp");
   }
 
@@ -616,13 +685,12 @@ class LayoutController extends GetxController {
     getAllGovernates();
     StorageService.getData("token") == null &&
             StorageService.getData("userId") == null
-        ? getAllAdvertisement(0)
-        : getAllAdvertisement(0).then((_) {
+        ? getAllAdvertisement(index: 0)
+        : getAllAdvertisement(index: 0).then((_) {
           getFavorites();
           getAllAdvertisementForUser();
           getUserNotifications();
-                      upadteUserData();
-
+          upadteUserData();
         });
   }
 }

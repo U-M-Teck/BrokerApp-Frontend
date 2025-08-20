@@ -64,11 +64,16 @@ class AddsItem extends StatelessWidget {
               ),
             ),
             12.hs,
-            AppImageView(
-              url: advertisements?.photos?[0] ?? "",
-              width: double.infinity,
-              height: 130.h,
-              radius: BorderRadius.circular(12),
+            Align(
+              alignment: Alignment.center,
+              child: AppImageView(
+                        fit: BoxFit.fill,
+              
+                url: advertisements?.photos?[0] ?? "",
+                  width: 250.w,
+                height: 130.h,
+                radius: BorderRadius.circular(12),
+              ),
             ),
             12.hs,
             Text(

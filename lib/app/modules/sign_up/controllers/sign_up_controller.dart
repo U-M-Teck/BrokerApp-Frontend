@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
+import '../../../config/style/app_color.dart';
 import '../../../config/utils/app_utils/app_utils.dart';
 import '../../../routes/app_pages.dart';
 
@@ -28,13 +29,21 @@ class SignUpController extends GetxController {
       personalDataKey.currentState?.save();
       return true;
     }
-    Get.snackbar("Error", "Please fix the errors in the form");
+    Get.snackbar(
+      "Error",
+      "Please fix the errors in the form",
+      colorText: AppColors.primary,
+    );
     return false;
   }
 
   void submitForm() {
     if (formKey.currentState!.validate()) {
-      Get.offAllNamed(Routes.personalData);
+      Get.offAllNamed(
+        Routes.personalData,
+        arguments: {'selectedIndex': selectedIndex.value},
+      );
+          print(selectedIndex.value);
     }
   }
 
@@ -53,15 +62,20 @@ class SignUpController extends GetxController {
         'userEmailAddress': emailController.text,
         'userPhoneNumber': AppUtils.phoneNumber,
         'userPassword': passwordController.text,
-        "isWhatsApped":"${isWhatsappAvailable.value}",
-        "secondMobile": isWhatsappAvailable.value==true?whatsappController.text:"",
+        "isWhatsApped": "${isWhatsappAvailable.value}",
+        "secondMobile":
+            isWhatsappAvailable.value == true ? whatsappController.text : "",
       };
 
       try {
         if (selectedIndex.value == 0) {
           final response = await _signUpProvider.createSeeker(data: signUpData);
           if (response.data?.success == true) {
-            Get.snackbar("Success", "Account created successfully");
+            Get.snackbar(
+              "Success",
+              "Account created successfully",
+              colorText: AppColors.primary,
+            );
             Get.offAllNamed(Routes.signIn);
           } else {
             _showError(response.data?.error ?? "");
@@ -69,7 +83,11 @@ class SignUpController extends GetxController {
         } else if (selectedIndex.value == 1) {
           final response = await _signUpProvider.createOwner(data: signUpData);
           if (response.data?.success == true) {
-            Get.snackbar("Success", "Account created successfully");
+            Get.snackbar(
+              "Success",
+              "Account created successfully",
+              colorText: AppColors.primary,
+            );
             Get.offAllNamed(Routes.signIn);
           } else {
             _showError(response.data?.error ?? "");
@@ -77,7 +95,11 @@ class SignUpController extends GetxController {
         } else {
           final response = await _signUpProvider.createBroker(data: signUpData);
           if (response.data?.success == true) {
-            Get.snackbar("Success", "Account created successfully");
+            Get.snackbar(
+              "Success",
+              "Account created successfully",
+              colorText: AppColors.primary,
+            );
             Get.offAllNamed(Routes.signIn);
           } else {
             _showError(response.data?.error ?? "");
@@ -121,12 +143,15 @@ class SignUpController extends GetxController {
       if (checkPhoneNumberResponse.data?.isSuccess == false) {
         _showError(checkPhoneNumberResponse.data?.message ?? "");
       } else {
-
         if (checkPhoneNumberResponse.statusCode == 200) {
           AppUtils.otp = checkPhoneNumberResponse.data?.otp;
           AppUtils.phoneNumber = phoneController.text;
           // Get.snackbar("Success", "OTP sent: ${response.data?.otp}");
-          Get.offAllNamed(Routes.signUpVerification);
+          Get.offAllNamed(
+            Routes.signUpVerification,
+            arguments: {'selectedIndex': selectedIndex.value},
+          );
+          print(selectedIndex.value);
         } else {
           _showError("Failed to send OTP");
         }
@@ -139,20 +164,25 @@ class SignUpController extends GetxController {
   }
 
   void _showError(String message) {
-    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar(
+      "Error",
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      colorText: AppColors.primary,
+    );
   }
 
   @override
   void onInit() {
+    if (Get.arguments != null && Get.arguments['selectedIndex'] != null) {
+      selectedIndex.value = Get.arguments['selectedIndex'];
+    }
     super.onInit();
     if (Get.currentRoute == Routes.signUpVerification) {
       stopWatchTimer.onStartTimer();
     }
     if (Get.currentRoute == Routes.personalData) {
-      phoneController.text = AppUtils.phoneNumber??"";
+      phoneController.text = AppUtils.phoneNumber ?? "";
     }
   }
-
-
-
 }

@@ -26,12 +26,14 @@ class EditDropDownWidget extends StatelessWidget {
       // Set initial value based on initialId
       if (selectedIdController?.value != null) {
         // Find the governorate (key) that corresponds to the given initialId (value)
-        final initialGovernorate = items.entries
-            .firstWhere(
-              (entry) => entry.value == initialId,
-              orElse: () => MapEntry('', 0), // Default empty entry if not found
-            )
-            .key;
+        final initialGovernorate =
+            items.entries
+                .firstWhere(
+                  (entry) => entry.value == initialId,
+                  orElse:
+                      () => MapEntry('', 0), // Default empty entry if not found
+                )
+                .key;
 
         // Debugging statement
         // Ensure it contains the correct data
@@ -42,11 +44,12 @@ class EditDropDownWidget extends StatelessWidget {
       }
 
       return DropdownButtonFormField<String>(
-        validator: (value) => value == null ? 'Please select $label' : null,
+        // validator: (value) => value == null ? 'Please select $label' : null,
         decoration: InputDecoration(labelText: label),
-        items: uniqueItems
-            .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-            .toList(),
+        items:
+            uniqueItems
+                .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                .toList(),
         value: controller?.value,
         onChanged: (value) {
           controller?.value = value;

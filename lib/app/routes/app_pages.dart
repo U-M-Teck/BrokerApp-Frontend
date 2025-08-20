@@ -1,3 +1,4 @@
+import 'package:broker/app/config/widgets/no_internet_screen.dart';
 import 'package:broker/app/modules/add_property/bindings/add_property_binding.dart';
 import 'package:broker/app/modules/add_property/views/add_property_view.dart';
 import 'package:broker/app/modules/add_property/views/screens/apartment/add_apartment_stage_1.dart';
@@ -67,6 +68,10 @@ class AppPages {
     GetPage(
       name: _Paths.brokerPoints,
       page: () =>  BrokerPointsScreen(),
+    ),
+        GetPage(
+      name: _Paths.noInternet,
+      page: () =>  NoInternetScreen(),
     ),
      GetPage(
       name: _Paths.contactUs,

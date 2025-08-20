@@ -10,13 +10,13 @@ android {
     ndkVersion = "27.0.12077973"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
         isCoreLibraryDesugaringEnabled = true // ✅ Enable desugaring
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
@@ -39,6 +39,8 @@ android {
     buildTypes {
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = false  // Disable minification
+            isShrinkResources = false // Disable shrinking resources
         }
     }
 }
@@ -48,8 +50,10 @@ flutter {
 }
 
 dependencies {
+    implementation("com.facebook.android:facebook-android-sdk:latest.release")
     implementation("com.google.firebase:firebase-analytics-ktx") // ✅ Firebase dependency example
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3") // ✅ Correct dependency type
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4") // ✅ Correct dependency type
+    implementation("com.facebook.android:facebook-android-sdk:16.3.0")
 }
 
 // ✅ Apply Google Services plugin at the bottom (required for Firebase)

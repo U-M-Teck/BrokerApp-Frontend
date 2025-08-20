@@ -35,58 +35,98 @@ class EditPaymentStage extends GetView<EditApartmentController> {
               mainAxisAlignment: MainAxisAlignment.center,
               spacing: 16.w,
               children: [
-                InkWell(
-                  onTap: () {
-                    controller.selectAd(0); // Index of Premium Ad
-                    Get.toNamed(Routes.editPremiumPaymentStage);
-                  },
-                  child: Container(
-                    height: 167.h,
-                    width: 167.w,
-                    decoration: BoxDecoration(
-                      color: AppColors.secondary,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.w,
-                      vertical: 40.h,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 8.h,
-                      children: [
-                        Icon(
-                          Icons.star_border_outlined,
-                          color: AppColors.white,
-                          size: 48,
-                        ),
-                        Text(
-                          AppStrings.premiumAd,
-                          style: AppTextStyle.font18white400,
-                        ),
-                      ],
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      controller.selectAd(0); // Index of Premium Ad
+                      controller.isPremium.value == true
+                          ? showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder:
+                                (s) => UnderReview(
+                                  button: Obx(() {
+                                    return AppButton1(
+                                      leading:
+                                          controller
+                                                      .editAdvertisementLoading
+                                                      .value ==
+                                                  true
+                                              ? CircularProgressIndicator(
+                                                color: Colors.white,
+                                              )
+                                              : SizedBox.shrink(),
+                                      title:
+                                          controller
+                                                      .editAdvertisementLoading
+                                                      .value ==
+                                                  true
+                                              ? ""
+                                              : AppStrings.done,
+                                      onPressed: () {
+                                        controller
+                                                    .editAdvertisementLoading
+                                                    .value ==
+                                                true
+                                            ? null
+                                            : controller.editAdvertisement();
+                                      },
+                                    );
+                                  }),
+                                  isLoading:
+                                      controller.editAdvertisementLoading.value,
+                                ),
+                          )
+                          : Get.toNamed(Routes.editPremiumPaymentStage);
+                    },
+                    child: Container(
+                      height: 167.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.secondary,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 40.h,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 8.h,
+                        children: [
+                          Icon(
+                            Icons.star_border_outlined,
+                            color: AppColors.white,
+                            size: 48,
+                          ),
+                          Text(
+                            AppStrings.premiumAd,
+                            style: AppTextStyle.font18white400,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    controller.selectAd(1); // Index of Free Ad
-                  },
-                  child: Container(
-                    height: 167.h,
-                    width: 167.w,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 28.w,
-                      vertical: 40.h,
-                    ),
-                    child: Center(
-                      child: Text(
-                        AppStrings.freeAd,
-                        style: AppTextStyle.font18white400,
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      controller.selectAd(1); // Index of Free Ad
+                    },
+                    child: Container(
+                      height: 167.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 28.w,
+                        vertical: 40.h,
+                      ),
+                      child: Center(
+                        child: Text(
+                          AppStrings.freeAd,
+                          style: AppTextStyle.font18white400,
+                        ),
                       ),
                     ),
                   ),
@@ -131,24 +171,27 @@ class EditPaymentStage extends GetView<EditApartmentController> {
                                                   .editAdvertisementLoading
                                                   .value ==
                                               true
-                                          ? CircularProgressIndicator(color: Colors.white,)
+                                          ? CircularProgressIndicator(
+                                            color: Colors.white,
+                                          )
                                           : SizedBox.shrink(),
-                                  title:controller
+                                  title:
+                                      controller
                                                   .editAdvertisementLoading
                                                   .value ==
                                               true
-                                          ?"": AppStrings.done,
+                                          ? ""
+                                          : AppStrings.done,
                                   onPressed: () {
-                                   controller
-                                                  .editAdvertisementLoading
-                                                  .value ==
-                                              true
-                                          ?null: controller.editAdvertisement();
+                                    controller.editAdvertisementLoading.value ==
+                                            true
+                                        ? null
+                                        : controller.editAdvertisement();
                                   },
                                 );
-                              }), isLoading: controller
-                                                  .editAdvertisementLoading
-                                                  .value,
+                              }),
+                              isLoading:
+                                  controller.editAdvertisementLoading.value,
                             ),
                       )
                       : null;

@@ -1,25 +1,23 @@
 import 'dart:async';
 import 'dart:io' show File;
+import 'dart:convert';
 
-import 'package:broker/app/core/extentions/extention.dart';
 import 'package:broker/app/core/heplers/date_format_helper.dart';
-import 'package:broker/app/core/heplers/file_helper.dart';
 import 'package:broker/app/modules/add_property/data/models/get_all_governates_model.dart';
 import 'package:broker/app/modules/edit_property/data/models/get_adv_details_model.dart';
 import 'package:broker/app/modules/edit_property/views/screens/apartment/edit_paymob_screen.dart';
 import 'package:broker/app/modules/layout/controllers/layout_controller.dart';
 import 'package:broker/app/routes/app_pages.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../../config/style/app_color.dart';
 import '../../../config/utils/app_utils/app_strings.dart';
-import '../../../core/heplers/image_picker.dart';
 import '../../../core/heplers/map_utils.dart';
 import '../../../core/services/storage_service.dart';
 import '../../add_property/data/models/get_all_durations_model.dart';
@@ -32,7 +30,6 @@ import '../views/widgets/search_screen.dart';
 class EditApartmentController extends GetxController {
   final EditPropertyProvider _editPropertyProvider = EditPropertyProvider();
   final selectedDuration = 0.obs;
-
 
   final RxBool isWhatsAppAvailable = false.obs;
   final allGovernates = Rxn<GetAllGovernatesModel>();
@@ -85,7 +82,6 @@ class EditApartmentController extends GetxController {
   RxInt documents = 0.obs;
 
   var imageFiles = <File?>[].obs;
-  var imageNames = <String>[].obs; // قائمة جديدة لحفظ أسماء الصور
   var apiPhotosList = <String>[].obs; // قائمة جديدة لحفظ أسماء الصور
 
   final getAdsDetailsLodaing = false.obs;
@@ -142,11 +138,14 @@ class EditApartmentController extends GetxController {
 
   //add check for the formfield to be submitted or not
   void checkFirstStageForm() {
-
     if (firstStageFormKey.currentState!.validate()) {
       if (currentLocation.value == null) {
-        Get.snackbar("Error", "Please select your location",
-            snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar(
+          "Error",
+          AppStrings.pleaseSelectLocation,
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: AppColors.primary,
+        );
       } else {
         Get.toNamed(Routes.editApartmentStage2);
         saveDataFromFirstStage();
@@ -164,8 +163,12 @@ class EditApartmentController extends GetxController {
   void checkThirdStageForm() {
     if (thirdStageFormKey.currentState!.validate()) {
       if (apiPhotosList.isEmpty) {
-        Get.snackbar("Error", AppStrings.pleaseAddAtLeastOneImage,
-            snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar(
+          "Error",
+          AppStrings.pleaseAddAtLeastOneImage,
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: AppColors.primary,
+        );
       } else {
         Get.toNamed(Routes.editApartmentStage4);
         saveDataFromThirdStage();
@@ -210,18 +213,20 @@ class EditApartmentController extends GetxController {
       "area": areaController.text,
       "buildingArea":
           selectedAdType.value == 4 ? buildingAreaController.text : "",
-      "usingFor": selectedAdType.value == 4
-          ? "${selectedBuildingUsingFor.value + 5}"
-          : selectedAdType.value == 7
+      "usingFor":
+          selectedAdType.value == 4
+              ? "${selectedBuildingUsingFor.value + 5}"
+              : selectedAdType.value == 7
               ? "${selectedBuildingUsingFor.value + 1}"
               : "",
       "numUnits": selectedAdType.value == 4 ? "${selectedNoUnits.value}" : "0",
       "numPartitions":
           selectedAdType.value == 4 ? "${selectedNoPartitions.value}" : "0",
       "shop": selectedAdType.value == 4 ? "${hasShop.value}" : "",
-      "shopsNumber": selectedAdType.value == 4 && noShopsController.text != ""
-          ? noShopsController.text
-          : "",
+      "shopsNumber":
+          selectedAdType.value == 4 && noShopsController.text != ""
+              ? noShopsController.text
+              : "",
       "parkingSpace":
           selectedAdType.value == 4 && parkingSpaceController.text != ""
               ? parkingSpaceController.text
@@ -230,24 +235,27 @@ class EditApartmentController extends GetxController {
           selectedAdType.value == 4 && buildingDateController.text != ""
               ? buildingDateController.text
               : "",
-      "width": (selectedAdType.value == 4 || selectedAdType.value == 7) &&
-              buildingWidthController.text != ""
-          ? buildingWidthController.text
-          : "",
-      "length": (selectedAdType.value == 4 || selectedAdType.value == 7) &&
-              buildingLengthController.text != ""
-          ? buildingLengthController.text
-          : "",
+      "width":
+          (selectedAdType.value == 4 || selectedAdType.value == 7) &&
+                  buildingWidthController.text != ""
+              ? buildingWidthController.text
+              : "",
+      "length":
+          (selectedAdType.value == 4 || selectedAdType.value == 7) &&
+                  buildingLengthController.text != ""
+              ? buildingLengthController.text
+              : "",
       "officesFloors":
           selectedAdType.value == 5 ? "${selectedOfficeFloors.value}" : "",
       "officesNum":
           selectedAdType.value == 5 ? "${selectedOfficeNumber.value}" : "",
-      "streetWidth": (selectedAdType.value == 5 ||
-                  selectedAdType.value == 6 ||
-                  selectedAdType.value == 7) &&
-              streetWidthController.text != ""
-          ? streetWidthController.text
-          : "",
+      "streetWidth":
+          (selectedAdType.value == 5 ||
+                      selectedAdType.value == 6 ||
+                      selectedAdType.value == 7) &&
+                  streetWidthController.text != ""
+              ? streetWidthController.text
+              : "",
       "floorsNumber": levelController.text,
       "rooms": "${selectedRooms.value}",
       "reception": "${recieption.value}",
@@ -264,15 +272,15 @@ class EditApartmentController extends GetxController {
       "landingStatus": "${landingStatus.value + 1}",
       "decoration": "${finishing.value + 1}",
       "document": "${documents.value + 1}",
-      "AdvertisementFacilitesList": [
-        hasWater.value ? 31 : null,
-        hasElectricity.value == true ? 30 : null,
-        hasInternet.value == true ? 29 : null,
-        hasGas.value == true ? 28 : null,
-        hasPhone.value == true ? 27 : null
-      ].where((item) => item != null).toList()
+      "AdvertisementFacilitesList":
+          [
+            hasWater.value ? 31 : null,
+            hasElectricity.value == true ? 30 : null,
+            hasInternet.value == true ? 29 : null,
+            hasGas.value == true ? 28 : null,
+            hasPhone.value == true ? 27 : null,
+          ].where((item) => item != null).toList(),
     };
-
   }
 
   void saveDataFromFirstStage() {
@@ -286,22 +294,37 @@ class EditApartmentController extends GetxController {
       "latitude": currentLocation.value?.latitude,
       "longitude": currentLocation.value?.longitude,
     };
+    print("First Stage Data: ${firstApartmentStageData.value}");
   }
 
   void saveDataFromThirdStage() {
     thirdApartmentStageData.value = {
       "description": descriptionController.text,
-      "photosList": apiPhotosList.map((url) => url.replaceFirst(
-          "http://backend.brokerapp.me/Resources/UploadFiles/", "")).toList(),
+      "photosList":
+          apiPhotosList
+              .map(
+                (url) => url.replaceFirst(
+                  "http://backend.brokerapp.me/Resources/UploadFiles/",
+                  "",
+                ),
+              )
+              .toList(),
     };
+    print("API Photos List: $apiPhotosList");
   }
 
   void saveDataFromForthStage() {
     forthApartmentStageData.value = {
-      "price": selectedAdType.value != 3 ? priceController.text : "0",
-      "rent": selectedContractType.value == 1 && selectedAdType.value != 3
-          ? "${rent.value + 1}"
-          : "0",
+      "price":
+          selectedAdType.value == 3 && selectedContractType.value == 1
+              ? dayController.text == ""
+                  ? weekController.text
+                  : dayController.text
+              : priceController.text,
+      "rent":
+          selectedContractType.value == 1 && selectedAdType.value != 3
+              ? "${rent.value + 1}"
+              : "0",
       "chaletRentType":
           selectedAdType.value == 3 && selectedContractType.value == 1
               ? selectedOption.value
@@ -320,7 +343,7 @@ class EditApartmentController extends GetxController {
   void saveDataFromFifthStage() {
     fifthApartmentStageData.value = {
       "mrMrs": selectedMrMrs.value == "Mr" ? "1" : "2",
-      "advertiseMaker": selectedBrokerOwner.value == "Owner" ? "1" : "2"
+      "advertiseMaker": selectedBrokerOwner.value == "Owner" ? "1" : "2",
     };
   }
 
@@ -363,11 +386,12 @@ class EditApartmentController extends GetxController {
 
     super.onClose();
   }
+
   final RxDouble discount = 0.0.obs;
-    final getDiscount = Rxn<GetDiscountModel>();
+  final getDiscount = Rxn<GetDiscountModel>();
   final allDurations = Rxn<GetAllDurationsModel>();
 
-   Future<void> getAllDurations() async {
+  Future<void> getAllDurations() async {
     final getAllDurationsData = {"start": "0", "length": "100"};
 
     final response = await _editPropertyProvider.getAllDurations(
@@ -378,7 +402,8 @@ class EditApartmentController extends GetxController {
       allDurations.value = GetAllDurationsModel.fromJson(l['result']);
     }, (r) => _showError(r.message));
   }
-      Future<void> checkCoupon() async {
+
+  Future<void> checkCoupon() async {
     final getAllDurationsData = {"keyword": discountCode.text};
 
     final response = await _editPropertyProvider.checkCoupon(
@@ -386,77 +411,151 @@ class EditApartmentController extends GetxController {
     );
 
     response.fold((l) async {
-            getDiscount.value = GetDiscountModel.fromJson(l['result']);
-            if (getDiscount.value?.success==false) {
-              _showError("Invalid Discount Code");
-            }else{
-              discount.value=getDiscount.value?.discount;
-            }
-
+      getDiscount.value = GetDiscountModel.fromJson(l['result']);
+      if (getDiscount.value?.success == false) {
+        _showError("Invalid Discount Code");
+      } else {
+        discount.value = getDiscount.value?.discount;
+      }
     }, (r) => _showError(r.message));
   }
 
-  void addImages(int index,source) async {
-    var image = await ImagePickerUtils.getImage(source: source);
-    if (image != null) {
-      String imageName =
-          image.path.split('/').last; // حفظ اسم الصورة النهائي فقط
-      imageFiles[index] = image; // إضافة الصورة إلى القائمة الأصلية
-      uploadImage(image);
+  void addImages(int index, ImageSource source) async {
+    int remainingSlots = 6 - apiPhotosList.length;
+    print(index + 1);
+    print(imageFiles.length);
 
-      apiPhotosList.add(imageName); // إضافة اسم الصورة إلى القائمة الجديدة
+    if (remainingSlots <= 0) {
+      _showError("You can only upload up to 6 images.");
+      return;
+    }
 
-      // طباعة اسم الصورة النهائي فقط
+    if (source == ImageSource.gallery) {
+      List<XFile>? images = await ImagePicker().pickMultiImage();
+      if (images.isNotEmpty) {
+        List<XFile> limitedImages = images.take(remainingSlots).toList();
+        for (int i = 0; i < limitedImages.length; i++) {
+          XFile image = limitedImages[i];
+          File file = File(image.path);
+          List<int> imageBytes = await file.readAsBytes();
+          String base64Image = base64Encode(imageBytes);
+          print("Base64 Image: $base64Image");
+
+          imageFiles.add(file);
+          print(imageFiles.length);
+
+          // await uploadImageBase64(base64Image, imageName);
+          if (index + i < apiPhotosList.length) {
+            apiPhotosList[index + i] = base64Image;
+          } else {
+            apiPhotosList.add(base64Image);
+          }
+        }
+      }
+    } else if (source == ImageSource.camera) {
+      if (imageFiles.length < 6) {
+        XFile? image = await ImagePicker().pickImage(source: source);
+        if (image != null) {
+          File file = File(image.path);
+          List<int> imageBytes = await file.readAsBytes();
+          String base64Image = base64Encode(imageBytes);
+          print("Base64 Image: $base64Image");
+
+          imageFiles.add(file);
+
+          print("Image Names Length: ${apiPhotosList.length}");
+
+          // await uploadImageBase64(base64Image, imageName);
+          if (index < apiPhotosList.length) {
+            apiPhotosList[index] = base64Image;
+            print("Image Names Length: ${apiPhotosList.length}");
+          } else {
+            apiPhotosList.add(base64Image);
+            print("Image Names Length: ${apiPhotosList.length}");
+          }
+        }
+      } else {
+        _showError("You can only upload up to 6 images.");
+      }
     }
   }
+
+  // Future<void> uploadImageBase64(String base64Image, String imageName) async {
+  //   try {
+  //     final uploadImageData = {"base64": base64Image, "fileName": imageName};
+  //     final response = await _editPropertyProvider.uploadImage(uploadImageData);
+  //     response.fold(
+  //       (success) {
+  //         print("Upload successful: $success");
+  //       },
+  //       (failure) {
+  //         // _showError(failure.message);
+  //       },
+  //     );
+  //   } catch (e) {
+  //     // Handle error if needed
+  //   }
+  // }
 
   void removeImage(int index) {
     if (index >= 0 && index < apiPhotosList.length) {
       apiPhotosList.removeAt(index);
     }
   }
+
   Future<void> getPaymentUrl(String amount) async {
     try {
       final getPaymentUrlData = {
         "amount": amount,
-        "userId": StorageService.getData("userId")
+        "userId": StorageService.getData("userId"),
       };
 
-      final response =
-          await _editPropertyProvider.getPaymentUrl(getPaymentUrlData);
-
-      response.fold(
-        (l) {
-          url.value = GetUrlModel.fromJson(l['result']);
-          if (url.value?.isSuccess==true) {
-            Get.to(() => EditPaymobScreen(paymentUrl: url.value?.url??""));
-          }
-        },
-        (r) => _showError(r.message),
+      final response = await _editPropertyProvider.getPaymentUrl(
+        getPaymentUrlData,
       );
+
+      response.fold((l) {
+        url.value = GetUrlModel.fromJson(l['result']);
+        if (url.value?.isSuccess == true) {
+          Get.to(() => EditPaymobScreen(paymentUrl: url.value?.url ?? ""));
+        }
+      }, (r) => _showError(r.message));
     } catch (e) {
-      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: AppColors.primary,
+      );
     }
   }
+
   Future<void> editAdvertisement() async {
-          editAdvertisementLoading.value=true;
-    
+    editAdvertisementLoading.value = true;
+
     final createAdvertisementData = {
+      "featuredAd":
+          isPremium.value == true
+              ? "true"
+              : selectedAdIndex.value == 0
+              ? "true"
+              : "false",
       "id": advDetailsModel.value?.id ?? 0,
       "type": selectedAdType.value,
       "seekerId": StorageService.getData("seekerId") ?? "0",
       "brokerPersonId": StorageService.getData("brokerId") ?? "0",
       "ownerId": StorageService.getData("ownerId") ?? "0",
       "paymentFacility": "1",
-      "isPublished": "true",
-      "advertiseMakerName": StorageService.getData("userName") ??
+      "isPublish": "true",
+      "advertiseMakerName":
+          StorageService.getData("userName") ??
           "${Get.find<LayoutController>().userData.value?.details?.name}",
       "contactRegisterInTheAccount": "true",
       "mobileNumber": StorageService.getData("phoneNumber") ?? "0",
-      "pool": selectedAdType.value == 2 || selectedAdType.value == 3
-          ? "${hasPool.value}"
-          : "false",
-
+      "pool":
+          selectedAdType.value == 2 || selectedAdType.value == 3
+              ? "${hasPool.value}"
+              : "false",
       ...?firstApartmentStageData.value, // استخدام spread operator
       ...?secondApartmentStageData.value, // استخدام spread operator
       ...?thirdApartmentStageData.value, // استخدام spread operator
@@ -465,19 +564,17 @@ class EditApartmentController extends GetxController {
       ...?sixthApartmentStageData.value, // استخدام spread operator
     };
 
-    final response =
-        await _editPropertyProvider.editAdvertisement(createAdvertisementData);
-
-    response.fold(
-      (l) async {
-        if (l['success'] == true) {
-          editAdvertisementLoading.value=false;
-          Get.offAllNamed(Routes.home);
-          Get.find<LayoutController>().getAllAdvertisementForUser();
-        }
-      },
-      (r) => _showError(r.message),
+    final response = await _editPropertyProvider.editAdvertisement(
+      createAdvertisementData,
     );
+
+    response.fold((l) async {
+      if (l['success'] == true) {
+        editAdvertisementLoading.value = false;
+        Get.offAllNamed(Routes.home);
+        Get.find<LayoutController>().getAllAdvertisementForUser();
+      }
+    }, (r) => _showError(r.message));
   }
 
   Future<void> getAdvDetailsForEdit(int advertiseId) async {
@@ -488,20 +585,29 @@ class EditApartmentController extends GetxController {
     };
 
     final response = await _editPropertyProvider.getAdvDetailsForEdit(
-        data: getAdvDetailsData);
-
-    response.fold(
-      (l) async {
-        advDetailsModel.value =
-            GetAdvDetailsForEditModel.fromJson(l['result']['advertisement']);
-        getAdsDetailsLodaing.value = false;
-      },
-      (r) => _showError(r.message),
+      data: getAdvDetailsData,
     );
+
+    response.fold((l) async {
+      advDetailsModel.value = GetAdvDetailsForEditModel.fromJson(
+        l['result']['advertisement'],
+      );
+      getAdsDetailsLodaing.value = false;
+    }, (r) => _showError(r.message));
   }
 
-  void showLocationPicker(BuildContext context) {
-    LatLng initialPosition = LatLng(30.0444, 31.2357); // Default: Cairo
+  void showLocationPicker(BuildContext context) async {
+    // Try to get the user's current location
+    LatLng initialPosition;
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        locationSettings: LocationSettings(accuracy: LocationAccuracy.high),
+      );
+      initialPosition = LatLng(position.latitude, position.longitude);
+    } catch (e) {
+      // Fallback to Cairo if location not available
+      initialPosition = LatLng(30.0444, 31.2357);
+    }
     Rx<LatLng> selectedPosition = Rx(initialPosition);
 
     // Function to get address from coordinates
@@ -514,7 +620,6 @@ class EditApartmentController extends GetxController {
 
         if (placemarks.isNotEmpty) {
           Placemark place = placemarks.first;
-          // Build address only with non-null and non-empty components
           List<String> addressParts =
               [
                 place.street,
@@ -523,104 +628,137 @@ class EditApartmentController extends GetxController {
 
           selectedAddress.value = addressParts.join(', ');
 
-          // Set initial text for street and district controllers
           if (place.street != null) {
             streetController.text = place.street!;
           }
-          if (place.subLocality != null) {
+          if (place.locality != null) {
             districtController.text = place.locality!;
           }
         } else {
-          selectedAddress.value = "No address found for this location";
+          selectedAddress.value = "لم يتم العثور على عنوان لهذا الموقع";
         }
       } catch (e) {
-        // Log the actual error
-        selectedAddress.value = "Could not fetch address. Please try again.";
+        selectedAddress.value = "تعذر جلب العنوان. يرجى المحاولة مرة أخرى.";
       }
     }
 
     // Get initial address
-    getAddressFromLatLng(initialPosition);
+    await getAddressFromLatLng(initialPosition);
 
-    Get.defaultDialog(
-      content: Column(
-        children: [
-          Obx(() {
-            return TextFormField(
-              onTap: () {
-                searchPlace(context);
+    Get.to(
+      () => Scaffold(
+        appBar: AppBar(
+          title: Text(AppStrings.selectLocation),
+          actions: [
+            IconButton(
+              onPressed: () {
+                currentLocation.value = Position(
+                  latitude: selectedPosition.value.latitude,
+                  longitude: selectedPosition.value.longitude,
+                  timestamp: DateTime.now(),
+                  accuracy: 1,
+                  altitude: 0,
+                  heading: 0,
+                  speed: 0,
+                  speedAccuracy: 0,
+                  altitudeAccuracy: 0,
+                  headingAccuracy: 0,
+                );
+                Get.back();
               },
-              controller: TextEditingController(text: address.value),
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.search_rounded),
-              ),
-              readOnly: true,
-            );
-          }),
-          SizedBox(
-            height: 500.h,
-            width: double.infinity,
-            child: Obx(
-              () => GoogleMap(
-                initialCameraPosition: initialCameraPosition,
-                onMapCreated: onMapCreate,
-                onCameraIdle: () async {
-                  getAddress();
-                },
-                onCameraMove: onCameraMove,
-                myLocationEnabled: true,
-                mapType:
-                    MapType.normal, // Use MapType.none for minimal rendering
-                trafficEnabled: false,
-                buildingsEnabled: false,
-                indoorViewEnabled: false,
-                // padding: EdgeInsets.only(bottom: 140.h),
-                markers: {
-                  Marker(
-                    markerId: MarkerId("selected"),
-                    position: selectedPosition.value,
+              icon: const Icon(Icons.check),
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(8.w),
+              child: Obx(() {
+                return TextFormField(
+                  onTap: () {
+                    searchPlace(context);
+                  },
+                  controller: TextEditingController(text: address.value),
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search_rounded),
+                    hintText: "ابحث عن موقع",
                   ),
-                },
-                onTap: (LatLng latLng) {
-                  selectedPosition.value = latLng;
-                  getAddressFromLatLng(latLng); // Update address
-                },
-                zoomGesturesEnabled: true,
-                scrollGesturesEnabled: true,
-                rotateGesturesEnabled: true,
-                tiltGesturesEnabled: true,
-                compassEnabled: false,
-                myLocationButtonEnabled: false,
-                zoomControlsEnabled: true,
-                gestureRecognizers:
-                    <Factory<OneSequenceGestureRecognizer>>{}.toSet(),
-                // gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{}..add(
-                //     Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
+                  readOnly: true,
+                );
+              }),
+            ),
+            Expanded(
+              child: Stack(
+                children: [
+                  Obx(
+                    () => GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                        target: initialPosition,
+                        zoom: 15,
+                      ),
+                      onMapCreated: onMapCreate,
+                      onCameraIdle: () async {
+                        getAddress();
+                      },
+                      onCameraMove: onCameraMove,
+                      myLocationEnabled: true,
+                      mapType: MapType.normal,
+                      trafficEnabled: false,
+                      buildingsEnabled: false,
+                      indoorViewEnabled: false,
+                      markers: {
+                        Marker(
+                          markerId: const MarkerId("selected"),
+                          position: selectedPosition.value,
+                        ),
+                      },
+                      onTap: (LatLng latLng) {
+                        selectedPosition.value = latLng;
+                        getAddressFromLatLng(latLng);
+                      },
+                      zoomGesturesEnabled: true,
+                      scrollGesturesEnabled: true,
+                      rotateGesturesEnabled: true,
+                      tiltGesturesEnabled: true,
+                      compassEnabled: false,
+                      myLocationButtonEnabled: true,
+                      zoomControlsEnabled: true,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 16.h,
+                    left: 60.w,
+                    right: 60.w,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24.w,
+                        vertical: 20.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(75),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Obx(
+                        () => Text(
+                          selectedAddress.value,
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          10.hs,
-          Obx(() => Text(selectedAddress.value)), // Display address
-          10.hs,
-          ElevatedButton(
-            onPressed: () {
-              currentLocation.value = Position(
-                latitude: selectedPosition.value.latitude,
-                longitude: selectedPosition.value.longitude,
-                timestamp: DateTime.now(),
-                accuracy: 1,
-                altitude: 0,
-                heading: 0,
-                speed: 0,
-                speedAccuracy: 0,
-                altitudeAccuracy: 0,
-                headingAccuracy: 0,
-              );
-              Get.back();
-            },
-            child: Text(AppStrings.confirmLocation),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -673,7 +811,9 @@ class EditApartmentController extends GetxController {
 
   Future<void> getAddress() async {
     loadingAddress.value = true;
-    final result = await _editPropertyProvider.getAddress(currentPosition.value);
+    final result = await _editPropertyProvider.getAddress(
+      currentPosition.value,
+    );
     // address.value = result;
     loadingAddress.value = false;
   }
@@ -700,35 +840,39 @@ class EditApartmentController extends GetxController {
   Future<void> getAllGovernates() async {
     final getAllGovernatesData = {"start": "0", "length": "100"};
 
-    final response =
-        await _editPropertyProvider.getAllGovernates(getAllGovernatesData);
-
-    response.fold(
-      (l) async {
-        allGovernates.value = GetAllGovernatesModel.fromJson(l['result']);
-      },
-      (r) => _showError(r.message),
+    final response = await _editPropertyProvider.getAllGovernates(
+      getAllGovernatesData,
     );
+
+    response.fold((l) async {
+      allGovernates.value = GetAllGovernatesModel.fromJson(l['result']);
+    }, (r) => _showError(r.message));
   }
 
-  Future<void> uploadImage(File imageFile) async {
-    try {
-      final uploadImageData = {"file": FileHelper.getMultiPartFile(imageFile)};
+  // Future<void> uploadImage(File imageFile) async {
+  //   try {
+  //     final uploadImageData = {"file": FileHelper.getMultiPartFile(imageFile)};
 
-      final response = await _editPropertyProvider.uploadImage(uploadImageData);
+  //     final response = await _editPropertyProvider.uploadImage(uploadImageData);
 
-      response.fold(
-        (l) {
-        },
-        (r) => _showError(r.message),
-      );
-    } catch (e) {
-      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM);
-    }
-  }
+  //     response.fold((l) {}, (r) => _showError(r.message));
+  //   } catch (e) {
+  //     Get.snackbar(
+  //       "Error",
+  //       e.toString(),
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       colorText: AppColors.primary,
+  //     );
+  //   }
+  // }
 
   void _showError(String message) {
-    Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar(
+      "Error",
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      colorText: AppColors.primary,
+    );
   }
 
   void clearData() {
@@ -760,40 +904,44 @@ class EditApartmentController extends GetxController {
     toilet.value = 0;
     documents.value = 0;
   }
-   Future<void> getAddressFromLatLng(LatLng position) async {
-      try {
-        List<Placemark> placemarks = await placemarkFromCoordinates(
-            position.latitude, position.longitude);
 
-        // طباعة عدد الأماكن المسترجعة
+  Future<void> getAddressFromLatLng(LatLng position) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
 
-        if (placemarks.isNotEmpty) {
-          Placemark place = placemarks.first;
-          selectedAddress.value =
-              "${place.name}, ${place.street}, ${place.locality}, ${place.country}";
-        } else {
-          selectedAddress.value = "العنوان غير موجود";
-        }
-      } catch (e) {
+      // طباعة عدد الأماكن المسترجعة
+
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks.first;
+        selectedAddress.value =
+            "${place.name}, ${place.street}, ${place.locality}, ${place.country}";
+      } else {
         selectedAddress.value = "العنوان غير موجود";
       }
+    } catch (e) {
+      selectedAddress.value = "العنوان غير موجود";
     }
+  }
 
   @override
   void onInit() {
     super.onInit();
 
+    getAllDurations();
     getAllGovernates();
-    
 
     // Set initial values for TextEditingControllers
     advDetailsModel.listen((advDetails) {
       if (advDetails != null) {
         titleController.text = advDetails.title ?? '';
+        isPremium.value = advDetails.featuredAd ?? false;
         buildingNoController.text = advDetails.buildingNumber ?? '';
         whatsappController.text = advDetails.secondMobileNumber ?? '';
         gardenAreaController.text = "${advDetails.gardenArea ?? ''}";
-        streetWidthController.text="${advDetails.streetWidth ?? ''}";
+        streetWidthController.text = "${advDetails.streetWidth ?? ''}";
         districtController.text = advDetails.compound ?? '';
         streetController.text = advDetails.street ?? '';
         areaController.text = advDetails.area ?? '';
@@ -806,18 +954,20 @@ class EditApartmentController extends GetxController {
         selectedMrMrs.value = advDetails.mrMrs == 1 ? "Mr" : "Mrs";
         selectedBrokerOwner.value =
             advDetails.advertiseMaker == 1 ? "Owner" : "Broker";
-        selectedBuildingUsingFor.value = 
-           advDetails.type==4?  advDetails.usingFor :0;
-        imageFiles.value = List.generate(6, (index) => null);
+        selectedBuildingUsingFor.value =
+            advDetails.type == 4 ? advDetails.usingFor : 0;
         hasShop.value = advDetails.shop ?? false;
-        buildingAreaController.text="${advDetails.buildingArea??""}";
+        buildingAreaController.text = "${advDetails.buildingArea ?? ""}";
         noShopsController.text = "${advDetails.shopsNumber ?? ''}";
         parkingSpaceController.text = "${advDetails.parkingSpace ?? ''}";
-        buildingDateController.text =advDetails.type==4? DateFormatHelper.formatDateTime(advDetails.buildingDate ?? ''):"";
+        buildingDateController.text =
+            advDetails.type == 4
+                ? DateFormatHelper.formatDateTime(advDetails.buildingDate ?? '')
+                : "";
         buildingWidthController.text = "${advDetails.width ?? ''}";
         buildingLengthController.text = "${advDetails.length ?? ''}";
         streetWidthController.text = "${advDetails.streetWidth ?? ''}";
-        isWhatsAppAvailable.value=advDetails.isWhatsApped??false;
+        isWhatsAppAvailable.value = advDetails.isWhatsApped ?? false;
         isFurnished.value = advDetails.furnished ?? false;
         hasElevator.value = advDetails.elevator ?? false;
         hasParking.value = advDetails.parking ?? false;
@@ -830,12 +980,18 @@ class EditApartmentController extends GetxController {
         hasGas.value = advDetails.facilitesApi?[4].isSelected ?? false;
         hasPhone.value = advDetails.facilitesApi?[5].isSelected ?? false;
         selectedOption.value = "${advDetails.chaletRentType ?? 0}";
-        apiPhotosList.value = advDetails.photosList
-                ?.where((url) =>
-                    url !=
-                    "http://backend.brokerapp.me/Resources/UploadFiles/AddPhoto.png")
+        apiPhotosList.value =
+            advDetails.photosList
+                ?.where(
+                  (url) =>
+                      url !=
+                      "http://backend.brokerapp.me/Resources/UploadFiles/AddPhoto.png",
+                )
                 .toList() ??
             [];
+        print("API Photos List: $apiPhotosList");
+        imageFiles.value = List.generate(apiPhotosList.length, (index) => null);
+
         currentLocation.value = Position(
           latitude: advDetails.latitude ?? 0,
           longitude: advDetails.longitude ?? 0,
@@ -848,15 +1004,16 @@ class EditApartmentController extends GetxController {
           altitudeAccuracy: 0,
           headingAccuracy: 0,
         );
-    if (currentLocation.value != null) {
-      getAddressFromLatLng(LatLng(
-        currentLocation.value!.latitude,
-        currentLocation.value!.longitude,
-      ));
-    }
+        if (currentLocation.value != null) {
+          getAddressFromLatLng(
+            LatLng(
+              currentLocation.value!.latitude,
+              currentLocation.value!.longitude,
+            ),
+          );
+        }
       }
     });
-    
   }
 
   void selectAd(int index) {

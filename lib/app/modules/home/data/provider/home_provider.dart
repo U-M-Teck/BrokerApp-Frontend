@@ -130,6 +130,19 @@ class HomeProvider {
       return Right(failure);
     }
   }
+    Future<Either<dynamic, Failure>> getUserPoints({Map<String, dynamic>? data}) async {
+    try {
+      ResponseModel response = await ApiService.post(
+        data: data ?? {},
+        endPoint: ApiConstans.getUserPoints,
+      );
+      return Left(response.data);
+    } on ResponseModel catch (responseModel) {
+      return Left(responseModel);
+    } on Failure catch (failure) {
+      return Right(failure);
+    }
+  }
 
   Future<Either<dynamic, Failure>> addContactUs({
     Map<String, dynamic>? data,

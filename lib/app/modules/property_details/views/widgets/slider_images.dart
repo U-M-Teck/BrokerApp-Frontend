@@ -19,68 +19,74 @@ class PropertyImages extends GetView<PropertyDetailsController> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Stack(
-            children: [
-              FractionallySizedBox(
-                widthFactor: 1.1.w,
-                child: CarouselSlider.builder(
-                  itemCount: images?.photos?.length ?? 0,
-                  options: CarouselOptions(
-                    autoPlay: true,
-                    enlargeCenterPage: true,
-                    viewportFraction: 1,
-                    aspectRatio: 16 / 9,
-                    onPageChanged: (index, reason) {
-                      controller.updateSliderValue(index.toDouble());
-                    },
-                  ),
-                  itemBuilder: (context, index, realIndex) {
-                    final path = images?.photos?[index] ?? '';
-                    return GestureDetector(
-                      onTap: () => _openFullScreenGallery(context, index),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 8.0.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: AppImageView(
-                            url: path,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                    );
+          children: [
+            FractionallySizedBox(
+              widthFactor: 1.1.w,
+              child: CarouselSlider.builder(
+                itemCount: images?.photos?.length ?? 0,
+                options: CarouselOptions(
+                  autoPlay: true,
+                  enlargeCenterPage: true,
+                  viewportFraction: 1,
+                  aspectRatio: 16 / 9,
+                  onPageChanged: (index, reason) {
+                    controller.updateSliderValue(index.toDouble());
                   },
                 ),
+                itemBuilder: (context, index, realIndex) {
+                  final path = images?.photos?[index] ?? '';
+                  return GestureDetector(
+                    onTap: () => _openFullScreenGallery(context, index),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 8.0.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: AppImageView(url: path, fit: BoxFit.cover),
+                      ),
+                    ),
+                  );
+                },
               ),
-              Positioned(
-                bottom: 10.0,
-                left: 0,
-                right: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: images?.photos?.asMap().entries.map((entry) {
-                    return GestureDetector(
-                      onTap: () => controller.updateSliderValue(entry.key.toDouble()),
-                      child: Obx(() => Container(
-                        width: 8.0.w,
-                        height: 8.0.h,
-                        margin: EdgeInsets.symmetric(horizontal: 4.0.w),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: controller.sliderValue.value == entry.key.toDouble()
-                              ? Theme.of(context).primaryColor
-                              : Colors.grey.shade400,
+            ),
+            Positioned(
+              bottom: 10.0,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:
+                    images?.photos?.asMap().entries.map((entry) {
+                      return GestureDetector(
+                        onTap:
+                            () => controller.updateSliderValue(
+                              entry.key.toDouble(),
+                            ),
+                        child: Obx(
+                          () => Container(
+                            width: 8.0.w,
+                            height: 8.0.h,
+                            margin: EdgeInsets.symmetric(horizontal: 4.0.w),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color:
+                                  controller.sliderValue.value ==
+                                          entry.key.toDouble()
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.grey.shade400,
+                            ),
+                          ),
                         ),
-                      )),
-                    );
-                  }).toList() ?? [],
-                ),
+                      );
+                    }).toList() ??
+                    [],
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -89,10 +95,11 @@ class PropertyImages extends GetView<PropertyDetailsController> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => FullScreenGallery(
-          images: images?.photos ?? [],
-          initialIndex: initialIndex,
-        ),
+        builder:
+            (context) => FullScreenGallery(
+              images: images?.photos ?? [],
+              initialIndex: initialIndex,
+            ),
       ),
     );
   }
@@ -102,7 +109,11 @@ class FullScreenGallery extends StatelessWidget {
   final List<String> images;
   final int initialIndex;
 
-  const FullScreenGallery({super.key, required this.images, required this.initialIndex});
+  const FullScreenGallery({
+    super.key,
+    required this.images,
+    required this.initialIndex,
+  });
 
   @override
   Widget build(BuildContext context) {

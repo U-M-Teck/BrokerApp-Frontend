@@ -26,9 +26,13 @@ class Assets {
 
   static const String assetsImagesEmptyFavorite = "assets/images/empty_favorite.png";
 
+  static const String assetsImagesLauncherIcon = "assets/images/launcher_icon.png";
+
   static const String assetsImagesLoadingImage = "assets/images/loading_image.json";
 
   static const String assetsImagesMapMarker = "assets/images/map_marker.png";
+
+  static const String assetsImagesNoInternet = "assets/images/no_internet.png";
 
   static const String assetsImagesNormalAdPin = "assets/images/normal_ad_pin.png";
 
@@ -43,6 +47,8 @@ class Assets {
   static const String assetsImagesSplash = "assets/images/splash.jpg";
 
   static const String assetsImagesSuccess = "assets/images/success.png";
+
+  static const String assetsImagesViewedAdPin = "assets/images/viewed_ad_pin.png";
 
   static const String assetsImagesWarning = "assets/images/warning.jpg";
 
