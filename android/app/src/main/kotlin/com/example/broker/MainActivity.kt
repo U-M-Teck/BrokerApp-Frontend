@@ -8,7 +8,5 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // ✅ Enables Android 15 edge-to-edge support (safe replacement for deprecated APIs)
-        enableEdgeToEdge()
     }
 }
