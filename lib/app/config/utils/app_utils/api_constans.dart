@@ -1,5 +1,5 @@
 class ApiConstans {
-  static const String baseUrl = 'http://62.146.178.31:9100';
+  static const String baseUrl = 'http://212.47.65.183:9100';
   static const String mapKey = 'AIzaSyASFpQ0BJ99BZ-b19_2tGAka4sdB8E7tkE';
   
   //Auth Endpoints
