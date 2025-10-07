@@ -50,31 +50,35 @@ class SplashController extends GetxController {
   }
 
   Future<bool> _isUpdateRequired() async {
+  try {
     final remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.setConfigSettings(
       RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 10),
-        minimumFetchInterval: Duration.zero, // Always fetch latest
+        minimumFetchInterval: Duration.zero,
       ),
     );
+
     await remoteConfig.fetchAndActivate();
 
-    String latestVersion;
-    if (GetPlatform.isAndroid) {
-      latestVersion = remoteConfig.getString('latest_version_android');
-    } else {
-      latestVersion = remoteConfig.getString('latest_version_ios');
-    }
+    String latestVersion = GetPlatform.isAndroid
+        ? remoteConfig.getString('latest_version_android')
+        : remoteConfig.getString('latest_version_ios');
+
     print("Latest version from remote config: $latestVersion");
-    if (latestVersion.isEmpty) {
-      print("No latest version found in remote config.");
-      return false; // No update required if no version is set
-    }
+
+    if (latestVersion.isEmpty) return false;
+
     final info = await PackageInfo.fromPlatform();
     final currentVersion = info.version;
 
     return _compareVersions(currentVersion, latestVersion);
+  } catch (e) {
+    print("⚠️ Remote Config fetch failed: $e");
+    return false; // Fail gracefully
   }
+}
+
 
   bool _compareVersions(String current, String latest) {
     List<int> c = current.split('.').map(int.parse).toList();

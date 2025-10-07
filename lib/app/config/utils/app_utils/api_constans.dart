@@ -1,6 +1,6 @@
 class ApiConstans {
   static const String baseUrl = 'http://212.47.65.183:9100';
-  static const String mapKey = 'AIzaSyASFpQ0BJ99BZ-b19_2tGAka4sdB8E7tkE';
+  static const String mapKey = 'AIzaSyAgVMBCdn0CkCyJO7aRm76RW0gUYZLaB-A';
   
   //Auth Endpoints
   static const String loginUser = '/api/TokenAuth/AuthenticateInMobile';

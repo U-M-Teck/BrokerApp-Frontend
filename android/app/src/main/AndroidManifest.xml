@@ -6,7 +6,7 @@
         android:icon="@mipmap/launcher_icon">
           <meta-data
         android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyASFpQ0BJ99BZ-b19_2tGAka4sdB8E7tkE" />
+        android:value="AIzaSyAgVMBCdn0CkCyJO7aRm76RW0gUYZLaB-A" />
 
             <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/><meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
 

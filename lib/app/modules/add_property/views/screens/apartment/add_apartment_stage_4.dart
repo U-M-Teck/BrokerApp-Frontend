@@ -121,7 +121,7 @@ class AddApartmentStage4 extends GetView<AddApartmentController> {
                     height: 16.h,
                     width: 16.w,
                   ),
-                  prefixText: 'EGP ',
+                  suffix: Text('EGP '),
                 ),
               ),
               controller.selectedContractType.value == 1&&controller.selectedAdType.value!=3
