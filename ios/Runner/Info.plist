@@ -52,6 +52,10 @@
 	</array>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 <true/>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>This app needs access to your location to show nearby properties on the map.</string>
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>We use your location to display properties near you, even when the app is running in the background.</string>
 <key>NSAppTransportSecurity</key>
 <dict>
     <key>NSAllowsArbitraryLoads</key>
