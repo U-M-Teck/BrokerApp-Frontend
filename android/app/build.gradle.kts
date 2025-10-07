@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "com.nahrdev.broker"
     compileSdk = 36
-    ndkVersion = "27.0.12077973"
+    ndkVersion = "28.0.12433566"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -18,10 +18,15 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+    packagingOptions {
+    jniLibs {
+        useLegacyPackaging = false
+    }
+}
 
     defaultConfig {
         applicationId = "com.nahrdev.broker"
-        minSdk = flutter.minSdkVersion
+        minSdk = 23
         targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
