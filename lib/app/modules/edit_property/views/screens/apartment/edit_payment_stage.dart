@@ -71,7 +71,7 @@ class EditPaymentStage extends GetView<EditApartmentController> {
                                                   true
                                               ? null
                                               : Get.offAllNamed(Routes.home);
-                                          ;
+                                          
                                         },
                                       );
                                     }),
@@ -158,8 +158,14 @@ class EditPaymentStage extends GetView<EditApartmentController> {
             Text(AppStrings.showsRemotely, style: AppTextStyle.font14black400),
             Obx(() {
               return AppButton1(
+                leading:
+                    controller.editAdvertisementLoading.value == true
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : SizedBox.shrink(),
                 title:
-                    controller.selectedAdIndex.value == 1
+                    controller.editAdvertisementLoading.value == true
+                        ? ""
+                        : controller.selectedAdIndex.value == 1
                         ? AppStrings.publishFreeAd
                         : AppStrings.publish,
                 onPressed: () {
