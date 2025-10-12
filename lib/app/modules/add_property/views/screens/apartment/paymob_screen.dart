@@ -23,45 +23,54 @@ class PaymentScreen extends StatelessWidget {
             NavigationDelegate(
               onNavigationRequest: (NavigationRequest request) {
                 if (request.url.contains('success=true')) {
-                  showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder:
-                        (s) => UnderReview(
-                          button: Obx(() {
-                            return AppButton1(
-                              leading:
+                  Get.find<AddApartmentController>().createAdvertisement().then(
+                    (v) => showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder:
+                          (s) => UnderReview(
+                            button: Obx(() {
+                              return AppButton1(
+                                leading:
+                                    Get.find<AddApartmentController>()
+                                                .createAdvertisementLoading
+                                                .value ==
+                                            true
+                                        ? CircularProgressIndicator(
+                                          color: Colors.white,
+                                        )
+                                        : SizedBox.shrink(),
+                                title:
+                                    Get.find<AddApartmentController>()
+                                                .createAdvertisementLoading
+                                                .value ==
+                                            true
+                                        ? ""
+                                        : AppStrings.done,
+                                onPressed: () {
                                   Get.find<AddApartmentController>()
                                               .createAdvertisementLoading
                                               .value ==
                                           true
-                                      ? CircularProgressIndicator(
-                                        color: Colors.white,
-                                      )
-                                      : SizedBox.shrink(),
-                              title:Get.find<AddApartmentController>()
-                                              .createAdvertisementLoading
-                                              .value ==
-                                          true
-                                      ?"": AppStrings.done,
-                              onPressed: () {
-                               Get.find<AddApartmentController>()
-                                              .createAdvertisementLoading
-                                              .value ==
-                                          true
-                                      ?null: Get.find<AddApartmentController>()
-                                    .createAdvertisement();
-                              },
-                            );
-                          }), isLoading: Get.find<AddApartmentController>()
-                                              .createAdvertisementLoading
-                                              .value,
-                        ),
+                                      ? null
+                                      : Get.offAllNamed(Routes.home);
+                                },
+                              );
+                            }),
+                            isLoading:
+                                Get.find<AddApartmentController>()
+                                    .createAdvertisementLoading
+                                    .value,
+                          ),
+                    ),
                   );
                   return NavigationDecision.prevent;
                 } else if (request.url.contains('success=false')) {
-                  Get.snackbar("Payment Failed", "Failed",          colorText: AppColors.primary
-);
+                  Get.snackbar(
+                    "Payment Failed",
+                    "Failed",
+                    colorText: AppColors.primary,
+                  );
                   Get.offAllNamed(Routes.home);
                   return NavigationDecision.prevent;
                 }

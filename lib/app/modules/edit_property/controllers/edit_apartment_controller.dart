@@ -571,7 +571,6 @@ class EditApartmentController extends GetxController {
     response.fold((l) async {
       if (l['success'] == true) {
         editAdvertisementLoading.value = false;
-        Get.offAllNamed(Routes.home);
         Get.find<LayoutController>().getAllAdvertisementForUser();
       }
     }, (r) => _showError(r.message));

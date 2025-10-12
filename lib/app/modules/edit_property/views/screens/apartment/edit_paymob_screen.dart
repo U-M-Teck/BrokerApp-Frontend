@@ -23,50 +23,54 @@ class EditPaymobScreen extends StatelessWidget {
             NavigationDelegate(
               onNavigationRequest: (NavigationRequest request) {
                 if (request.url.contains('success=true')) {
-                  showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder:
-                        (s) => UnderReview(
-                          button: Obx(() {
-                            return AppButton1(
-                              leading:
+                  Get.find<EditApartmentController>().editAdvertisement().then(
+                    (v) => showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder:
+                          (s) => UnderReview(
+                            button: Obx(() {
+                              return AppButton1(
+                                leading:
+                                    Get.find<EditApartmentController>()
+                                                .editAdvertisementLoading
+                                                .value ==
+                                            true
+                                        ? CircularProgressIndicator(
+                                          color: Colors.white,
+                                        )
+                                        : SizedBox.shrink(),
+                                title:
+                                    Get.find<EditApartmentController>()
+                                                .editAdvertisementLoading
+                                                .value ==
+                                            true
+                                        ? ""
+                                        : AppStrings.done,
+                                onPressed: () {
                                   Get.find<EditApartmentController>()
-                                              .editAdvertisementLoading
-                                              .value ==
-                                          true
-                                      ? CircularProgressIndicator(
-                                        color: Colors.white,
-                                      )
-                                      : SizedBox.shrink(),
-                              title:
-                                  Get.find<EditApartmentController>()
-                                              .editAdvertisementLoading
-                                              .value ==
-                                          true
-                                      ? ""
-                                      : AppStrings.done,
-                              onPressed: () {
-                              Get.find<EditApartmentController>()
                                               .editAdvertisementLoading
                                               .value ==
                                           true
                                       ? null
-                                      :  Get.find<EditApartmentController>()
-                                    .editAdvertisement();
-                              },
-                            );
-                          }),
-                          isLoading:
-                              Get.find<EditApartmentController>()
-                                  .editAdvertisementLoading
-                                  .value,
-                        ),
+                                      : Get.offAllNamed(Routes.home);
+                                },
+                              );
+                            }),
+                            isLoading:
+                                Get.find<EditApartmentController>()
+                                    .editAdvertisementLoading
+                                    .value,
+                          ),
+                    ),
                   );
                   return NavigationDecision.prevent;
                 } else if (request.url.contains('success=false')) {
-                  Get.snackbar("Payment Failed", "Failed",          colorText: AppColors.primary
-);
+                  Get.snackbar(
+                    "Payment Failed",
+                    "Failed",
+                    colorText: AppColors.primary,
+                  );
                   Get.offAllNamed(Routes.home);
                   return NavigationDecision.prevent;
                 }

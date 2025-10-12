@@ -52,6 +52,12 @@
 	</array>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 <true/>
+<key>NSCameraUsageDescription</key>
+<string>This app needs camera access to allow you to take property photos.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>This app needs photo library access to upload property images.</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>This app saves photos to your gallery after capturing or selecting images.</string>
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>This app needs access to your location to show nearby properties on the map.</string>
 <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

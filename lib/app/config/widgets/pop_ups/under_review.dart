@@ -1,4 +1,3 @@
-import 'package:broker/app/config/style/app_color.dart';
 import 'package:broker/app/config/style/app_text_styles.dart';
 import 'package:broker/app/config/utils/app_utils/app_strings.dart';
 import 'package:broker/app/core/extentions/extention.dart';
@@ -16,15 +15,10 @@ class UnderReview extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       contentPadding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 20.h),
-      title: Row(
-        children: [
-          Text(AppStrings.underReview, style: AppTextStyle.font18black600),
-          Spacer(),
-          IconButton(
-            onPressed: () => isLoading ? null : Navigator.of(context).pop(),
-            icon: Icon(Icons.close, color: AppColors.grey),
-          ),
-        ],
+      title: Text(
+        AppStrings.underReview,
+        style: AppTextStyle.font18black600,
+        textAlign: TextAlign.center,
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,

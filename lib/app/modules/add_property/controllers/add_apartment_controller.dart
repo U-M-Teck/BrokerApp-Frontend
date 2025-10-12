@@ -469,7 +469,6 @@ class AddApartmentController extends GetxController {
       if (l['success'] == true) {
         createAdvertisementLoading.value = false;
 
-        Get.offAllNamed(Routes.home);
         Get.find<LayoutController>().getAllAdvertisementForUser();
         Get.find<LayoutController>().getUserNotifications();
       }

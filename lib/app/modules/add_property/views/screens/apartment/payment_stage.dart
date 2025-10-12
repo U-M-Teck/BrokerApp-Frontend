@@ -118,48 +118,64 @@ class PaymentStage extends GetView<AddApartmentController> {
                   AppStrings.appearsInGoldColor,
                   style: AppTextStyle.font14black400,
                 ),
-                Text(AppStrings.showsRemotely, style: AppTextStyle.font14black400),
+                Text(
+                  AppStrings.showsRemotely,
+                  style: AppTextStyle.font14black400,
+                ),
               ],
             ),
             Obx(() {
               return AppButton1(
+                leading:
+                    controller.createAdvertisementLoading.value == true
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : SizedBox.shrink(),
                 title:
-                    controller.selectedAdIndex.value == 1
+                    controller.createAdvertisementLoading.value == true
+                        ? ""
+                        : controller.selectedAdIndex.value == 1
                         ? AppStrings.publishFreeAd
                         : AppStrings.publish,
                 onPressed: () {
                   controller.selectedAdIndex.value == 1
-                      ? showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder:
-                            (s) => UnderReview(
-                              button: Obx(() {
-                                return AppButton1(
-                                  leading:
+                      ? controller.createAdvertisement().then(
+                        (v) => showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder:
+                              (s) => UnderReview(
+                                button: Obx(() {
+                                  return AppButton1(
+                                    leading:
+                                        controller
+                                                    .createAdvertisementLoading
+                                                    .value ==
+                                                true
+                                            ? CircularProgressIndicator(
+                                              color: Colors.white,
+                                            )
+                                            : SizedBox.shrink(),
+                                    title:
+                                        controller
+                                                    .createAdvertisementLoading
+                                                    .value ==
+                                                true
+                                            ? ""
+                                            : AppStrings.done,
+                                    onPressed: () {
                                       controller
                                                   .createAdvertisementLoading
                                                   .value ==
                                               true
-                                          ? CircularProgressIndicator(color: Colors.white,)
-                                          : SizedBox.shrink(),
-                                  title:controller
-                                                  .createAdvertisementLoading
-                                                  .value ==
-                                              true
-                                          ?"": AppStrings.done,
-                                  onPressed: () {
-                                   controller
-                                                  .createAdvertisementLoading
-                                                  .value ==
-                                              true
-                                          ?null: controller.createAdvertisement();
-                                  },
-                                );
-                              }), isLoading: controller
-                                                  .createAdvertisementLoading
-                                                  .value,
-                            ),
+                                          ? null
+                                          : Get.offAllNamed(Routes.home);
+                                    },
+                                  );
+                                }),
+                                isLoading:
+                                    controller.createAdvertisementLoading.value,
+                              ),
+                        ),
                       )
                       : null;
                 },

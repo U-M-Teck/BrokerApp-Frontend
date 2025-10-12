@@ -40,42 +40,47 @@ class EditPaymentStage extends GetView<EditApartmentController> {
                     onTap: () {
                       controller.selectAd(0); // Index of Premium Ad
                       controller.isPremium.value == true
-                          ? showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder:
-                                (s) => UnderReview(
-                                  button: Obx(() {
-                                    return AppButton1(
-                                      leading:
+                          ? controller.editAdvertisement().then(
+                            (v) => showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder:
+                                  (s) => UnderReview(
+                                    button: Obx(() {
+                                      return AppButton1(
+                                        leading:
+                                            controller
+                                                        .editAdvertisementLoading
+                                                        .value ==
+                                                    true
+                                                ? CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                )
+                                                : SizedBox.shrink(),
+                                        title:
+                                            controller
+                                                        .editAdvertisementLoading
+                                                        .value ==
+                                                    true
+                                                ? ""
+                                                : AppStrings.done,
+                                        onPressed: () {
                                           controller
                                                       .editAdvertisementLoading
                                                       .value ==
                                                   true
-                                              ? CircularProgressIndicator(
-                                                color: Colors.white,
-                                              )
-                                              : SizedBox.shrink(),
-                                      title:
-                                          controller
-                                                      .editAdvertisementLoading
-                                                      .value ==
-                                                  true
-                                              ? ""
-                                              : AppStrings.done,
-                                      onPressed: () {
+                                              ? null
+                                              : Get.offAllNamed(Routes.home);
+                                          ;
+                                        },
+                                      );
+                                    }),
+                                    isLoading:
                                         controller
-                                                    .editAdvertisementLoading
-                                                    .value ==
-                                                true
-                                            ? null
-                                            : controller.editAdvertisement();
-                                      },
-                                    );
-                                  }),
-                                  isLoading:
-                                      controller.editAdvertisementLoading.value,
-                                ),
+                                            .editAdvertisementLoading
+                                            .value,
+                                  ),
+                            ),
                           )
                           : Get.toNamed(Routes.editPremiumPaymentStage);
                     },
@@ -159,40 +164,44 @@ class EditPaymentStage extends GetView<EditApartmentController> {
                         : AppStrings.publish,
                 onPressed: () {
                   controller.selectedAdIndex.value == 1
-                      ? showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder:
-                            (s) => UnderReview(
-                              button: Obx(() {
-                                return AppButton1(
-                                  leading:
+                      ? controller.editAdvertisement().then(
+                        (v) => showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder:
+                              (s) => UnderReview(
+                                button: Obx(() {
+                                  return AppButton1(
+                                    leading:
+                                        controller
+                                                    .editAdvertisementLoading
+                                                    .value ==
+                                                true
+                                            ? CircularProgressIndicator(
+                                              color: Colors.white,
+                                            )
+                                            : SizedBox.shrink(),
+                                    title:
+                                        controller
+                                                    .editAdvertisementLoading
+                                                    .value ==
+                                                true
+                                            ? ""
+                                            : AppStrings.done,
+                                    onPressed: () {
                                       controller
                                                   .editAdvertisementLoading
                                                   .value ==
                                               true
-                                          ? CircularProgressIndicator(
-                                            color: Colors.white,
-                                          )
-                                          : SizedBox.shrink(),
-                                  title:
-                                      controller
-                                                  .editAdvertisementLoading
-                                                  .value ==
-                                              true
-                                          ? ""
-                                          : AppStrings.done,
-                                  onPressed: () {
-                                    controller.editAdvertisementLoading.value ==
-                                            true
-                                        ? null
-                                        : controller.editAdvertisement();
-                                  },
-                                );
-                              }),
-                              isLoading:
-                                  controller.editAdvertisementLoading.value,
-                            ),
+                                          ? null
+                                          : Get.offAllNamed(Routes.home);
+                                    },
+                                  );
+                                }),
+                                isLoading:
+                                    controller.editAdvertisementLoading.value,
+                              ),
+                        ),
                       )
                       : null;
                 },
