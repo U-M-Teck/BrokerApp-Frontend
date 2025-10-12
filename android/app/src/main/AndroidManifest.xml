@@ -76,36 +76,13 @@
     </intent>
 </queries>
 
-<!-- Internet access for APIs, Firebase, and Maps -->
-<uses-permission android:name="android.permission.INTERNET"/>
-
-<!-- Location permissions for Google Maps and nearby property search -->
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-<uses-feature android:name="android.hardware.location.gps"/>
-
-<!-- Background location (optional: only if you show nearby properties while app is closed or minimized) -->
-<!-- <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> -->
-
-<!-- Camera access for taking property photos -->
-<uses-permission android:name="android.permission.CAMERA"/>
-
-<!-- Modern storage permissions (Android 13+, SDK 33 and above) -->
-<uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-<uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
-
-<!-- Backward compatibility for Android < 13 -->
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-    android:maxSdkVersion="32"/>
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-    android:maxSdkVersion="32"/>
-
-<!-- Phone call permission (for contacting brokers or owners) -->
-<uses-permission android:name="android.permission.CALL_PHONE"/>
-
-<!-- Optional: For Firebase Cloud Messaging (if used) -->
-<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-<uses-permission android:name="android.permission.WAKE_LOCK"/>
-
+    <uses-permission android:name="android.permission.INTERNET"/>   
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-feature android:name="android.hardware.location.gps"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
 </manifest>
